@@ -1,13 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    if (searchParams?.get('registered') === 'true') {
+      setSuccess('Registration successful! Please sign in.');
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,15 +26,25 @@ export default function LoginPage() {
     setError('');
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
 
     try {
-      // TODO: Implement login logic
-      console.log('Login attempt:', { email, password });
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      });
+
+      if (result?.error) {
+        throw new Error('Invalid email or password');
+      }
+
+      // Redirect to dashboard on success
+      router.push('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
-      setError('Invalid email or password');
+      setError(error instanceof Error ? error.message : 'Invalid email or password');
     } finally {
       setIsLoading(false);
     }
@@ -51,6 +72,12 @@ export default function LoginPage() {
           {error && (
             <div className="mb-4 bg-red-50 border border-red-200 text-red-600 rounded-md p-4 text-sm">
               {error}
+            </div>
+          )}
+
+          {success && (
+            <div className="mb-4 bg-green-50 border border-green-200 text-green-600 rounded-md p-4 text-sm">
+              {success}
             </div>
           )}
 

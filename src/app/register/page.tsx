@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
@@ -8,6 +9,7 @@ import Input from '@/components/ui/Input';
 type UserRole = 'CUSTOMER' | 'GENERAL_CONTRACTOR' | 'SUBCONTRACTOR';
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [selectedRole, setSelectedRole] = useState<UserRole>('CUSTOMER');
@@ -23,16 +25,30 @@ export default function RegisterPage() {
       password: formData.get('password'),
       firstName: formData.get('firstName'),
       lastName: formData.get('lastName'),
-      companyName: formData.get('companyName'),
+      companyName: formData.get('companyName') || undefined,
       role: selectedRole,
     };
 
     try {
-      // TODO: Implement registration logic
-      console.log('Registration attempt:', userData);
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Registration failed');
+      }
+
+      // Redirect to login page on success
+      router.push('/login?registered=true');
     } catch (error) {
       console.error('Registration error:', error);
-      setError('Registration failed. Please try again.');
+      setError(error instanceof Error ? error.message : 'Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
     }
