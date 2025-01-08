@@ -41,7 +41,7 @@ export default function SupplierApplicationConfirmationPage() {
             </p>
             <ul className="text-sm text-gray-600 space-y-2">
               <li>• Our team will review your application</li>
-              <li>• You'll receive an email with our decision</li>
+              <li>• You&apos;ll receive an email with our decision</li>
               <li>• If approved, you can start listing your products</li>
             </ul>
           </div>
