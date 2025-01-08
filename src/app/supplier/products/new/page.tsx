@@ -129,7 +129,7 @@ export default function NewProductPage() {
                 id="description"
                 name="description"
                 rows={4}
-                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm text-gray-900"
                 required
               />
             </div>

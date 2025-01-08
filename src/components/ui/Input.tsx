@@ -7,36 +7,41 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   fullWidth?: boolean;
 }
 
-const Input: React.FC<InputProps> = ({
+export default function Input({
   label,
   error,
   fullWidth = false,
-  className,
+  className = '',
   ...props
-}) => {
+}: InputProps) {
   return (
-    <div className={twMerge('flex flex-col gap-1', fullWidth && 'w-full')}>
+    <div className={fullWidth ? 'w-full' : ''}>
       {label && (
-        <label className="text-sm font-medium text-gray-700">
+        <label
+          htmlFor={props.id}
+          className="block text-sm font-medium text-gray-700 mb-2"
+        >
           {label}
         </label>
       )}
       <input
-        className={twMerge(
-          'px-3 py-2 bg-white border shadow-sm border-gray-300 placeholder-gray-400',
-          'focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary',
-          'rounded-md',
-          error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
-          fullWidth && 'w-full',
-          className
-        )}
+        className={`
+          block rounded-md shadow-sm
+          text-gray-900
+          border-gray-300 
+          focus:border-primary focus:ring-primary
+          sm:text-sm
+          ${fullWidth ? 'w-full' : ''}
+          ${error ? 'border-red-300' : ''}
+          ${className}
+        `}
         {...props}
       />
       {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
+        <p className="mt-1 text-sm text-red-600">
+          {error}
+        </p>
       )}
     </div>
   );
-};
-
-export default Input; 
+} 
