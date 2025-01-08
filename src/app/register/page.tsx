@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
-type UserRole = 'CUSTOMER' | 'GENERAL_CONTRACTOR' | 'SUBCONTRACTOR';
+type UserRole = 'CUSTOMER' | 'GENERAL_CONTRACTOR' | 'SUBCONTRACTOR' | 'SUPPLIER';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -137,6 +137,11 @@ export default function RegisterPage() {
                   { value: 'CUSTOMER', label: 'Customer' },
                   { value: 'GENERAL_CONTRACTOR', label: 'General Contractor' },
                   { value: 'SUBCONTRACTOR', label: 'Subcontractor' },
+                  { 
+                    value: 'SUPPLIER', 
+                    label: 'Supplier',
+                    description: 'Join our network of suppliers and reach more customers. Application required.'
+                  },
                 ].map((role) => (
                   <div
                     key={role.value}
@@ -157,6 +162,11 @@ export default function RegisterPage() {
                           <p className="font-medium text-gray-900">
                             {role.label}
                           </p>
+                          {role.description && (
+                            <p className="text-gray-500 text-sm mt-1">
+                              {role.description}
+                            </p>
+                          )}
                         </div>
                       </div>
                       {selectedRole === role.value && (

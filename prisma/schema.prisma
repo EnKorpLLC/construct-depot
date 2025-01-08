@@ -13,23 +13,69 @@ enum UserRole {
   CUSTOMER
   GENERAL_CONTRACTOR
   SUBCONTRACTOR
+  SUPPLIER
+}
+
+enum SupplierStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
+  id            String         @id @default(cuid())
+  email         String         @unique
   password      String
   firstName     String
   lastName      String
   companyName   String?
-  role          UserRole  @default(CUSTOMER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  role          UserRole       @default(CUSTOMER)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  // Supplier specific fields
+  supplierStatus      SupplierStatus?
+  supplierApplication SupplierApplication?
+  products           Product[]
 
   // NextAuth.js fields
   emailVerified DateTime?
   accounts      Account[]
   sessions      Session[]
+}
+
+model SupplierApplication {
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  companyDetails  String    @db.Text
+  businessType    String
+  taxId           String
+  websiteUrl      String?
+  phoneNumber     String
+  address         String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  notes           String?   @db.Text
+  documents       String[]  // URLs to business documents
+}
+
+model Product {
+  id                  String    @id @default(cuid())
+  name                String
+  description         String    @db.Text
+  price              Decimal   @db.Decimal(10, 2)
+  minOrderQuantity   Int
+  unit               String    // e.g., "pieces", "pallets", "cubic yards"
+  supplierId         String
+  supplier           User      @relation(fields: [supplierId], references: [id])
+  isActive           Boolean   @default(true)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  categories         String[]
+  images             String[]  // URLs to product images
+  specifications     Json?     // Flexible product specifications
+  markup            Decimal   @db.Decimal(10, 2) @default(1.20) // 20% default markup
 }
 
 // NextAuth.js models
