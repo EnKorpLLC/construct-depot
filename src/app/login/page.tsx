@@ -21,7 +21,8 @@ export default function LoginPage() {
     try {
       // TODO: Implement login logic
       console.log('Login attempt:', { email, password });
-    } catch (err) {
+    } catch (error) {
+      console.error('Login error:', error);
       setError('Invalid email or password');
     } finally {
       setIsLoading(false);
