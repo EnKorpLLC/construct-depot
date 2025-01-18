@@ -1,0 +1,92 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Validate Required Secrets
+        run: |
+          missing_secrets=()
+          
+          # Check core secrets
+          [ -z "${{ secrets.DATABASE_URL }}" ] && missing_secrets+=("DATABASE_URL")
+          [ -z "${{ secrets.NEXTAUTH_URL }}" ] && missing_secrets+=("NEXTAUTH_URL")
+          [ -z "${{ secrets.NEXTAUTH_SECRET }}" ] && missing_secrets+=("NEXTAUTH_SECRET")
+          [ -z "${{ secrets.REDIS_URL }}" ] && missing_secrets+=("REDIS_URL")
+          
+          # Check Vercel deployment secrets
+          [ -z "${{ secrets.VERCEL_TOKEN }}" ] && missing_secrets+=("VERCEL_TOKEN")
+          [ -z "${{ secrets.VERCEL_ORG_ID }}" ] && missing_secrets+=("VERCEL_ORG_ID")
+          [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ] && missing_secrets+=("VERCEL_PROJECT_ID")
+          
+          if [ ${#missing_secrets[@]} -ne 0 ]; then
+            echo "❌ Missing required secrets:"
+            printf '%s\n' "${missing_secrets[@]}"
+            exit 1
+          fi
+          
+          echo "✅ All required secrets are present"
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: production
+    
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+      REDIS_URL: ${{ secrets.REDIS_URL }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+
+      - name: Run database migrations
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+        
+      - name: Build
+        run: npm run build
+        env:
+          NEXTAUTH_URL: ${{ env.NEXTAUTH_URL }}
+          NEXTAUTH_SECRET: ${{ env.NEXTAUTH_SECRET }}
+          NODE_ENV: production
+        
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ env.VERCEL_TOKEN }}
+          vercel-org-id: ${{ env.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ env.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
