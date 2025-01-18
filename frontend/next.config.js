@@ -9,7 +9,7 @@ const nextConfig = {
   compress: true,
   generateEtags: true,
   
-  // Optimize build output
+  // Optimize build output for Vercel
   output: 'standalone',
   
   // Cache optimization
@@ -59,6 +59,23 @@ const nextConfig = {
       };
     }
     return config;
+  },
+
+  // Vercel-specific optimizations
+  serverRuntimeConfig: {
+    PROJECT_ROOT: __dirname,
+  },
+  publicRuntimeConfig: {
+    API_URL: process.env.NEXT_PUBLIC_API_URL,
+    APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+  },
+  
+  // Image optimization
+  images: {
+    domains: ['constructdepot.com'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    minimumCacheTTL: 60,
   },
 };
 
