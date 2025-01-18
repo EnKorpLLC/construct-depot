@@ -8,6 +8,7 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  DIRECT_URL: ${{ secrets.DATABASE_URL }}
   NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
   REDIS_URL: ${{ secrets.REDIS_URL }}
@@ -89,6 +90,7 @@ jobs:
           echo "NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-using default}"
           echo "NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-using default}"
           echo "STORAGE_BUCKET=${STORAGE_BUCKET:-using default}"
+          echo "DIRECT_URL=${DIRECT_URL:-using DATABASE_URL}"
           
           if [ ${#missing_vars[@]} -ne 0 ]; then
             echo "Missing required environment variables:"
