@@ -86,23 +86,41 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
-        run: cd frontend && npm ci
+        working-directory: ./frontend
+        run: |
+          npm install -g npm@latest
+          npm install
+          npm install tailwindcss postcss autoprefixer @types/node @types/react @types/react-dom
+        
+      - name: Set up environment
+        working-directory: ./frontend
+        run: |
+          echo "NEXTAUTH_URL=${{ env.NEXTAUTH_URL }}" >> .env.production
+          echo "NEXTAUTH_SECRET=${{ env.NEXTAUTH_SECRET }}" >> .env.production
+          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> .env.production
+          echo "REDIS_URL=${{ env.REDIS_URL }}" >> .env.production
+          echo "NODE_ENV=production" >> .env.production
         
       - name: Generate Prisma Client
-        run: cd frontend && npx prisma generate
+        working-directory: ./frontend
+        run: npx prisma generate
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
 
       - name: Run database migrations
-        run: cd frontend && npx prisma migrate deploy
+        working-directory: ./frontend
+        run: npx prisma migrate deploy
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
         
       - name: Build
-        run: cd frontend && npm run build
+        working-directory: ./frontend
+        run: npm run build
         env:
           NEXTAUTH_URL: ${{ env.NEXTAUTH_URL }}
           NEXTAUTH_SECRET: ${{ env.NEXTAUTH_SECRET }}
+          DATABASE_URL: ${{ env.DATABASE_URL }}
+          REDIS_URL: ${{ env.REDIS_URL }}
           NODE_ENV: production
         
       - name: Deploy to Vercel
