@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Project } from '@prisma/client';
@@ -20,7 +22,7 @@ export function ProjectList() {
       } catch (error) {
         console.error('Error fetching projects:', error);
       } finally {
-        setLoading = false;
+        setLoading(false);
       }
     };
 

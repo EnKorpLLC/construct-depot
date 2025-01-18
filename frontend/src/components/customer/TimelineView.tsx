@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { CustomerDashboardService } from '@/lib/services/customer/CustomerDashboardService';

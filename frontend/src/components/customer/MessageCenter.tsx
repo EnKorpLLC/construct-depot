@@ -1,6 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { CustomerDashboardService } from '@/lib/services/customer/CustomerDashboardService';
+import { CustomerDashboardService } from '@/lib/services/customer/dashboardService';
 
 interface Message {
   id: string;
@@ -27,7 +29,7 @@ export function MessageCenter() {
       } catch (error) {
         console.error('Error fetching messages:', error);
       } finally {
-        setLoading = false;
+        setLoading(false);
       }
     };
 

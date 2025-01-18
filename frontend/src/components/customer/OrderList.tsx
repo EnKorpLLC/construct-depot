@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { OrderService } from '@/lib/services/order/OrderService';
@@ -20,7 +22,7 @@ export function OrderList() {
       } catch (error) {
         console.error('Error fetching orders:', error);
       } finally {
-        setLoading = false;
+        setLoading(false);
       }
     };
 

@@ -1,5 +1,135 @@
 # Development Tools Guide
-Last Modified: 2024-01-19
+Last Updated: 2024-01-19 12:45
+
+## Component Verification Tools
+
+### 1. Component Structure Verification
+- **Script**: `scripts/verify-component-names.ts`
+- **Usage**: `npx ts-node scripts/verify-component-names.ts`
+- **CI Mode**: Runs automatically in GitHub Actions
+- **Checks**:
+  - Component file names in PascalCase
+  - Proper 'use client' directive usage
+  - Export naming conventions
+  - Special file handling (Next.js pages)
+
+### 2. Import Path Checker
+- **Script**: `scripts/fix-imports.ts`
+- **Usage**: 
+  - Check: `npx ts-node scripts/fix-imports.ts --check`
+  - Fix: `npx ts-node scripts/fix-imports.ts`
+- **CI Mode**: Runs in check mode via GitHub Actions
+- **Features**:
+  - Validates UI component import paths
+  - Ensures correct casing in imports
+  - Provides detailed error reporting
+  - Automatic fixing capability
+
+### 3. Test File Naming Tool
+- **Script**: `scripts/fix-test-names.ts`
+- **Usage**:
+  - Check: `npx ts-node scripts/fix-test-names.ts --check`
+  - Fix: `npx ts-node scripts/fix-test-names.ts`
+- **CI Mode**: Runs in check mode via GitHub Actions
+- **Features**:
+  - Validates test file naming conventions
+  - Ensures PascalCase for component tests
+  - Handles special test directories
+  - Automatic renaming capability
+
+## CI Integration
+
+### GitHub Actions Workflow
+- **File**: `.github/workflows/component-checks.yml`
+- **Triggers**:
+  - Push to main branch
+  - Pull requests to main branch
+  - Changes in src/ directory
+- **Checks**:
+  1. ESLint validation
+  2. TypeScript type checking
+  3. Component structure verification
+  4. Import path validation
+  5. Test file naming convention
+
+### Automated Checks
+- Runs on ubuntu-latest
+- Uses Node.js 18
+- Caches npm dependencies
+- Reports detailed status
+- Fails if any check fails
+
+## ESLint Configuration
+
+### Component Rules
+- Enforces 'use client' directive
+- Validates import paths
+- Ensures proper component naming
+- Checks React hooks usage
+- Validates prop types
+
+### Type Safety
+- Strict TypeScript checks
+- No implicit any
+- Explicit return types
+- Proper interface usage
+
+## Development Scripts
+
+### Available Commands
+```bash
+# Component Verification
+npm run verify-components    # Run all component checks
+npm run fix-imports         # Fix import path issues
+npm run fix-test-names      # Fix test file names
+
+# Type Checking
+npm run type-check          # Run TypeScript checks
+
+# Linting
+npm run lint               # Run ESLint
+npm run lint:fix          # Fix ESLint issues
+```
+
+## Best Practices
+
+### Component Development
+1. Use the component checklist
+2. Run verification tools locally
+3. Fix issues before committing
+4. Follow naming conventions
+5. Use proper imports
+
+### Code Quality
+1. Write comprehensive tests
+2. Maintain type safety
+3. Document changes
+4. Follow ESLint rules
+5. Use proper error handling
+
+## Troubleshooting
+
+### Common Issues
+1. Component verification failures
+   - Check file naming
+   - Verify import paths
+   - Ensure proper exports
+   
+2. CI pipeline failures
+   - Review GitHub Actions logs
+   - Run checks locally first
+   - Fix reported issues
+   
+3. Import path issues
+   - Use correct casing
+   - Follow path conventions
+   - Run fix-imports script
+
+### Support
+- Check GitHub Actions logs
+- Review error messages
+- Consult component checklist
+- Update documentation
 
 ## Pre-commit Hooks
 Pre-commit hooks automatically run checks before each commit to ensure code quality and consistency.
@@ -80,29 +210,4 @@ npm run lint
 
 # Fix automatically fixable issues
 npm run lint:fix
-```
-
-## Best Practices
-1. Always use the component generator for new components
-2. Review the component checklist before creating components
-3. Run verification tools regularly
-4. Fix issues reported by pre-commit hooks immediately
-5. Keep documentation updated when adding new features
-
-## Troubleshooting
-### Pre-commit Hooks Failing
-1. Check the error messages carefully
-2. Run the failing check manually for more detailed output
-3. Verify that all dependencies are installed
-4. Ensure your code follows the component checklist
-
-### Component Generator Issues
-1. Verify the component name is in PascalCase
-2. Check that the target directory exists
-3. Ensure you have necessary permissions
-
-### Structure Verification Failures
-1. Review the reported issues
-2. Check the component checklist
-3. Use the component generator for new components
-4. Update existing components to follow conventions 
+``` 

@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/solid';
 import { useEffect, useState } from 'react';
 import { CustomerDashboardService } from '@/lib/services/customer/dashboardService';

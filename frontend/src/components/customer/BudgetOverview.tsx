@@ -13,7 +13,7 @@ import {
   Legend,
   Filler
 } from 'chart.js';
-import { CustomerDashboardService } from '@/lib/services/customer/CustomerDashboardService';
+import { CustomerDashboardService } from '@/lib/services/customer/dashboardService';
 
 ChartJS.register(
   CategoryScale,
@@ -49,7 +49,7 @@ export function BudgetOverview() {
       } catch (error) {
         console.error('Error fetching budget data:', error);
       } finally {
-        setLoading = false;
+        setLoading(false);
       }
     };
 
