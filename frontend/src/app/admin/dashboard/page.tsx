@@ -3,9 +3,9 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import CrawlerManagementWidget from '@/components/admin/super/CrawlerManagementWidget';
-import SystemMetricsWidget from '@/components/admin/super/SystemMetricsWidget';
-import UserManagementWidget from '@/components/admin/super/UserManagementWidget';
+import { CrawlerManagementWidget } from '@/components/admin/super/CrawlerManagementWidget';
+import { SystemMetricsWidget } from '@/components/admin/super/SystemMetricsWidget';
+import { UserManagementWidget } from '@/components/admin/super/UserManagementWidget';
 import { AdminRole } from '@/types/admin';
 
 export default function AdminDashboard() {

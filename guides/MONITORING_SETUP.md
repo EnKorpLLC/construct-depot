@@ -1,6 +1,41 @@
 # Monitoring Setup Guide
 
-Last Updated: 2025-01-16 16:15
+Last Modified: 2024-01-19
+
+## Crawler Monitoring
+Status: ✅ Implemented
+
+### Dashboard
+- Location: `/admin/crawler`
+- Components:
+  - Real-time job status monitoring
+  - Configuration management overview
+  - Error tracking and reporting
+
+### Metrics Tracked
+1. Job Performance
+   - Pages processed
+   - Items found
+   - Processing time
+   - Error rate
+
+2. System Health
+   - Active crawlers
+   - Queue status
+   - Rate limit compliance
+   - Resource usage
+
+### Alerts
+- Job failure notifications
+- Rate limit warnings
+- Resource utilization alerts
+- Error threshold notifications
+
+### Logging
+- Job execution logs
+- Error details with stack traces
+- Performance metrics
+- Configuration changes
 
 ## 1. Error Tracking (Sentry)
 

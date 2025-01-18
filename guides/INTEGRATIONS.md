@@ -1,9 +1,38 @@
-# Integrations Guide
+# System Integrations
 
-Last Updated: 2024-01-18
+Last Modified: 2024-01-19
 
-## Overview
-This document outlines the third-party integrations used in the Bulk Buyer Group platform and their configuration status.
+## Crawler System
+Status: ✅ Implemented
+
+### Components
+1. Configuration Management
+   - API Endpoints: `/api/crawler/configs`
+   - CRUD operations for crawler configurations
+   - Validation for schedule and rate limit settings
+
+2. Job Monitoring
+   - API Endpoints: `/api/crawler/jobs`
+   - Real-time job status tracking
+   - Error logging and reporting
+
+3. User Interface
+   - Location: `/admin/crawler`
+   - Components:
+     - ConfigurationForm
+     - JobMonitoringDashboard
+     - CrawlerManagementWidget
+
+### Integration Points
+- Database: Uses Prisma for configuration and job storage
+- Redis: Caches crawler results and job status
+- API: RESTful endpoints for crawler management
+- Frontend: React components with TypeScript
+
+### Configuration
+- Rate Limiting: Configurable per crawler instance
+- Scheduling: Cron-style scheduling support
+- Error Handling: Automatic retry with backoff
 
 ## Core Integrations
 
