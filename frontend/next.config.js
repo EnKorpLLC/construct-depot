@@ -9,8 +9,8 @@ const nextConfig = {
   compress: true,
   generateEtags: true,
   
-  // Optimize build output for Vercel
-  output: 'standalone',
+  // Build output configuration
+  distDir: '.next',
   
   // Cache optimization
   onDemandEntries: {
