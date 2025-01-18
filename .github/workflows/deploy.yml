@@ -110,6 +110,10 @@ jobs:
         shell: bash
         working-directory: ./frontend
         run: |
+          echo "Current directory: $(pwd)"
+          echo "Listing prisma directory:"
+          ls -la prisma/
+          
           echo "Installing prisma CLI..."
           npm install prisma --save-dev
           
@@ -122,11 +126,20 @@ jobs:
             exit 1
           fi
           
+          echo "DATABASE_URL format check (anonymized):"
+          echo "${DATABASE_URL//:\/\/.*@/:\/\/****@}"
+          
           echo "Validating schema..."
           npx prisma validate
           
           echo "Generating Prisma Client..."
-          npx prisma generate --debug
+          PRISMA_SCHEMA_PATH="./prisma/schema.prisma"
+          if [ ! -f "$PRISMA_SCHEMA_PATH" ]; then
+            echo "❌ Schema file not found at $PRISMA_SCHEMA_PATH"
+            exit 1
+          fi
+          
+          npx prisma generate --schema="$PRISMA_SCHEMA_PATH" --debug
           
           if [ $? -ne 0 ]; then
             echo "❌ Failed to generate Prisma client"
@@ -141,16 +154,31 @@ jobs:
           echo "✅ Prisma client generated successfully"
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
+          PRISMA_SCHEMA_PATH: ./prisma/schema.prisma
 
       - name: Run database migrations
         shell: bash
         working-directory: ./frontend
         run: |
-          npx prisma migrate deploy
+          echo "Running database migrations..."
+          echo "Using schema at: ./prisma/schema.prisma"
+          
+          # Test database connection
+          echo "Testing database connection..."
+          npx prisma db pull --schema=./prisma/schema.prisma >/dev/null 2>&1 || {
+            echo "❌ Failed to connect to database"
+            exit 1
+          }
+          
+          echo "Running migrations..."
+          npx prisma migrate deploy --schema=./prisma/schema.prisma
+          
           if [ $? -ne 0 ]; then
-            echo "Failed to run database migrations"
+            echo "❌ Failed to run database migrations"
             exit 1
           fi
+          
+          echo "✅ Database migrations completed successfully"
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
         
