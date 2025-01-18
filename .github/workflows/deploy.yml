@@ -22,6 +22,7 @@ jobs:
     environment: production
     steps:
       - name: Validate Required Secrets
+        shell: bash
         run: |
           missing_secrets=()
           
@@ -65,6 +66,7 @@ jobs:
           fetch-depth: 0
 
       - name: Debug Info
+        shell: bash
         run: |
           echo "Current directory: $(pwd)"
           echo "Git status:"
@@ -86,34 +88,41 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
+        shell: bash
         working-directory: ./frontend
         run: |
           npm install -g npm@latest
           npm install
-          npm install tailwindcss postcss autoprefixer @types/node @types/react @types/react-dom
+          npm install tailwindcss postcss autoprefixer "@types/node" "@types/react" "@types/react-dom"
         
       - name: Set up environment
+        shell: bash
         working-directory: ./frontend
         run: |
-          echo "NEXTAUTH_URL=${{ env.NEXTAUTH_URL }}" >> .env.production
-          echo "NEXTAUTH_SECRET=${{ env.NEXTAUTH_SECRET }}" >> .env.production
-          echo "DATABASE_URL=${{ env.DATABASE_URL }}" >> .env.production
-          echo "REDIS_URL=${{ env.REDIS_URL }}" >> .env.production
-          echo "NODE_ENV=production" >> .env.production
+          {
+            echo "NEXTAUTH_URL=${{ env.NEXTAUTH_URL }}"
+            echo "NEXTAUTH_SECRET=${{ env.NEXTAUTH_SECRET }}"
+            echo "DATABASE_URL=${{ env.DATABASE_URL }}"
+            echo "REDIS_URL=${{ env.REDIS_URL }}"
+            echo "NODE_ENV=production"
+          } > .env.production
         
       - name: Generate Prisma Client
+        shell: bash
         working-directory: ./frontend
         run: npx prisma generate
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
 
       - name: Run database migrations
+        shell: bash
         working-directory: ./frontend
         run: npx prisma migrate deploy
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
         
       - name: Build
+        shell: bash
         working-directory: ./frontend
         run: npm run build
         env:
