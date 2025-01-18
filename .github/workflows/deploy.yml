@@ -11,9 +11,9 @@ env:
   NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
   REDIS_URL: ${{ secrets.REDIS_URL }}
-  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
-  STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL || 'http://localhost:3000' }}
+  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL || 'http://localhost:3000' }}
+  STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET || 'local-storage' }}
   ENABLE_ANALYTICS: true
   ENABLE_CRAWLER: true
   ENABLE_NOTIFICATIONS: true
@@ -76,11 +76,20 @@ jobs:
         run: |
           echo "Checking required environment variables..."
           missing_vars=()
-          for var in DATABASE_URL NEXTAUTH_URL NEXTAUTH_SECRET REDIS_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_APP_URL STORAGE_BUCKET VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
+          # Required variables that must be set
+          required_vars=(DATABASE_URL NEXTAUTH_URL NEXTAUTH_SECRET REDIS_URL VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID)
+          for var in "${required_vars[@]}"; do
             if [ -z "${!var}" ]; then
               missing_vars+=("$var")
             fi
           done
+          
+          # Optional variables with defaults
+          echo "Optional variables status:"
+          echo "NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-using default}"
+          echo "NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-using default}"
+          echo "STORAGE_BUCKET=${STORAGE_BUCKET:-using default}"
+          
           if [ ${#missing_vars[@]} -ne 0 ]; then
             echo "Missing required environment variables:"
             printf '%s\n' "${missing_vars[@]}"
