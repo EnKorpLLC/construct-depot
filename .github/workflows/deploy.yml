@@ -110,11 +110,35 @@ jobs:
         shell: bash
         working-directory: ./frontend
         run: |
-          npx prisma generate
-          if [ $? -ne 0 ]; then
-            echo "Failed to generate Prisma client"
+          echo "Installing prisma CLI..."
+          npm install prisma --save-dev
+          
+          echo "Checking Prisma version..."
+          npx prisma -v
+          
+          echo "Checking DATABASE_URL..."
+          if [ -z "$DATABASE_URL" ]; then
+            echo "❌ DATABASE_URL is not set"
             exit 1
           fi
+          
+          echo "Validating schema..."
+          npx prisma validate
+          
+          echo "Generating Prisma Client..."
+          npx prisma generate --debug
+          
+          if [ $? -ne 0 ]; then
+            echo "❌ Failed to generate Prisma client"
+            echo "Checking for common issues:"
+            echo "1. Verifying node_modules/@prisma exists..."
+            ls -la node_modules/@prisma || true
+            echo "2. Checking prisma schema location..."
+            find . -name "schema.prisma" || true
+            exit 1
+          fi
+          
+          echo "✅ Prisma client generated successfully"
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
 
