@@ -1,17 +1,29 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "@typescript-eslint/no-unused-vars": ["warn", { 
-      "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_",
-      "caughtErrorsIgnorePattern": "^_"
-    }],
-    "react/no-unescaped-entities": "off",
-    "@next/next/no-img-element": "off"
-  },
-  "ignorePatterns": [
-    "node_modules/",
-    ".next/",
-    "out/"
-  ]
+    // Enforce 'use client' directive when hooks are used
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    
+    // Import path rules
+    "import/no-unresolved": "error",
+    "import/case-sensitivity": "error",
+    
+    // Custom rules for Next.js
+    "@next/next/no-server-import-in-page": "error",
+    "@next/next/no-html-link-for-pages": "error",
+    
+    // TypeScript specific rules
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    
+    // General React rules
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error"
+  }
 } 
