@@ -63,13 +63,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          submodules: true
-          persist-credentials: false
 
-      - name: Setup Git Authentication
-        run: |
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "https://github.com/"
-          
       - name: Debug Info
         run: |
           echo "Current directory: $(pwd)"
