@@ -68,15 +68,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify Vercel CLI
-        run: |
-          npm install -g vercel
-          vercel --version
-          
-          # Verify Vercel project access
-          echo "Verifying Vercel project access..."
-          vercel pull --yes --environment=production --token=${{ env.VERCEL_TOKEN }}
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -155,31 +146,11 @@ jobs:
           REDIS_URL: ${{ env.REDIS_URL }}
           NODE_ENV: production
 
-      - name: Verify Vercel deployment readiness
-        shell: bash
-        working-directory: ./frontend
-        run: |
-          echo "Verifying Vercel deployment configuration..."
-          
-          # Check if .vercel directory exists
-          if [ ! -d ".vercel" ]; then
-            echo "Creating Vercel project link..."
-            vercel link --token=${{ env.VERCEL_TOKEN }} --confirm
-          fi
-          
-          # Verify project settings
-          echo "Verifying project settings..."
-          vercel inspect --token=${{ env.VERCEL_TOKEN }}
-          
-          # Check for potential deployment blockers
-          echo "Checking for deployment blockers..."
-          vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }} --yes || exit 1
-        
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ env.VERCEL_TOKEN }}
           vercel-org-id: ${{ env.VERCEL_ORG_ID }}
           vercel-project-id: ${{ env.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod --debug'
+          vercel-args: '--prod'
           working-directory: ./frontend
