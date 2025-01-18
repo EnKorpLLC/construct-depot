@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
-import { ConfigurationForm } from '@/components/crawler/ConfigurationForm';
+import { Button } from '/src/components/ui/Button';
+import { ConfigurationForm } from '/src/components/crawler/ConfigurationForm';
 
 interface CrawlerConfig {
   id: string;

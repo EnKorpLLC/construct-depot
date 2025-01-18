@@ -26,12 +26,15 @@ const nextConfig = {
   
   // Webpack configuration
   webpack: (config, { dev, isServer }) => {
-    // Add case-sensitive path resolution
+    // Add path resolution configuration
     config.resolve = {
       ...config.resolve,
       enforceExtension: false,
       enforceModuleExtension: false,
-      caseSensitive: true,
+      alias: {
+        ...config.resolve.alias,
+        '@/components': '/src/components'
+      }
     };
 
     // Optimize production builds

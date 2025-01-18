@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/Button';
-import { CrawlerManagementWidget } from '@/components/admin/super/CrawlerManagementWidget';
-import { JobMonitoringDashboard } from '@/components/crawler/JobMonitoringDashboard';
+import { Button } from '/src/components/ui/Button';
+import { CrawlerManagementWidget } from '/src/components/admin/super/CrawlerManagementWidget';
+import { JobMonitoringDashboard } from '/src/components/crawler/JobMonitoringDashboard';
 
 export default function CrawlerManagementPage() {
   const router = useRouter();
