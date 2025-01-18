@@ -1,208 +1,55 @@
 name: Deploy to Production
-
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
 
-permissions:
-  contents: read
-  deployments: write
-  actions: write
-  checks: write
-  issues: write
-  packages: write
-  pull-requests: write
-  statuses: write
+env:
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-      - name: Validate Required Secrets
-        shell: bash
-        run: |
-          missing_secrets=()
-          
-          # Check core secrets
-          [ -z "${{ secrets.DATABASE_URL }}" ] && missing_secrets+=("DATABASE_URL")
-          [ -z "${{ secrets.NEXTAUTH_URL }}" ] && missing_secrets+=("NEXTAUTH_URL")
-          [ -z "${{ secrets.NEXTAUTH_SECRET }}" ] && missing_secrets+=("NEXTAUTH_SECRET")
-          [ -z "${{ secrets.REDIS_URL }}" ] && missing_secrets+=("REDIS_URL")
-          
-          # Check Vercel deployment secrets
-          [ -z "${{ secrets.VERCEL_TOKEN }}" ] && missing_secrets+=("VERCEL_TOKEN")
-          [ -z "${{ secrets.VERCEL_ORG_ID }}" ] && missing_secrets+=("VERCEL_ORG_ID")
-          [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ] && missing_secrets+=("VERCEL_PROJECT_ID")
-          
-          if [ ${#missing_secrets[@]} -ne 0 ]; then
-            echo "❌ Missing required secrets:"
-            printf '%s\n' "${missing_secrets[@]}"
-            exit 1
-          fi
-          
-          echo "✅ All required secrets are present"
-
   deploy:
-    needs: validate
     runs-on: ubuntu-latest
-    environment: production
-    
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
-      REDIS_URL: ${{ secrets.REDIS_URL }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-      NODE_ENV: production
-      CI: true
-      NPM_CONFIG_LEGACY_PEER_DEPS: true
+    defaults:
+      run:
+        working-directory: ./frontend
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
+      - uses: actions/checkout@v4
+      
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.17.0'
+          node-version: '20'
           cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-
+          cache-dependency-path: './frontend/package-lock.json'
+      
       - name: Install dependencies
-        shell: bash
-        working-directory: ./frontend
-        run: |
-          echo "Node version: $(node -v)"
-          echo "NPM version: $(npm -v)"
-          
-          # Remove existing modules and lock file
-          rm -rf node_modules package-lock.json
-          
-          # Install dependencies with conservative flags
-          npm install --legacy-peer-deps --prefer-offline --no-audit --no-fund --no-optional --loglevel=error
-          
-          # Install exact versions of dev dependencies
-          npm install -D typescript@5.0.4 @types/node@18.16.0 @types/react@18.2.0 @types/react-dom@18.2.0 tailwindcss@3.3.0 postcss@8.4.23 autoprefixer@10.4.14
-          
-          # Verify core dependencies are installed
-          npm list next react react-dom typescript || true
-        
-      - name: Set up environment
-        shell: bash
-        working-directory: ./frontend
-        run: |
-          {
-            echo "NEXTAUTH_URL=${{ env.NEXTAUTH_URL }}"
-            echo "NEXTAUTH_SECRET=${{ env.NEXTAUTH_SECRET }}"
-            echo "DATABASE_URL=${{ env.DATABASE_URL }}"
-            echo "REDIS_URL=${{ env.REDIS_URL }}"
-            echo "NODE_ENV=production"
-          } > .env.production
-        
-      - name: Generate Prisma Client
-        shell: bash
-        working-directory: ./frontend
+        run: npm ci
+      
+      - name: Verify Prisma setup
         run: |
           echo "Current directory: $(pwd)"
           echo "Listing prisma directory:"
           ls -la prisma/
-          
-          echo "Installing prisma CLI..."
-          npm install prisma --save-dev
-          
-          echo "Checking Prisma version..."
-          npx prisma -v
-          
-          echo "Checking DATABASE_URL..."
-          if [ -z "$DATABASE_URL" ]; then
-            echo "❌ DATABASE_URL is not set"
-            exit 1
-          fi
-          
-          echo "DATABASE_URL format check (anonymized):"
-          echo "${DATABASE_URL//:\/\/.*@/:\/\/****@}"
-          
-          echo "Validating schema..."
-          npx prisma validate
-          
-          echo "Generating Prisma Client..."
-          PRISMA_SCHEMA_PATH="./prisma/schema.prisma"
-          if [ ! -f "$PRISMA_SCHEMA_PATH" ]; then
-            echo "❌ Schema file not found at $PRISMA_SCHEMA_PATH"
-            exit 1
-          fi
-          
-          npx prisma generate --schema="$PRISMA_SCHEMA_PATH" --debug
-          
-          if [ $? -ne 0 ]; then
-            echo "❌ Failed to generate Prisma client"
-            echo "Checking for common issues:"
-            echo "1. Verifying node_modules/@prisma exists..."
-            ls -la node_modules/@prisma || true
-            echo "2. Checking prisma schema location..."
-            find . -name "schema.prisma" || true
-            exit 1
-          fi
-          
-          echo "✅ Prisma client generated successfully"
-        env:
-          DATABASE_URL: ${{ env.DATABASE_URL }}
-          PRISMA_SCHEMA_PATH: ./prisma/schema.prisma
-
-      - name: Run database migrations
-        shell: bash
-        working-directory: ./frontend
+          echo "Checking schema path:"
+          test -f prisma/schema.prisma && echo "Schema found" || echo "Schema not found"
+          echo "DATABASE_URL format check:"
+          echo $DATABASE_URL | sed 's/:[^:]*@/:***@/' || true
+      
+      - name: Test database connection
         run: |
-          echo "Running database migrations..."
-          echo "Using schema at: ./prisma/schema.prisma"
-          
-          # Test database connection
-          echo "Testing database connection..."
-          npx prisma db pull --schema=./prisma/schema.prisma >/dev/null 2>&1 || {
-            echo "❌ Failed to connect to database"
+          npx prisma db pull --schema=./prisma/schema.prisma || (
+            echo "Database connection failed"
             exit 1
-          }
-          
-          echo "Running migrations..."
-          npx prisma migrate deploy --schema=./prisma/schema.prisma
-          
-          if [ $? -ne 0 ]; then
-            echo "❌ Failed to run database migrations"
-            exit 1
-          fi
-          
-          echo "✅ Database migrations completed successfully"
-        env:
-          DATABASE_URL: ${{ env.DATABASE_URL }}
-        
-      - name: Build
-        shell: bash
-        working-directory: ./frontend
+          )
+      
+      - name: Generate Prisma Client
         run: |
-          npm run build
-          if [ $? -ne 0 ]; then
-            echo "Build failed"
-            exit 1
-          fi
-        env:
-          NEXTAUTH_URL: ${{ env.NEXTAUTH_URL }}
-          NEXTAUTH_SECRET: ${{ env.NEXTAUTH_SECRET }}
-          DATABASE_URL: ${{ env.DATABASE_URL }}
-          REDIS_URL: ${{ env.REDIS_URL }}
-          NODE_ENV: production
-
+          npx prisma generate --schema=./prisma/schema.prisma
+      
+      - name: Build project
+        run: npm run build
+      
       - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ env.VERCEL_TOKEN }}
-          vercel-org-id: ${{ env.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ env.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: ./frontend
+        run: npx vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }} --yes
