@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
   swcMinify: true,
   experimental: {
@@ -31,7 +33,7 @@ const nextConfig = {
       ...config.resolve,
       alias: {
         ...config.resolve.alias,
-        '@/components': '/src/components'
+        '@': path.join(__dirname, 'src'),
       },
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       enforceExtension: false
