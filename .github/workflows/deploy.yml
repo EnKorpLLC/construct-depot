@@ -9,6 +9,12 @@ on:
 permissions:
   contents: read
   deployments: write
+  actions: write
+  checks: write
+  issues: write
+  packages: write
+  pull-requests: write
+  statuses: write
 
 jobs:
   validate:
@@ -55,7 +61,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+        with:
+          fetch-depth: 0
+          
+      - name: Debug Info
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Git status:"
+          git status
+          echo "Git remote:"
+          git remote -v
+          echo "Node version:"
+          node -v
+          echo "NPM version:"
+          npm -v
+          
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
