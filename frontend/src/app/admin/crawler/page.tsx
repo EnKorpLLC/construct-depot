@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/components/ui/Button';
 import { CrawlerManagementWidget } from '@/components/admin/super/CrawlerManagementWidget';
 import { JobMonitoringDashboard } from '@/components/crawler/JobMonitoringDashboard';
 
