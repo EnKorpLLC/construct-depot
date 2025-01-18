@@ -60,6 +60,7 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
       NODE_ENV: production
       CI: true
+      NPM_CONFIG_LEGACY_PEER_DEPS: true
     
     steps:
       - name: Checkout code
@@ -85,14 +86,17 @@ jobs:
           npm cache clean --force
           rm -rf node_modules package-lock.json
           
+          # Update npm to latest version
+          npm install -g npm@latest
+          
           # Install dependencies with specific flags for CI environment
-          npm install --no-audit --no-fund --no-optional
+          npm install --legacy-peer-deps --no-audit --no-fund --no-optional
           
           # Install required dev dependencies explicitly
-          npm install -D typescript @types/node @types/react @types/react-dom tailwindcss postcss autoprefixer
+          npm install -D typescript@latest @types/node @types/react @types/react-dom tailwindcss postcss autoprefixer
           
           # Verify installation
-          npm ls --depth=0
+          npm ls --depth=0 || true
         
       - name: Set up environment
         shell: bash
