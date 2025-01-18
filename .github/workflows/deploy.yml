@@ -6,6 +6,16 @@ on:
 env:
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+  REDIS_URL: ${{ secrets.REDIS_URL }}
+  NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
+  STORAGE_BUCKET: ${{ secrets.STORAGE_BUCKET }}
+  ENABLE_ANALYTICS: true
+  ENABLE_CRAWLER: true
+  ENABLE_NOTIFICATIONS: true
+  NODE_ENV: production
 
 jobs:
   deploy:
@@ -26,6 +36,22 @@ jobs:
       
       - name: Install dependencies
         run: npm ci
+      
+      - name: Verify environment
+        run: |
+          echo "Checking required environment variables..."
+          missing_vars=()
+          for var in DATABASE_URL NEXTAUTH_URL NEXTAUTH_SECRET REDIS_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_APP_URL STORAGE_BUCKET; do
+            if [ -z "${!var}" ]; then
+              missing_vars+=("$var")
+            fi
+          done
+          if [ ${#missing_vars[@]} -ne 0 ]; then
+            echo "Missing required environment variables:"
+            printf '%s\n' "${missing_vars[@]}"
+            exit 1
+          fi
+          echo "All required environment variables are set"
       
       - name: Verify Prisma setup
         run: |
