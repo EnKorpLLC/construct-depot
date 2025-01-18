@@ -47,7 +47,23 @@ const UI_COMPONENTS = [
   'Tooltip',
 ];
 
-async function fixImports(filePath: string): Promise<boolean> {
+async function checkImports(filePath: string): Promise<string[]> {
+  const content = await readFile(filePath, 'utf-8');
+  const issues: string[] = [];
+
+  // Check UI component imports
+  for (const component of UI_COMPONENTS) {
+    const lowerComponent = component.toLowerCase();
+    const regex = new RegExp(`@/components/ui/${lowerComponent}['"]`, 'g');
+    if (regex.test(content)) {
+      issues.push(`Import uses lowercase '${lowerComponent}' instead of '${component}'`);
+    }
+  }
+
+  return issues;
+}
+
+async function fixImports(filePath: string, checkOnly: boolean = false): Promise<boolean> {
   const content = await readFile(filePath, 'utf-8');
   let newContent = content;
   let hasChanges = false;
@@ -57,12 +73,15 @@ async function fixImports(filePath: string): Promise<boolean> {
     const lowerComponent = component.toLowerCase();
     const regex = new RegExp(`@/components/ui/${lowerComponent}['"]`, 'g');
     if (regex.test(newContent)) {
+      if (checkOnly) {
+        return true; // Found an issue
+      }
       newContent = newContent.replace(regex, `@/components/ui/${component}'`);
       hasChanges = true;
     }
   }
 
-  if (hasChanges) {
+  if (hasChanges && !checkOnly) {
     await writeFile(filePath, newContent);
     console.log(`✅ Fixed imports in ${filePath}`);
   }
@@ -70,42 +89,58 @@ async function fixImports(filePath: string): Promise<boolean> {
   return hasChanges;
 }
 
-async function scanDirectory(dir: string): Promise<number> {
-  let fixedFiles = 0;
+async function scanDirectory(dir: string, checkOnly: boolean = false): Promise<number> {
+  let issueCount = 0;
   const entries = await readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     
     if (entry.isDirectory()) {
-      fixedFiles += await scanDirectory(fullPath);
+      issueCount += await scanDirectory(fullPath, checkOnly);
       continue;
     }
 
     if (!entry.name.endsWith('.tsx')) continue;
 
-    if (await fixImports(fullPath)) {
-      fixedFiles++;
+    if (checkOnly) {
+      const issues = await checkImports(fullPath);
+      if (issues.length > 0) {
+        console.error(`\n${fullPath}:`);
+        for (const issue of issues) {
+          console.error(`  - ${issue}`);
+        }
+        issueCount += issues.length;
+      }
+    } else if (await fixImports(fullPath)) {
+      issueCount++;
     }
   }
 
-  return fixedFiles;
+  return issueCount;
 }
 
 async function main() {
-  console.log('Fixing component imports...');
+  const checkOnly = process.argv.includes('--check');
+  console.log(checkOnly ? 'Checking component imports...' : 'Fixing component imports...');
   
   const componentsDir = path.join(process.cwd(), 'src/components');
   const pagesDir = path.join(process.cwd(), 'src/app');
 
-  const fixedFiles = await scanDirectory(componentsDir) + await scanDirectory(pagesDir);
+  const issueCount = await scanDirectory(componentsDir, checkOnly) + 
+                    await scanDirectory(pagesDir, checkOnly);
 
-  if (fixedFiles === 0) {
-    console.log('✅ No files needed fixing');
+  if (issueCount === 0) {
+    console.log('✅ No issues found');
     process.exit(0);
   } else {
-    console.log(`✅ Fixed imports in ${fixedFiles} files`);
-    process.exit(0);
+    if (checkOnly) {
+      console.error(`❌ Found ${issueCount} import issues`);
+      process.exit(1);
+    } else {
+      console.log(`✅ Fixed ${issueCount} files`);
+      process.exit(0);
+    }
   }
 }
 

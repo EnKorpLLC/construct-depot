@@ -6,8 +6,13 @@ import { promisify } from 'util';
 const readdir = promisify(fs.readdir);
 const rename = promisify(fs.rename);
 
-async function fixTestNames(dir: string): Promise<number> {
-  let renamedFiles = 0;
+interface TestFileIssue {
+  file: string;
+  correctName: string;
+}
+
+async function checkTestNames(dir: string): Promise<TestFileIssue[]> {
+  const issues: TestFileIssue[] = [];
   const entries = await readdir(dir, { withFileTypes: true });
 
   for (const entry of entries) {
@@ -25,47 +30,71 @@ async function fixTestNames(dir: string): Promise<number> {
           const firstChar = componentName.charAt(0);
           
           if (firstChar !== firstChar.toUpperCase()) {
-            // Convert to PascalCase if it's not already
+            // Convert to PascalCase
             const pascalCaseName = componentName
               .split(/[-_]/)
               .map(part => part.charAt(0).toUpperCase() + part.slice(1))
               .join('');
 
-            const newName = `${pascalCaseName}.test.tsx`;
-            const oldPath = path.join(fullPath, testFile);
-            const newPath = path.join(fullPath, newName);
-            
-            try {
-              await rename(oldPath, newPath);
-              console.log(`✅ Renamed ${testFile} to ${newName}`);
-              renamedFiles++;
-            } catch (error: any) {
-              console.error(`❌ Failed to rename ${testFile}: ${error?.message || 'Unknown error'}`);
-            }
+            issues.push({
+              file: path.join(fullPath, testFile),
+              correctName: `${pascalCaseName}.test.tsx`
+            });
           }
         }
       } else {
         // Recursively process other directories
-        renamedFiles += await fixTestNames(fullPath);
+        issues.push(...await checkTestNames(fullPath));
       }
     }
   }
 
-  return renamedFiles;
+  return issues;
+}
+
+async function fixTestNames(dir: string, checkOnly: boolean = false): Promise<number> {
+  let issueCount = 0;
+  const issues = await checkTestNames(dir);
+
+  if (checkOnly) {
+    for (const issue of issues) {
+      console.error(`${issue.file}:`);
+      console.error(`  - Should be renamed to: ${issue.correctName}`);
+      issueCount++;
+    }
+  } else {
+    for (const issue of issues) {
+      try {
+        await rename(issue.file, path.join(path.dirname(issue.file), issue.correctName));
+        console.log(`✅ Renamed ${path.basename(issue.file)} to ${issue.correctName}`);
+        issueCount++;
+      } catch (error: any) {
+        console.error(`❌ Failed to rename ${issue.file}: ${error?.message || 'Unknown error'}`);
+      }
+    }
+  }
+
+  return issueCount;
 }
 
 async function main() {
-  console.log('Fixing test file names...');
+  const checkOnly = process.argv.includes('--check');
+  console.log(checkOnly ? 'Checking test file names...' : 'Fixing test file names...');
   
   const componentsDir = path.join(process.cwd(), 'src/components');
-  const renamedFiles = await fixTestNames(componentsDir);
+  const issueCount = await fixTestNames(componentsDir, checkOnly);
 
-  if (renamedFiles === 0) {
-    console.log('✅ No files needed renaming');
+  if (issueCount === 0) {
+    console.log('✅ No issues found');
     process.exit(0);
   } else {
-    console.log(`✅ Renamed ${renamedFiles} files`);
-    process.exit(0);
+    if (checkOnly) {
+      console.error(`❌ Found ${issueCount} test file naming issues`);
+      process.exit(1);
+    } else {
+      console.log(`✅ Fixed ${issueCount} test files`);
+      process.exit(0);
+    }
   }
 }
 

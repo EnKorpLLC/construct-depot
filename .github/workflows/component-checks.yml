@@ -1,0 +1,59 @@
+name: Component Structure Checks
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/component-checks.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/component-checks.yml'
+
+jobs:
+  verify:
+    name: Verify Component Structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Type Check
+        run: npm run type-check
+
+      - name: Verify Component Structure
+        run: npx ts-node scripts/verify-component-names.ts
+
+      - name: Check Import Paths
+        run: |
+          # Run import path check in "check only" mode
+          npx ts-node scripts/fix-imports.ts --check
+
+      - name: Check Test File Names
+        run: |
+          # Run test name check in "check only" mode
+          npx ts-node scripts/fix-test-names.ts --check
+
+      - name: Report Status
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "✅ All component checks passed"
+          else
+            echo "❌ Some component checks failed"
+            exit 1
+          fi 
