@@ -38,8 +38,12 @@ jobs:
       
       - name: Install dependencies
         run: |
+          echo "Installing npm dependencies..."
           npm ci
+          echo "Installing Vercel CLI..."
           npm install -g vercel
+          echo "Vercel CLI version:"
+          vercel --version
       
       - name: Verify environment
         run: |
@@ -56,24 +60,46 @@ jobs:
             exit 1
           fi
           echo "All required environment variables are set"
+          echo "VERCEL_ORG_ID length: ${#VERCEL_ORG_ID}"
+          echo "VERCEL_PROJECT_ID length: ${#VERCEL_PROJECT_ID}"
+          echo "Current directory: $(pwd)"
+          echo "Directory contents:"
+          ls -la
       
       - name: Setup Prisma
         run: |
+          echo "Installing Prisma..."
           npm install prisma --save-dev
+          echo "Checking Prisma schema..."
+          ls -la prisma/
+          echo "Generating Prisma client..."
           npx prisma generate --schema=./prisma/schema.prisma
       
       - name: Link Vercel Project
         run: |
-          vercel link --token=${{ env.VERCEL_TOKEN }} --yes
+          echo "Attempting to link Vercel project..."
+          echo "Current directory: $(pwd)"
+          echo "Project configuration:"
+          cat vercel.json || echo "vercel.json not found"
+          vercel link --token=${{ env.VERCEL_TOKEN }} --yes --debug
       
       - name: Pull Vercel Environment
         run: |
-          vercel pull --yes --environment=production --token=${{ env.VERCEL_TOKEN }}
+          echo "Pulling Vercel environment..."
+          vercel pull --yes --environment=production --token=${{ env.VERCEL_TOKEN }} --debug
       
       - name: Build Project
         run: |
-          vercel build --prod --token=${{ env.VERCEL_TOKEN }}
+          echo "Starting Vercel build..."
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          echo "Checking Next.js config:"
+          cat next.config.js
+          vercel build --prod --token=${{ env.VERCEL_TOKEN }} --debug
       
       - name: Deploy to Vercel
         run: |
-          vercel deploy --prebuilt --prod --token=${{ env.VERCEL_TOKEN }} --yes
+          echo "Starting Vercel deployment..."
+          echo "Build output contents:"
+          ls -la .next/ || echo ".next directory not found"
+          vercel deploy --prebuilt --prod --token=${{ env.VERCEL_TOKEN }} --yes --debug
