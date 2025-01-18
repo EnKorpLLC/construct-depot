@@ -21,7 +21,7 @@ env:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     defaults:
       run:
         working-directory: ./frontend
@@ -36,14 +36,29 @@ jobs:
           cache: 'npm'
           cache-dependency-path: './frontend/package-lock.json'
       
+      - name: System Info
+        run: |
+          echo "OS Information:"
+          lsb_release -a
+          echo "Node Version:"
+          node -v
+          echo "NPM Version:"
+          npm -v
+          echo "Current User:"
+          whoami
+          echo "Current Directory:"
+          pwd
+      
       - name: Install dependencies
         run: |
           echo "Installing npm dependencies..."
           npm ci
-          echo "Installing Vercel CLI..."
-          npm install -g vercel
+          echo "Installing Vercel CLI globally..."
+          sudo npm install -g vercel
           echo "Vercel CLI version:"
-          vercel --version
+          vercel --version || echo "Vercel CLI not found in PATH"
+          echo "Which vercel:"
+          which vercel || echo "vercel not found"
       
       - name: Verify environment
         run: |
@@ -81,11 +96,15 @@ jobs:
           echo "Current directory: $(pwd)"
           echo "Project configuration:"
           cat vercel.json || echo "vercel.json not found"
+          echo "PATH variable:"
+          echo $PATH
+          export PATH="$PATH:/usr/local/bin"
           vercel link --token=${{ env.VERCEL_TOKEN }} --yes --debug
       
       - name: Pull Vercel Environment
         run: |
           echo "Pulling Vercel environment..."
+          export PATH="$PATH:/usr/local/bin"
           vercel pull --yes --environment=production --token=${{ env.VERCEL_TOKEN }} --debug
       
       - name: Build Project
@@ -95,6 +114,7 @@ jobs:
           echo "NPM version: $(npm -v)"
           echo "Checking Next.js config:"
           cat next.config.js
+          export PATH="$PATH:/usr/local/bin"
           vercel build --prod --token=${{ env.VERCEL_TOKEN }} --debug
       
       - name: Deploy to Vercel
@@ -102,4 +122,5 @@ jobs:
           echo "Starting Vercel deployment..."
           echo "Build output contents:"
           ls -la .next/ || echo ".next directory not found"
+          export PATH="$PATH:/usr/local/bin"
           vercel deploy --prebuilt --prod --token=${{ env.VERCEL_TOKEN }} --yes --debug
