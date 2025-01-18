@@ -5,27 +5,29 @@ A modern web application for managing bulk building material purchases and sales
 ## Features
 
 - Bulk order aggregation system
-- Supplier management
+- Supplier management and dashboard
 - Real-time order tracking
 - Shipping and logistics management
 - Take-off service from blueprints
 - Contractor bidding platform
 - Multi-role user system
+- Analytics and reporting
 
 ## Tech Stack
 
 ### Frontend
-- React.js with Next.js
+- Next.js 14 with App Router
 - TypeScript
 - Tailwind CSS
-- Material-UI/Chakra UI
+- Chart.js for analytics
+- date-fns for date handling
+- next-auth for authentication
 
-### Backend
-- Node.js with Express
-- PostgreSQL
-- Redis
-- GraphQL
-- WebSocket
+### Infrastructure
+- PostgreSQL with Prisma ORM
+- Redis for caching
+- Jest and React Testing Library
+- GitHub Actions for CI/CD
 
 ## Getting Started
 
@@ -42,45 +44,44 @@ A modern web application for managing bulk building material purchases and sales
 git clone [repository-url]
 ```
 
-2. Install frontend dependencies
+2. Install dependencies
 ```bash
-cd frontend
 npm install
 ```
 
-3. Install backend dependencies
-```bash
-cd backend
-npm install
-```
-
-4. Set up environment variables
+3. Set up environment variables
 ```bash
 cp .env.example .env
 ```
 
-5. Start development servers
+4. Start development server
 ```bash
-# Frontend
-cd frontend
-npm run dev
-
-# Backend
-cd backend
 npm run dev
 ```
 
 ## Project Structure
 
 ```
-├── frontend/           # Frontend application
-│   ├── src/           # Source files
-│   └── public/        # Static files
-├── backend/           # Backend application
-│   ├── src/          # Source files
-│   └── config/       # Configuration files
-└── docs/             # Documentation
+├── frontend/              # Frontend application
+│   ├── src/              # Source files
+│   │   ├── app/         # Next.js App Router pages
+│   │   ├── components/  # React components
+│   │   ├── lib/        # Utilities and services
+│   │   └── types/      # TypeScript types
+│   ├── public/          # Static files
+│   └── prisma/          # Database schema and migrations
+├── docs/                # Documentation
+└── .github/            # GitHub Actions and configs
 ```
+
+## Documentation
+
+Please refer to the [documentation](docs/README.md) for:
+- API Reference
+- Component Documentation
+- Development Guides
+- User Guides
+- Testing Guidelines
 
 ## Contributing
 
