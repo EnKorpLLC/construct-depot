@@ -1,8 +1,8 @@
 # GitHub Actions Deployment Setup
 
-Last Updated: 2024-01-17
+Last Updated: 2024-01-19
 
-This guide explains how to set up GitHub Actions for automated deployment of the Bulk Buyer Group application.
+This guide explains how to set up and monitor GitHub Actions for automated deployment of the Bulk Buyer Group application.
 
 ## Required Secrets
 
@@ -43,75 +43,106 @@ You must set up the following secrets in your GitHub repository:
    - Get from Vercel Dashboard
    - Location: Project Settings > Project ID
 
-## Setting Up Secrets
+## Workflow Configuration
 
-1. Go to your GitHub repository
-2. Click "Settings" tab
-3. In the left sidebar, click "Secrets and variables" > "Actions"
-4. Click "New repository secret"
-5. Add each secret:
-   - Name: Use the exact names listed above
-   - Value: Paste the corresponding value
-   - Click "Add secret"
+The deployment workflow (.github/workflows/deploy.yml) is configured with enhanced error handling and CI optimizations:
 
-## Environment Setup
+### Key Features
+- Strict secret validation
+- Optimized npm installation for CI
+- Explicit error handling for critical steps
+- Production environment configuration
+- Database migration safety checks
 
-1. In GitHub repository:
-   - Go to Settings > Environments
-   - Click "New environment"
-   - Name it "production"
-   - Add any required protection rules
+### Installation Process
+The workflow uses a specialized npm installation process:
+```bash
+# Clear existing cache and modules
+npm cache clean --force
+rm -rf node_modules package-lock.json
 
-2. In Vercel:
-   - Ensure your repository is connected
-   - Configure build settings
-   - Set up environment variables
+# Install with CI optimizations
+npm install --no-audit --no-fund --no-optional
 
-## Workflow File
-
-The workflow file (.github/workflows/deploy.yml) is already configured to:
-1. Validate all required secrets
-2. Set up Node.js environment
-3. Install dependencies
-4. Generate Prisma client
-5. Run database migrations
-6. Build the application
-7. Deploy to Vercel
-
-## Troubleshooting
-
-### Common Issues
-
-1. "Context access might be invalid"
-   - Check if all secrets are properly set
-   - Verify secret names match exactly
-   - Ensure environment "production" exists
-
-2. Vercel deployment fails
-   - Verify Vercel token has correct permissions
-   - Check if project ID is correct
-   - Ensure organization ID matches
-
-3. Database migration fails
-   - Verify DATABASE_URL is correct
-   - Check if database is accessible
-   - Review migration logs
+# Install required dev dependencies
+npm install -D typescript @types/node @types/react @types/react-dom tailwindcss postcss autoprefixer
+```
 
 ## Monitoring Deployments
 
-1. View deployments:
-   - Go to repository "Actions" tab
-   - Click on "Deploy to Production" workflow
-   - Monitor build and deployment progress
+### Real-time Monitoring
+1. Access the GitHub repository
+2. Go to the "Actions" tab
+3. Look for the most recent "Deploy to Production" workflow run
+4. Monitor each step in real-time:
+   - ✓ Green check: Step completed successfully
+   - ⚠️ Yellow pending: Step in progress
+   - ❌ Red X: Step failed
 
-2. Vercel deployments:
-   - Check Vercel dashboard
-   - Review build logs
-   - Monitor deployment status
+### Critical Points to Monitor
+1. **Dependency Installation**
+   - Watch for npm installation errors
+   - Verify all dependencies are resolved
+   - Check for TypeScript compilation issues
+
+2. **Database Operations**
+   - Monitor Prisma client generation
+   - Watch database migration execution
+   - Verify connection success
+
+3. **Build Process**
+   - Check for build errors
+   - Verify environment variable loading
+   - Monitor TypeScript compilation
+
+4. **Vercel Deployment**
+   - Verify deployment initiation
+   - Monitor build progress
+   - Check final deployment status
+
+### Error Response Protocol
+If errors occur during deployment:
+
+1. **Immediate Actions**
+   - Screenshot or copy the error message
+   - Note which step failed
+   - Check the full logs for context
+
+2. **Common Issues and Solutions**
+   - npm installation failures:
+     - Check package.json for conflicts
+     - Verify Node.js version compatibility
+     - Clear npm cache and retry
+   
+   - Database migration failures:
+     - Verify DATABASE_URL is correct
+     - Check database accessibility
+     - Review migration files
+   
+   - Build failures:
+     - Check for TypeScript errors
+     - Verify environment variables
+     - Review dependency versions
+
+3. **Recovery Steps**
+   - Fix identified issues
+   - Push changes to trigger new deployment
+   - Monitor new deployment closely
+
+### Post-Deployment Verification
+After successful deployment:
+1. Visit the production URL
+2. Test critical functionality
+3. Verify database connections
+4. Check Redis connectivity
+5. Monitor error logs
 
 ## Security Notes
-
 - Never commit secrets to the repository
 - Rotate secrets periodically
 - Use environment protection rules
-- Review access to secrets regularly 
+- Review access to secrets regularly
+- Monitor deployment logs for sensitive information exposure
+
+## Troubleshooting
+For detailed troubleshooting steps, refer to the DEPLOYMENT_CHECKLIST.md file. 

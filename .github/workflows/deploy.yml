@@ -58,39 +58,15 @@ jobs:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      NODE_ENV: production
+      CI: true
     
     steps:
-      - name: Debug Environment Variables
-        run: |
-          echo "DATABASE_URL is set: [${{ env.DATABASE_URL }}]"
-          echo "NEXTAUTH_URL is set: [${{ env.NEXTAUTH_URL }}]"
-          echo "NEXTAUTH_SECRET is set: [${{ env.NEXTAUTH_SECRET }}]"
-          echo "REDIS_URL is set: [${{ env.REDIS_URL }}]"
-          echo "VERCEL_TOKEN is set: [${{ env.VERCEL_TOKEN }}]"
-          echo "VERCEL_ORG_ID is set: [${{ env.VERCEL_ORG_ID }}]"
-          echo "VERCEL_PROJECT_ID is set: [${{ env.VERCEL_PROJECT_ID }}]"
-          # Note: The above echo statements are for debugging purposes and should not expose actual secret values in a real-world scenario.
-
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Debug Info
-        shell: bash
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Git status:"
-          git status
-          echo "Git remote:"
-          git remote -v
-          echo "List files:"
-          ls -la
-          echo "Node version:"
-          node -v
-          echo "NPM version:"
-          npm -v
-          
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -102,9 +78,21 @@ jobs:
         shell: bash
         working-directory: ./frontend
         run: |
-          npm install -g npm@latest
-          npm install
-          npm install tailwindcss postcss autoprefixer "@types/node" "@types/react" "@types/react-dom"
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          
+          # Clear npm cache and remove node_modules if they exist
+          npm cache clean --force
+          rm -rf node_modules package-lock.json
+          
+          # Install dependencies with specific flags for CI environment
+          npm install --no-audit --no-fund --no-optional
+          
+          # Install required dev dependencies explicitly
+          npm install -D typescript @types/node @types/react @types/react-dom tailwindcss postcss autoprefixer
+          
+          # Verify installation
+          npm ls --depth=0
         
       - name: Set up environment
         shell: bash
@@ -121,21 +109,36 @@ jobs:
       - name: Generate Prisma Client
         shell: bash
         working-directory: ./frontend
-        run: npx prisma generate
+        run: |
+          npx prisma generate
+          if [ $? -ne 0 ]; then
+            echo "Failed to generate Prisma client"
+            exit 1
+          fi
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
 
       - name: Run database migrations
         shell: bash
         working-directory: ./frontend
-        run: npx prisma migrate deploy
+        run: |
+          npx prisma migrate deploy
+          if [ $? -ne 0 ]; then
+            echo "Failed to run database migrations"
+            exit 1
+          fi
         env:
           DATABASE_URL: ${{ env.DATABASE_URL }}
         
       - name: Build
         shell: bash
         working-directory: ./frontend
-        run: npm run build
+        run: |
+          npm run build
+          if [ $? -ne 0 ]; then
+            echo "Build failed"
+            exit 1
+          fi
         env:
           NEXTAUTH_URL: ${{ env.NEXTAUTH_URL }}
           NEXTAUTH_SECRET: ${{ env.NEXTAUTH_SECRET }}
