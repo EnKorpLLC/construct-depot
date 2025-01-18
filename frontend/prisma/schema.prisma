@@ -1,9 +1,7 @@
 // This is your Prisma schema file
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  // Enable direct connections for local development
-  directUrl = env("DIRECT_URL") // optional
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
