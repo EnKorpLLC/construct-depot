@@ -71,7 +71,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '18.17.0'
           cache: 'npm'
           cache-dependency-path: frontend/package-lock.json
 
@@ -82,21 +82,17 @@ jobs:
           echo "Node version: $(node -v)"
           echo "NPM version: $(npm -v)"
           
-          # Clear npm cache and remove node_modules if they exist
-          npm cache clean --force
+          # Remove existing modules and lock file
           rm -rf node_modules package-lock.json
           
-          # Update npm to latest version
-          npm install -g npm@latest
+          # Install dependencies with conservative flags
+          npm install --legacy-peer-deps --prefer-offline --no-audit --no-fund --no-optional --loglevel=error
           
-          # Install dependencies with specific flags for CI environment
-          npm install --legacy-peer-deps --no-audit --no-fund --no-optional
+          # Install exact versions of dev dependencies
+          npm install -D typescript@5.0.4 @types/node@18.16.0 @types/react@18.2.0 @types/react-dom@18.2.0 tailwindcss@3.3.0 postcss@8.4.23 autoprefixer@10.4.14
           
-          # Install required dev dependencies explicitly
-          npm install -D typescript@latest @types/node @types/react @types/react-dom tailwindcss postcss autoprefixer
-          
-          # Verify installation
-          npm ls --depth=0 || true
+          # Verify core dependencies are installed
+          npm list next react react-dom typescript || true
         
       - name: Set up environment
         shell: bash
