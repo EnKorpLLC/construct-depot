@@ -60,9 +60,7 @@ jobs:
       - name: Install dependencies
         run: |
           echo "Installing npm dependencies..."
-          # First try to install react@18.3.1 specifically
-          npm install react@18.3.1 react-dom@18.3.1 --save-exact
-          # Then install remaining dependencies with legacy peer deps
+          # Install dependencies with legacy peer deps to handle version conflicts
           npm install --legacy-peer-deps
           echo "Installing Vercel CLI globally..."
           sudo npm install -g vercel
