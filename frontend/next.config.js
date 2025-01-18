@@ -29,12 +29,12 @@ const nextConfig = {
     // Add path resolution configuration
     config.resolve = {
       ...config.resolve,
-      enforceExtension: false,
-      enforceModuleExtension: false,
       alias: {
         ...config.resolve.alias,
         '@/components': '/src/components'
-      }
+      },
+      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      enforceExtension: false
     };
 
     // Optimize production builds
