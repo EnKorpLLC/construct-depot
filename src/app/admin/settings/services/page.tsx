@@ -1,7 +1,7 @@
 'use client';
 
 import { ServiceConfig } from '@/components/admin/settings/ServiceConfig';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
 
 export default function ServicesPage() {
   return (

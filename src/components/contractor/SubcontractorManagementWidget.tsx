@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
 import { Search, Star, MessageSquare, Building2, Users } from 'lucide-react';
 
 interface Subcontractor {

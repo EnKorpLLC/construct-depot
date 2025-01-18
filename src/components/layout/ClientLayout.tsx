@@ -1,17 +1,15 @@
 'use client';
 
-import React from 'react';
+import { type FC, type ReactNode } from 'react';
 
 interface ClientLayoutProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
+export default function ClientLayout({ children }: ClientLayoutProps) {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-background">
       {children}
     </div>
   );
-};
-
-export default ClientLayout; 
+} 

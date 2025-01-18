@@ -29,6 +29,13 @@ A modern web application for managing bulk building material purchases and sales
 - Jest and React Testing Library
 - GitHub Actions for CI/CD
 
+### Development Tools
+- ESLint with custom rules
+- Pre-commit hooks for quality checks
+- Component generator for consistency
+- Structure verification tools
+- Automated testing suite
+
 ## Getting Started
 
 ### Prerequisites
@@ -59,6 +66,30 @@ cp .env.example .env
 npm run dev
 ```
 
+## Development Process
+
+### Creating Components
+Use the component generator to create new components:
+```bash
+npx ts-node scripts/create-component.ts ComponentName [directory] [flags]
+```
+
+See [Development Tools Guide](guides/DEVELOPMENT_TOOLS.md) for available flags and options.
+
+### Quality Checks
+Pre-commit hooks automatically run:
+- ESLint
+- Type checking
+- Component structure verification
+- Case-sensitive path checks
+
+### Component Guidelines
+Follow the [Component Checklist](guides/COMPONENT_CHECKLIST.md) for:
+- Naming conventions
+- File structure
+- Client/Server separation
+- Testing requirements
+
 ## Project Structure
 
 ```
@@ -71,17 +102,18 @@ npm run dev
 │   ├── public/          # Static files
 │   └── prisma/          # Database schema and migrations
 ├── docs/                # Documentation
+├── guides/             # Development guides
 └── .github/            # GitHub Actions and configs
 ```
 
 ## Documentation
 
-Please refer to the [documentation](docs/README.md) for:
-- API Reference
-- Component Documentation
-- Development Guides
-- User Guides
-- Testing Guidelines
+Please refer to the following guides:
+- [Development Tools Guide](guides/DEVELOPMENT_TOOLS.md)
+- [Component Checklist](guides/COMPONENT_CHECKLIST.md)
+- [Project Status](guides/PROJECT_STATUS.md)
+- [API Reference](docs/README.md)
+- [Testing Guidelines](docs/testing.md)
 
 ## Contributing
 
