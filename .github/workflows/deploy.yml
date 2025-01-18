@@ -49,16 +49,28 @@ jobs:
           echo "Current Directory:"
           pwd
       
+      - name: Clean install directory
+        run: |
+          echo "Cleaning npm cache..."
+          npm cache clean --force
+          echo "Removing existing node_modules..."
+          rm -rf node_modules package-lock.json
+      
       - name: Install dependencies
         run: |
           echo "Installing npm dependencies..."
-          npm ci
+          # First try to install react@18.2.0 specifically
+          npm install react@18.2.0 react-dom@18.2.0 --save-exact
+          # Then install remaining dependencies with legacy peer deps
+          npm install --legacy-peer-deps
           echo "Installing Vercel CLI globally..."
           sudo npm install -g vercel
           echo "Vercel CLI version:"
           vercel --version || echo "Vercel CLI not found in PATH"
           echo "Which vercel:"
           which vercel || echo "vercel not found"
+          echo "Installed React version:"
+          npm list react
       
       - name: Verify environment
         run: |
