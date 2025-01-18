@@ -84,8 +84,12 @@ model User {
   taxAddress         Json?
   cartItems          CartItem[]
   orders             Order[]
+  supplierOrders     Order[]        @relation("SupplierOrders")
   products           Product[]
   orderHistory       OrderHistory[]
+  supplierPools      PoolGroup[]    @relation("SupplierPools")
+  orderSettings      OrderSettings[]
+  activityLogs       ActivityLog[]
 
   // Supplier specific fields
   supplierStatus      SupplierStatus?
@@ -135,6 +139,7 @@ model Product {
   markup           Decimal       @default(1.20) @db.Decimal(10, 2) // 20% default markup
   orderItems       OrderItem[]
   pooledOrders     PooledOrder[]
+  poolGroups       PoolGroup[]
   taxCode          String? // For product-specific tax codes
   cartItems        CartItem[]
 
@@ -233,6 +238,8 @@ model Order {
   shipment        Shipment?
   history         OrderHistory[]
   poolGroup       PoolGroup?     @relation(fields: [poolGroupId], references: [id])
+  pooledOrder     PooledOrder?   @relation(fields: [pooledOrderId], references: [id])
+  pooledOrderId   String?
   
   // Indexes
   @@index([userId])
@@ -241,6 +248,7 @@ model Order {
   @@index([createdAt])
   @@index([poolExpiry])
   @@index([poolGroupId])
+  @@index([pooledOrderId])
 }
 
 model PoolGroup {
@@ -248,20 +256,16 @@ model PoolGroup {
   productId         String
   supplierId        String
   status            PoolStatus  @default(OPEN)
-  minQuantity       Int         // Minimum quantity required
-  currentQuantity   Int         // Current total quantity
-  pricePerUnit      Decimal     @db.Decimal(10, 2)
-  currency          String      @default("USD")
-  expiryDate        DateTime    // When the pool expires
+  minQuantity       Int
+  maxQuantity       Int?
+  currentQuantity   Int         @default(0)
+  expiryDate        DateTime
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
-  
-  // Relations
   orders            Order[]
   product           Product     @relation(fields: [productId], references: [id])
   supplier          User        @relation("SupplierPools", fields: [supplierId], references: [id])
   
-  // Indexes
   @@index([productId])
   @@index([supplierId])
   @@index([status])
@@ -348,35 +352,32 @@ model OrderHistory {
 }
 
 model OrderSettings {
-  id                    String    @id @default(cuid())
-  userId                String    @unique
-  defaultCurrency       String    @default("USD")
-  minimumOrderAmount    Decimal   @db.Decimal(10, 2)
-  paymentTerms         Int       @default(30) // Days
-  autoConfirmOrders    Boolean   @default(false)
-  notificationSettings Json
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
-  
+  id                   String   @id @default(cuid())
+  userId               String   @unique
+  defaultPaymentMethod String?
+  defaultShippingAddr  Json?
+  defaultBillingAddr   Json?
+  notificationPrefs    Json?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
   // Relations
   user                 User      @relation(fields: [userId], references: [id])
 }
 
 model PooledOrder {
-  id              String            @id @default(cuid())
-  productId       String
-  product         Product           @relation(fields: [productId], references: [id])
-  status          PooledOrderStatus @default(OPEN)
-  targetQuantity  Int // MOQ from product
-  currentQuantity Int // Sum of all order quantities
-  startDate       DateTime          @default(now())
-  endDate         DateTime? // When status changed from OPEN
-  orders          Order[] // Related individual orders
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  id             String            @id @default(cuid())
+  status         PooledOrderStatus @default(OPEN)
+  totalQuantity  Int
+  startDate      DateTime          @default(now())
+  endDate        DateTime? // When status changed from OPEN
+  orders         Order[] // Related individual orders
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
 
-  // Add to existing Product model
-  @@index([productId])
+  @@index([status])
+  @@index([startDate])
+  @@index([endDate])
 }
 
 model CartItem {
@@ -434,14 +435,15 @@ model CrawlerJob {
 
 model ActivityLog {
   id        String   @id @default(cuid())
-  type      String
   userId    String
-  metadata  Json
+  action    String
+  details   Json?
+  metadata  Json?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 
-  @@index([type])
   @@index([userId])
+  @@index([action])
   @@index([createdAt])
 }
 

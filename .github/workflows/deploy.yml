@@ -108,6 +108,10 @@ jobs:
           npm install prisma --save-dev
           echo "Checking Prisma schema..."
           ls -la prisma/
+          echo "Formatting Prisma schema..."
+          npx prisma format
+          echo "Validating Prisma schema..."
+          npx prisma validate
           echo "Generating Prisma client..."
           npx prisma generate --schema=./prisma/schema.prisma
       
