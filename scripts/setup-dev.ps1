@@ -63,9 +63,21 @@ while (-not $servicesReady -and $attempt -lt $maxAttempts) {
     $attempt++
     try {
         # Check PostgreSQL
-        $pgConnection = docker exec bulkbuyergroup-postgres-1 pg_isready
+        $pgStatus = docker exec bulkbuyergroup-postgres-1 pg_isready
+        if ($LASTEXITCODE -ne 0) {
+            throw "PostgreSQL is not ready"
+        }
+        
         # Check Redis
-        $redisConnection = docker exec bulkbuyergroup-redis-1 redis-cli ping
+        $redisStatus = docker exec bulkbuyergroup-redis-1 redis-cli ping
+        if ($redisStatus -ne "PONG") {
+            throw "Redis is not ready"
+        }
+        
+        # Log PostgreSQL readiness
+        Write-SetupMessage "PostgreSQL is ready: $pgStatus" -Color "Blue"
+        # Log Redis readiness
+        Write-SetupMessage "Redis is ready: $redisStatus" -Color "Blue"
         $servicesReady = $true
         Write-SetupMessage "Services are ready!" -Color "Green"
     } catch {

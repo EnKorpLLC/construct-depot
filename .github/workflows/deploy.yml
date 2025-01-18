@@ -60,6 +60,17 @@ jobs:
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     
     steps:
+      - name: Debug Environment Variables
+        run: |
+          echo "DATABASE_URL is set: [${{ env.DATABASE_URL }}]"
+          echo "NEXTAUTH_URL is set: [${{ env.NEXTAUTH_URL }}]"
+          echo "NEXTAUTH_SECRET is set: [${{ env.NEXTAUTH_SECRET }}]"
+          echo "REDIS_URL is set: [${{ env.REDIS_URL }}]"
+          echo "VERCEL_TOKEN is set: [${{ env.VERCEL_TOKEN }}]"
+          echo "VERCEL_ORG_ID is set: [${{ env.VERCEL_ORG_ID }}]"
+          echo "VERCEL_PROJECT_ID is set: [${{ env.VERCEL_PROJECT_ID }}]"
+          # Note: The above echo statements are for debugging purposes and should not expose actual secret values in a real-world scenario.
+
       - name: Checkout code
         uses: actions/checkout@v3
         with:
