@@ -5,6 +5,8 @@ on:
 
 env:
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   DATABASE_URL: ${{ secrets.DATABASE_URL }}
   NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
   NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
@@ -41,7 +43,7 @@ jobs:
         run: |
           echo "Checking required environment variables..."
           missing_vars=()
-          for var in DATABASE_URL NEXTAUTH_URL NEXTAUTH_SECRET REDIS_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_APP_URL STORAGE_BUCKET; do
+          for var in DATABASE_URL NEXTAUTH_URL NEXTAUTH_SECRET REDIS_URL NEXT_PUBLIC_API_URL NEXT_PUBLIC_APP_URL STORAGE_BUCKET VERCEL_TOKEN VERCEL_ORG_ID VERCEL_PROJECT_ID; do
             if [ -z "${!var}" ]; then
               missing_vars+=("$var")
             fi
@@ -78,4 +80,6 @@ jobs:
         run: npm run build
       
       - name: Deploy to Vercel
-        run: npx vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }} --yes
+        run: |
+          npx vercel pull --yes --environment=production --token=${{ env.VERCEL_TOKEN }}
+          npx vercel deploy --prebuilt --prod --token=${{ env.VERCEL_TOKEN }} --yes
