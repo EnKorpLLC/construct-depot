@@ -1,0 +1,23 @@
+# Build output
+.next/
+out/
+dist/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Config files
+*.config.js
+next-env.d.ts
+
+# Test files
+**/*.test.ts
+**/*.test.tsx
+**/__tests__/**
+**/tests/**
+e2e/
+
+# Generated files
+src/types/generated/
+public/ 

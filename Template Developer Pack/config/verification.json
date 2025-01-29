@@ -1,0 +1,132 @@
+{
+  "version": "1.0.0",
+  "verification": {
+    "enabled": true,
+    "failFast": true,
+    "checks": {
+      "docs": {
+        "enabled": true,
+        "minReadmeLength": 500,
+        "requiredSections": [
+          "Overview",
+          "Getting Started",
+          "Installation",
+          "Usage",
+          "Configuration",
+          "Contributing"
+        ],
+        "apiDocs": {
+          "required": true,
+          "files": [
+            "README.md",
+            "authentication.md",
+            "endpoints.md",
+            "errors.md"
+          ]
+        },
+        "codeExamples": {
+          "required": true,
+          "requireLanguageSpecification": true
+        }
+      },
+      "style": {
+        "enabled": true,
+        "tools": [
+          "eslint",
+          "prettier",
+          "editorconfig"
+        ],
+        "autofix": true
+      },
+      "dependencies": {
+        "enabled": true,
+        "maxAge": 365,
+        "auditLevel": "moderate",
+        "requireLockFile": true,
+        "bannedDependencies": []
+      },
+      "security": {
+        "enabled": true,
+        "auditLevel": "moderate",
+        "requireSigning": true,
+        "scanSecrets": true,
+        "checks": [
+          "dependencies",
+          "staticAnalysis",
+          "secretScanning",
+          "licenseCompliance"
+        ]
+      },
+      "types": {
+        "enabled": true,
+        "strict": true,
+        "requireExplicitReturns": true,
+        "noImplicitAny": true,
+        "checkJs": false
+      },
+      "tests": {
+        "enabled": true,
+        "coverage": {
+          "statements": 80,
+          "branches": 75,
+          "functions": 80,
+          "lines": 80
+        },
+        "requireTests": true,
+        "enforceNaming": true
+      }
+    },
+    "reporting": {
+      "console": {
+        "enabled": true,
+        "verbose": true
+      },
+      "json": {
+        "enabled": true,
+        "file": "reports/verification.json"
+      },
+      "html": {
+        "enabled": true,
+        "file": "reports/verification.html"
+      }
+    },
+    "ci": {
+      "blockOnFailure": true,
+      "artifactPaths": [
+        "reports/verification.json",
+        "reports/verification.html"
+      ]
+    }
+  },
+  "paths": {
+    "docs": [
+      "README.md",
+      "docs/**/*.md",
+      "guides/**/*.md"
+    ],
+    "exclude": [
+      "node_modules/**",
+      "build/**",
+      "dist/**",
+      "coverage/**"
+    ]
+  },
+  "customRules": {
+    "commitMessage": {
+      "enabled": true,
+      "pattern": "^(feat|fix|docs|style|refactor|test|chore)(\\(.+\\))?: .{1,}$"
+    },
+    "branchNaming": {
+      "enabled": true,
+      "pattern": "^(feature|bugfix|hotfix|release)\\/[a-z0-9-]+$"
+    },
+    "fileNaming": {
+      "enabled": true,
+      "patterns": {
+        "components": "^[A-Z][a-zA-Z]+\\.[jt]sx?$",
+        "utils": "^[a-z][a-zA-Z]+\\.[jt]sx?$",
+        "tests": "^.+\\.(test|spec)\\.[jt]sx?$"
+      }
+    }
+  }
+} 

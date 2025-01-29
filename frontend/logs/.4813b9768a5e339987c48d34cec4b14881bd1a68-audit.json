@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\ryanj\\OneDrive\\Desktop\\Bulk Buyer Group\\frontend\\logs\\.4813b9768a5e339987c48d34cec4b14881bd1a68-audit.json",
+    "files": [
+        {
+            "date": 1737248999136,
+            "name": "C:\\Users\\ryanj\\OneDrive\\Desktop\\Bulk Buyer Group\\frontend\\logs\\combined-2025-01-18.log",
+            "hash": "4a8c7a5dc30f8785f71e3c508f7703bfcffa668c40bda56aca1ebbadbaa72995"
+        }
+    ],
+    "hashType": "sha256"
+}

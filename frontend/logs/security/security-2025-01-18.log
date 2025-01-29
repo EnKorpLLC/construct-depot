@@ -1,0 +1,2 @@
+{"eventType":"SUSPICIOUS_ACTIVITY","level":"warn","message":"No CORS origins configured","service":"security-service","severity":"high","timestamp":"2025-01-19T02:21:22.855Z"}
+{"eventType":"SUSPICIOUS_ACTIVITY","level":"warn","message":"No CORS origins configured","service":"security-service","severity":"high","timestamp":"2025-01-19T02:23:10.979Z"}

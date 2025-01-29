@@ -1,0 +1,5 @@
+{"level":"error","message":"Test error message from script","timestamp":"2025-01-19T01:09:59.238Z"}
+{"level":"warn","message":"Test warning message from script","timestamp":"2025-01-19T01:09:59.250Z"}
+{"level":"info","message":"Test info message from script","timestamp":"2025-01-19T01:09:59.253Z"}
+{"level":"debug","message":"Test debug message from script","timestamp":"2025-01-19T01:09:59.255Z"}
+{"level":"http","message":"Test HTTP message from script","timestamp":"2025-01-19T01:09:59.257Z"}

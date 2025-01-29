@@ -1,0 +1,3143 @@
+{
+  "timestamp": "2025-01-29T10:45:48.780Z",
+  "totalFilesScanned": 448,
+  "duplicateGroups": [],
+  "duplicateFilenames": [
+    {
+      "name": "auth.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/middleware/auth.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/auth.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/auth.ts"
+      ]
+    },
+    {
+      "name": "validation.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/middleware/validation.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/validation.ts"
+      ]
+    },
+    {
+      "name": "orderValidation.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/routes/order/orderValidation.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/validation/orderValidation.ts"
+      ]
+    },
+    {
+      "name": "types.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/services/database/types.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/types.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/validation/types.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/services/analytics/types.ts"
+      ]
+    },
+    {
+      "name": "OrderService.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/services/order/OrderService.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/order/OrderService.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/order/OrderService.ts"
+      ]
+    },
+    {
+      "name": "order-management.perf.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/tests/performance/order-management.perf.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/performance/order-management.perf.ts"
+      ]
+    },
+    {
+      "name": "errors.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/utils/errors.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/errors.ts"
+      ]
+    },
+    {
+      "name": "route.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/app/api/health/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/activities/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/crawler/config/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/crawler/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/logs/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/suppliers/[id]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/suppliers/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/system/config/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/system/health/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/users/[userId]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/users/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/customers/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/orders/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/pools/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/revenue/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/[...nextauth]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/forgot-password/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/mfa/setup/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/mfa/verify/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/register/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/reset-password/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/verify-email/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/cart/[itemId]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/cart/clear/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/cart/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/catalog/[productId]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/catalog/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/checkout/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/checkout/verify/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/config/[id]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/config/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/job/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/[id]/execute/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/[id]/metrics/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/[id]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/inventory/[productId]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/inventory/reorder-suggestions/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/notifications/mark-read/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/notifications/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/[orderId]/history/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/[orderId]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/[orderId]/status/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/pools/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/pooled-orders/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/pools/active/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/products/[productId]/inventory/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/products/[productId]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/products/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/apply/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/inventory/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/orders/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/products/bulk/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/products/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/tax/calculate/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/tax/test/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/test-logging/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/test/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/upload/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/v1/users/password/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/v1/users/profile/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/admin/services/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/analytics/[...route]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/analytics/orders/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/auth/[...nextauth]/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/health/route.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/orders/[orderId]/join-pool/route.ts"
+      ]
+    },
+    {
+      "name": "utils.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/e2e/utils.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/utils.ts"
+      ]
+    },
+    {
+      "name": "jest.config.js",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/jest.config.js",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/jest.config.js"
+      ]
+    },
+    {
+      "name": "metrics.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/lib/metrics.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/metrics.ts"
+      ]
+    },
+    {
+      "name": "next-env.d.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/next-env.d.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/next-env.d.ts"
+      ]
+    },
+    {
+      "name": "seed.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/prisma/seed.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/prisma/seed.ts"
+      ]
+    },
+    {
+      "name": "check-metrics.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/check-metrics.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/check-metrics.ts"
+      ]
+    },
+    {
+      "name": "setup-monitoring.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/setup-monitoring.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/setup-monitoring.ts"
+      ]
+    },
+    {
+      "name": "verify-security.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/verify-security.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/verify-security.ts"
+      ]
+    },
+    {
+      "name": "warm-cache.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/warm-cache.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/scripts/warm-cache.ts"
+      ]
+    },
+    {
+      "name": "SystemMetricsWidget.test.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/components/admin/SystemMetricsWidget.test.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/__tests__/SystemMetricsWidget.test.tsx"
+      ]
+    },
+    {
+      "name": "notifications.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/integration/api/notifications.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/integration/websocket/notifications.test.ts"
+      ]
+    },
+    {
+      "name": "data-generators.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/mocks/data-generators.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/mocks/data-generators.ts"
+      ]
+    },
+    {
+      "name": "prisma.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/mocks/prisma.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/prisma.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/prisma.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/mocks/prisma.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/prisma.ts"
+      ]
+    },
+    {
+      "name": "AdminService.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/AdminService.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/AdminService.test.ts"
+      ]
+    },
+    {
+      "name": "crawler.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/crawler.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/integration/crawler.test.ts"
+      ]
+    },
+    {
+      "name": "CrawlerService.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/CrawlerService.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/CrawlerService.test.ts"
+      ]
+    },
+    {
+      "name": "EnhancedValidationService.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/EnhancedValidationService.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/EnhancedValidationService.test.ts"
+      ]
+    },
+    {
+      "name": "OrderWorkflowService.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/OrderWorkflowService.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/OrderWorkflowService.test.ts"
+      ]
+    },
+    {
+      "name": "service.template.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/service.template.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/service.template.test.ts"
+      ]
+    },
+    {
+      "name": "setup.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/setup.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/setup.test.ts"
+      ]
+    },
+    {
+      "name": "setup.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/setup.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/setup.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/components/setup.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/setup.ts"
+      ]
+    },
+    {
+      "name": "mock-data.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/mock-data.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/utils/mock-data.ts"
+      ]
+    },
+    {
+      "name": "test-db.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/test-db.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/utils/test-db.ts"
+      ]
+    },
+    {
+      "name": "test-utils.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/test-utils.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/test-utils.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/test-utils.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/components/utils/test-utils.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/utils/test-utils.tsx"
+      ]
+    },
+    {
+      "name": "page.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/(authenticated)/profile/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/crawler/[id]/edit/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/crawler/new/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/crawler/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/dashboard/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/logs/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/settings/services/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/super/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/suppliers/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/analytics/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/cart/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/catalog/[productId]/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/catalog/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/checkout/success/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/customer/dashboard/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/dashboard/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/login/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/orders/[orderId]/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/register/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/apply/confirmation/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/apply/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/dashboard/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/orders/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/[id]/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/bulk-upload/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/new/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/admin/settings/services/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/contractor/dashboard/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/customer/dashboard/page.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/subcontractor/dashboard/page.tsx"
+      ]
+    },
+    {
+      "name": "globals.css",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/globals.css",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/globals.css"
+      ]
+    },
+    {
+      "name": "layout.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/layout.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/admin/layout.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/layout.tsx"
+      ]
+    },
+    {
+      "name": "ServiceConfig.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/settings/ServiceConfig.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/admin/settings/ServiceConfig.tsx"
+      ]
+    },
+    {
+      "name": "CrawlerManagementWidget.test.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/__tests__/CrawlerManagementWidget.test.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/CrawlerManagementWidget.test.tsx"
+      ]
+    },
+    {
+      "name": "ClientLayout.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ClientLayout.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/layout/ClientLayout.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/layout/ClientLayout.tsx"
+      ]
+    },
+    {
+      "name": "OrderList.tsx",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/OrderList.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/order/OrderList.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderList.tsx",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/OrderList.tsx"
+      ]
+    },
+    {
+      "name": "security.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/config/security.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/config/security.ts"
+      ]
+    },
+    {
+      "name": "order-pooling.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/order-pooling.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/__tests__/order-pooling.test.ts"
+      ]
+    },
+    {
+      "name": "order-workflow.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/order-workflow.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/__tests__/order-workflow.test.ts"
+      ]
+    },
+    {
+      "name": "orders.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/orders.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/api/orders/orders.test.ts"
+      ]
+    },
+    {
+      "name": "validation-service.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/validation-service.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/__tests__/validation-service.test.ts"
+      ]
+    },
+    {
+      "name": "email.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/email.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/email.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/email.ts"
+      ]
+    },
+    {
+      "name": "redis.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/redis.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/redis.ts"
+      ]
+    },
+    {
+      "name": "enhanced-validation-service.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/__tests__/enhanced-validation-service.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/services/__tests__/enhanced-validation-service.test.ts"
+      ]
+    },
+    {
+      "name": "order-workflow-service.test.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/__tests__/order-workflow-service.test.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/services/__tests__/order-workflow-service.test.ts"
+      ]
+    },
+    {
+      "name": "WebSocketService.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/websocket/WebSocketService.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/WebSocketService.ts"
+      ]
+    },
+    {
+      "name": "admin.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/admin.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/admin.ts"
+      ]
+    },
+    {
+      "name": "crawler.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/crawler.ts"
+      ]
+    },
+    {
+      "name": "check-docs.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/check-docs.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/check-docs.ts"
+      ]
+    },
+    {
+      "name": "check-references.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/check-references.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/check-references.ts"
+      ]
+    },
+    {
+      "name": "find-duplicates.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/find-duplicates.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/find-duplicates.ts"
+      ]
+    },
+    {
+      "name": "fix-docs.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/fix-docs.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/fix-docs.ts"
+      ]
+    },
+    {
+      "name": "update-timestamps.ts",
+      "paths": [
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/update-timestamps.ts",
+        "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/update-timestamps.ts"
+      ]
+    }
+  ],
+  "inaccurateFiles": [
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/controllers/order/OrderController.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/middleware/auth.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/middleware/validation.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/models/order/Order.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/routes/order/orderRoutes.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/routes/order/orderValidation.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/services/database/DatabaseService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/services/database/types.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/services/order/__tests__/OrderService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/services/order/OrderService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/tests/performance/order-management.perf.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/backend/src/utils/errors.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/cypress/e2e/order-management.cy.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/app/api/health/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/e2e/notifications.spec.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/e2e/supplier-dashboard.spec.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/e2e/utils.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/jest.config.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/jest.setup.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/lib/metrics.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/next-env.d.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/next.config.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/prisma/seed.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/check-metrics.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/seed-db.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/setup-monitoring.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/test-logger.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/test-security.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/verify-security.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/scripts/warm-cache.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/components/admin/SystemMetricsWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/components/Home.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/components/profile/ProfileSettings.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/e2e/admin/SystemMetrics.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/e2e/admin/UserManagement.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/e2e/order/OrderManagement.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/integration/api/notifications.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/integration/websocket/notifications.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/mocks/data-generators.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/mocks/prisma.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/AdminService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/crawler.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/CrawlerService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/EnhancedValidationService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/InventoryService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/OrderWorkflowService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/services/service.template.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/setup.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/setup.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/types/order.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/dependencyChecker.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/mock-data.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/test-db.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/test-utils.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/testQuarantine.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/__tests__/utils/testSetup.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/(authenticated)/profile/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/crawler/[id]/edit/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/crawler/new/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/crawler/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/dashboard/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/logs/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/settings/services/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/super/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/admin/suppliers/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/analytics/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/activities/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/crawler/config/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/crawler/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/logs/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/suppliers/[id]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/suppliers/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/system/config/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/system/health/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/system/metrics/socket.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/users/[userId]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/admin/users/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/customers/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/orders/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/pools/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/analytics/revenue/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/[...nextauth]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/forgot-password/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/mfa/setup/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/mfa/verify/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/register/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/reset-password/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/auth/verify-email/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/cart/[itemId]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/cart/clear/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/cart/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/catalog/[productId]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/catalog/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/checkout/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/checkout/verify/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/config/[id]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/config/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/job/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/[id]/execute/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/[id]/metrics/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/[id]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/crawler/targets/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/inventory/[productId]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/inventory/reorder-suggestions/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/notifications/mark-read/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/notifications/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/[orderId]/history/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/[orderId]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/[orderId]/status/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/pools/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/orders/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/pooled-orders/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/pools/active/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/products/[productId]/inventory/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/products/[productId]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/products/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/apply/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/inventory/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/orders/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/products/bulk/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/supplier/products/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/tax/calculate/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/tax/test/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/test-logging/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/test/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/upload/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/v1/users/password/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/api/v1/users/profile/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/cart/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/catalog/[productId]/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/catalog/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/checkout/success/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/customer/dashboard/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/dashboard/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/error.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/globals.css",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/layout.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/login/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/orders/[orderId]/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/register/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/apply/confirmation/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/apply/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/dashboard/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/orders/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/[id]/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/bulk-upload/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/new/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/app/supplier/products/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/ActivityLog.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/settings/ServiceConfig.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/__tests__/CrawlerManagementWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/__tests__/SystemMetricsWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/__tests__/UserManagementWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/AdminActivityWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/CrawlerManagementWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/CrawlerManagementWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/GlobalConfigWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/SystemHealthWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/SystemMetricsWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/admin/super/UserManagementWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/analytics/CustomerMetrics.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/analytics/OrderMetrics.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/analytics/PoolMetrics.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/analytics/RevenueMetrics.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/cart/TaxCalculation.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/checkout/TaxExemptionInput.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ClientLayout.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/common/LoadingSpinner.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/crawler/ConfigurationForm.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/crawler/JobMonitoringDashboard.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/crawler/ScheduleForm.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/BudgetOverview.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/DashboardStats.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/MessageCenter.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/NotificationPanel.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/NotificationPanel.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/OrderList.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/ProjectList.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/customer/TimelineView.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/dashboard/ActivePoolsWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/layout/ClientLayout.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/layout/Navbar.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/layouts/DashboardLayout.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/layouts/Header.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/layouts/Sidebar.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/layouts/TopBar.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/Navigation.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/notifications/NotificationList.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/notifications/NotificationList.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/order/OrderActions.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/order/OrderList.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/order/OrderStatusBadge.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/__tests__/OrderCreation.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/__tests__/OrderDashboard.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/__tests__/OrderPaymentDetails.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/__tests__/PoolManagement.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderCreate.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderCreation.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderDashboard.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderDetails.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderHistory.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderHistory.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderList.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderPaymentDetails.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderStatusTimeline.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/OrderTaxSummary.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/orders/PoolManagement.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/profile/ProfileSettings.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/SessionProvider.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/subcontractor/__tests__/PaymentTrackingWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/CustomerInsights.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/CustomerInsights.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/InventoryManager.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/InventoryOverview.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/InventoryOverview.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/OrderList.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/OrderManagement.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/OrderManagement.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/PooledOrderList.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/SalesAnalytics.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/supplier/SalesAnalytics.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Badge.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Breadcrumbs.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Button.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/card.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/carousel.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Input.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/label.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Progress.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/select.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Skeleton.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Table.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Tabs.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/textarea.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/components/ui/Toast.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/config/security.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/emails/VerificationEmail.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/hooks/useWebSocket.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/index.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/cache.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/monitoring.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/order-pooling.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/order-workflow.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/orders.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/rate-limit.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/redis.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/tax.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/__tests__/validation-service.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/cache.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/cacheWarming.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/crawler/advanced.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/db.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/email.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/errorRecovery.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/errors.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/inventory.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/logger.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/metrics.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/monitoring.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/morganMiddleware.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/orders.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/prisma.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/rate-limit.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/rateLimiter.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/redis.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/securityLogger.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/__tests__/enhanced-validation-service.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/__tests__/order-workflow-service.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/admin/AdminService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/ApiService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/crawler/performance.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/customer/dashboardService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/email.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/EmailService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/EnhancedValidationService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/InventoryService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/NotificationService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/order/OrderService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/OrderWorkflowService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/project/ProjectService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/RateLimitService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/ValidationService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/websocket/WebSocketService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/services/WebSocketService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/tax.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/test-utils.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/theme.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/utils.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/lib/utils/rateLimit.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/middleware.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/middleware/authRateLimit.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/middleware/superAdminMiddleware.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/scripts/warm-cache.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/server.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/admin.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/auth.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/core/BaseCrawler.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/types.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/utils/AuthManager.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/utils/CacheManager.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/utils/ConcurrentCrawler.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/utils/encryption.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/utils/ImageProcessor.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/utils/ProductMatcher.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/crawler/utils/RateLimiter.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/order/OrderService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/validation.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/validation/__tests__/orderValidation.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/validation/orderValidation.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/services/validation/types.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/api/products.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/config/production.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/e2e/profile.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/integration/crawler.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/integration/supplier-api.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/jest.setup.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/load/analytics-load-test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/load/load-test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/load/order-management-load-test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/load/run-load-tests.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/load/websocket-test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/setup.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/tests/test-utils.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/admin.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/auth.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/crawler.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/order.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/prisma.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/types/user.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/utils/formatters.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/src/utils/sentry.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/frontend/tailwind.config.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/jest.config.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/next-env.d.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/prisma/seed.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/analyze-load-test-results.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/check-metrics.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/create-component.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/create-super-admin.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/deploy-production.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/fix-docs.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/fix-imports.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/fix-references.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/fix-structure.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/fix-test-names.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/load-tests/setup-test-user.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/load-tests/smoke-test.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/normalize-endings.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/normalize-line-endings.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/setup-monitoring.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/standardize-docs.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/test-database-connection.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/test-redis-connection.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/test-redis.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/verify-component-names.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/scripts/verify-security.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/components/setup.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/components/utils/test-utils.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/integration/service-integration.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/mocks/data-generators.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/mocks/prisma.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/AdminService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/CrawlerService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/EnhancedValidationService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/OrderWorkflowService.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/services/service.template.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/setup.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/setup.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/utils/mock-data.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/utils/test-db.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/__tests__/utils/test-utils.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/admin/layout.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/admin/settings/services/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/admin/services/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/analytics/[...route]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/analytics/orders/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/auth/[...nextauth]/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/health/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/api/orders/[orderId]/join-pool/route.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/contractor/dashboard/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/customer/dashboard/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/globals.css",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/layout.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/app/subcontractor/dashboard/page.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/admin/settings/ServiceConfig.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/admin/settings/services/AnalyticsConfig.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/admin/settings/services/EmailConfig.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/admin/settings/services/SecurityConfig.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/contractor/BiddingWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/contractor/MaterialOrdersWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/contractor/ProjectManagementWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/contractor/SubcontractorManagementWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/__tests__/BudgetTrackingWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/__tests__/CommunicationHubWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/__tests__/ProjectOverviewWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/__tests__/TimelineWidget.test.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/BudgetTrackingWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/CommunicationHubWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/ProjectOverviewWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/customer/TimelineWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/layout/ClientLayout.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/subcontractor/ActiveProjectsWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/subcontractor/PaymentTrackingWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/components/subcontractor/ProjectOpportunitiesWidget.tsx",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/config/security.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/__tests__/order-pooling.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/__tests__/order-workflow.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/__tests__/validation-service.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/analytics.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/crypto.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/email.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/prisma.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/redis.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/services/__tests__/enhanced-validation-service.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/lib/services/__tests__/order-workflow-service.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/middleware/crawler-security.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/services/analytics/AnalyticsService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/services/analytics/RealTimeAnalyticsService.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/services/analytics/types.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/api/orders/order-details.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/api/orders/order-payment.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/api/orders/order-pool.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/api/orders/orders.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/middleware/crawler-security.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/performance/analytics.perf.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/performance/order-management.perf.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/src/tests/services/serviceConfig.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/check-docs.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/check-references.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/find-duplicates.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/init-template.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/validate-env.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/verify/docs.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/Template Developer Pack/scripts/verify/index.js",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    },
+    {
+      "path": "C:/Users/ryanj/OneDrive/Desktop/Bulk Buyer Group/tests/load/order-management.test.ts",
+      "issues": [
+        "Missing last updated timestamp"
+      ]
+    }
+  ],
+  "summary": {
+    "totalDuplicateGroups": 0,
+    "totalDuplicateFiles": 0,
+    "totalDuplicateLines": 0,
+    "totalDuplicateFilenames": 56,
+    "totalInaccurateFiles": 437
+  }
+}

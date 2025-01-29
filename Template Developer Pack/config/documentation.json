@@ -1,0 +1,153 @@
+{
+  "version": "1.0.0",
+  "documentation": {
+    "standards": {
+      "readme": {
+        "required": true,
+        "sections": {
+          "overview": {
+            "required": true,
+            "description": "Brief project description and purpose"
+          },
+          "getting_started": {
+            "required": true,
+            "subsections": [
+              "prerequisites",
+              "installation",
+              "quick_start"
+            ]
+          },
+          "usage": {
+            "required": true,
+            "codeExamples": true
+          },
+          "configuration": {
+            "required": true,
+            "includeDefaults": true
+          },
+          "contributing": {
+            "required": true,
+            "linkToGuide": true
+          }
+        }
+      },
+      "api": {
+        "format": "OpenAPI",
+        "version": "3.0.0",
+        "required": true,
+        "components": {
+          "authentication": true,
+          "endpoints": true,
+          "schemas": true,
+          "examples": true,
+          "errors": true
+        }
+      },
+      "guides": {
+        "required": true,
+        "categories": [
+          "getting-started",
+          "development",
+          "deployment",
+          "security",
+          "maintenance"
+        ],
+        "format": {
+          "headers": true,
+          "codeExamples": true,
+          "screenshots": "recommended"
+        }
+      }
+    },
+    "formatting": {
+      "markdown": {
+        "lineLength": 80,
+        "headerStyle": "atx",
+        "listStyle": "hyphen",
+        "codeBlocks": {
+          "requireLanguage": true,
+          "supportedLanguages": [
+            "bash",
+            "javascript",
+            "typescript",
+            "json",
+            "yaml",
+            "sql",
+            "html",
+            "css"
+          ]
+        }
+      },
+      "diagrams": {
+        "format": "mermaid",
+        "required": false
+      }
+    },
+    "templates": {
+      "readme": "templates/README.md",
+      "contributing": "templates/CONTRIBUTING.md",
+      "api": "templates/api/",
+      "guides": "templates/guides/"
+    },
+    "validation": {
+      "links": {
+        "checkBroken": true,
+        "requireAbsolute": false
+      },
+      "images": {
+        "checkExists": true,
+        "maxSize": "1MB",
+        "formats": ["png", "jpg", "svg"]
+      },
+      "codeBlocks": {
+        "validateSyntax": true,
+        "requireOutput": false
+      }
+    },
+    "generation": {
+      "api": {
+        "fromCode": true,
+        "tools": ["swagger-jsdoc", "typedoc"],
+        "output": "docs/api"
+      },
+      "changelog": {
+        "automatic": true,
+        "fromCommits": true,
+        "template": "templates/CHANGELOG.md"
+      }
+    },
+    "maintenance": {
+      "updateSchedule": "weekly",
+      "validateLinks": "daily",
+      "archiveOld": {
+        "enabled": true,
+        "threshold": "1 year"
+      }
+    }
+  },
+  "integrations": {
+    "github": {
+      "wiki": false,
+      "pages": true,
+      "templates": {
+        "issues": true,
+        "pullRequests": true
+      }
+    },
+    "jira": {
+      "enabled": false,
+      "linkIssues": true
+    }
+  },
+  "search": {
+    "enabled": true,
+    "engine": "docsearch",
+    "indexing": {
+      "frequency": "daily",
+      "paths": [
+        "docs/**/*.md",
+        "guides/**/*.md"
+      ]
+    }
+  }
+} 

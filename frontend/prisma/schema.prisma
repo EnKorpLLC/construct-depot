@@ -1,0 +1,454 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String               @id @default(cuid())
+  email               String               @unique
+  password            String
+  firstName           String
+  lastName            String
+  companyName         String?
+  role                UserRole             @default(CUSTOMER)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  taxExempt           Boolean              @default(false)
+  taxExemptionNumber  String?
+  taxAddress          Json?
+  supplierStatus      SupplierStatus?
+  emailVerified       DateTime?
+  accounts            Account[]
+  activityLogs        ActivityLog[]
+  cartItems           CartItem[]
+  CrawlerConfig       CrawlerConfig[]
+  supplierOrders      Order[]              @relation("SupplierOrders")
+  orders              Order[]
+  orderHistory        OrderHistory[]
+  orderSettings       OrderSettings[]
+  supplierPools       PoolGroup[]          @relation("SupplierPools")
+  products            Product[]
+  sessions            Session[]
+  supplierApplication SupplierApplication?
+
+  @@index([email])
+  @@index([role])
+}
+
+model SupplierApplication {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  companyDetails String
+  businessType   String
+  taxId          String
+  websiteUrl     String?
+  phoneNumber    String
+  address        String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  notes          String?
+  documents      String[]
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id                String         @id @default(cuid())
+  name              String
+  description       String
+  price             Decimal        @db.Decimal(10, 2)
+  minOrderQuantity  Int
+  unit              String
+  supplierId        String
+  isActive          Boolean        @default(true)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  categories        String[]
+  images            String[]
+  specifications    Json?
+  markup            Decimal        @default(1.20) @db.Decimal(10, 2)
+  taxCode           String?
+  currentStock      Int            @default(0)
+  lowStockThreshold Int            @default(10)
+  inventoryStatus   String         @default("IN_STOCK")
+  reorderPoint      Int            @default(20)
+  reorderQuantity   Int            @default(50)
+  lastRestockDate   DateTime?
+  cartItems         CartItem[]
+  inventoryLogs     InventoryLog[]
+  orderItems        OrderItem[]
+  poolGroups        PoolGroup[]
+  pooledOrders      PooledOrder[]
+  supplier          User           @relation(fields: [supplierId], references: [id])
+
+  @@index([name])
+  @@index([categories])
+  @@index([supplierId])
+  @@index([isActive])
+  @@index([inventoryStatus])
+  @@index([currentStock])
+  @@index([price])
+  @@index([createdAt])
+}
+
+model InventoryLog {
+  id        String   @id @default(cuid())
+  productId String
+  type      String
+  quantity  Int
+  reason    String?
+  createdAt DateTime @default(now())
+  createdBy String
+  reference String?
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+  @@index([type])
+  @@index([createdAt])
+  @@index([createdBy])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Order {
+  id            String         @id @default(cuid())
+  orderNumber   String         @unique
+  userId        String
+  supplierId    String
+  status        OrderStatus    @default(DRAFT)
+  totalAmount   Decimal        @db.Decimal(10, 2)
+  currency      String         @default("USD")
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  poolExpiry    DateTime?
+  poolGroupId   String?
+  pooledOrderId String?
+  poolGroup     PoolGroup?     @relation(fields: [poolGroupId], references: [id])
+  pooledOrder   PooledOrder?   @relation(fields: [pooledOrderId], references: [id])
+  supplier      User           @relation("SupplierOrders", fields: [supplierId], references: [id])
+  user          User           @relation(fields: [userId], references: [id])
+  history       OrderHistory[]
+  items         OrderItem[]
+  payment       Payment?
+  shipment      Shipment?
+
+  @@index([userId])
+  @@index([supplierId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([poolExpiry])
+  @@index([poolGroupId])
+  @@index([pooledOrderId])
+}
+
+model PoolGroup {
+  id              String     @id @default(cuid())
+  productId       String
+  supplierId      String
+  status          PoolStatus @default(OPEN)
+  minQuantity     Int
+  maxQuantity     Int?
+  currentQuantity Int        @default(0)
+  expiryDate      DateTime
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  orders          Order[]
+  product         Product    @relation(fields: [productId], references: [id])
+  supplier        User       @relation("SupplierPools", fields: [supplierId], references: [id])
+
+  @@index([productId])
+  @@index([supplierId])
+  @@index([status])
+  @@index([expiryDate])
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  orderId    String
+  productId  String
+  quantity   Int
+  unitPrice  Decimal  @db.Decimal(10, 2)
+  totalPrice Decimal  @db.Decimal(10, 2)
+  notes      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  order      Order    @relation(fields: [orderId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  orderId        String        @unique
+  amount         Decimal       @db.Decimal(10, 2)
+  currency       String        @default("USD")
+  status         PaymentStatus @default(PENDING)
+  method         PaymentMethod
+  transactionId  String?
+  paymentDetails Json?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  order          Order         @relation(fields: [orderId], references: [id])
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Shipment {
+  id                String    @id @default(cuid())
+  orderId           String    @unique
+  trackingNumber    String?
+  carrier           String?
+  status            String
+  estimatedDelivery DateTime?
+  actualDelivery    DateTime?
+  shippingAddress   Json
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  order             Order     @relation(fields: [orderId], references: [id])
+
+  @@index([status])
+  @@index([trackingNumber])
+}
+
+model OrderHistory {
+  id        String      @id @default(cuid())
+  orderId   String
+  status    OrderStatus
+  userId    String
+  notes     String?
+  metadata  Json?
+  createdAt DateTime    @default(now())
+  order     Order       @relation(fields: [orderId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
+
+  @@index([orderId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model OrderSettings {
+  id                     String         @id @default(cuid())
+  userId                 String
+  createdAt              DateTime       @default(now())
+  updatedAt              DateTime       @updatedAt
+  defaultShippingAddress Json?
+  defaultBillingAddress  Json?
+  preferredPaymentMethod PaymentMethod?
+  notificationSettings   Json?
+  user                   User           @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model PooledOrder {
+  id            String            @id @default(cuid())
+  status        PooledOrderStatus @default(OPEN)
+  totalQuantity Int
+  startDate     DateTime          @default(now())
+  endDate       DateTime?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  productId     String
+  orders        Order[]
+  product       Product           @relation(fields: [productId], references: [id])
+
+  @@index([status])
+  @@index([startDate])
+  @@index([endDate])
+  @@index([productId])
+}
+
+model CartItem {
+  id        String   @id @default(cuid())
+  userId    String
+  productId String
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model StateTaxRate {
+  id            String   @id @default(cuid())
+  state         String   @unique
+  stateCode     String   @unique @db.VarChar(2)
+  rate          Decimal  @db.Decimal(5, 4)
+  hasLocalTax   Boolean  @default(false)
+  effectiveDate DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model CrawlerConfig {
+  id          String       @id @default(cuid())
+  name        String
+  description String
+  targetUrl   String
+  schedule    String?
+  rateLimit   Int
+  status      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  lastRunAt   DateTime?
+  createdBy   String
+  user        User         @relation(fields: [createdBy], references: [id])
+  jobs        CrawlerJob[]
+
+  @@index([createdBy])
+}
+
+model CrawlerJob {
+  id             String        @id @default(cuid())
+  configId       String
+  startTime      DateTime      @default(now())
+  endTime        DateTime?
+  status         String
+  pagesProcessed Int           @default(0)
+  itemsFound     Int           @default(0)
+  errors         Json[]
+  config         CrawlerConfig @relation(fields: [configId], references: [id])
+
+  @@index([configId])
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  details   Json?
+  metadata  Json?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
+
+model ProductSearch {
+  id         String   @id @default(cuid())
+  productId  String
+  searchText String
+  createdAt  DateTime @default(now())
+
+  @@index([searchText, createdAt])
+}
+
+model ProductStats {
+  id             String   @id @default(cuid())
+  productId      String   @unique
+  totalSales     Int      @default(0)
+  averageRating  Float    @default(0)
+  viewCount      Int      @default(0)
+  lastCalculated DateTime @default(now())
+
+  @@index([totalSales])
+  @@index([averageRating])
+  @@index([viewCount])
+}
+
+model RateLimit {
+  id     String   @id @default(cuid())
+  key    String   @unique
+  points Int      @default(0)
+  expire DateTime
+
+  @@index([key, expire])
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+  GENERAL_CONTRACTOR
+  SUBCONTRACTOR
+  SUPPLIER
+}
+
+enum SupplierStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum OrderStatus {
+  DRAFT
+  POOLING
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  CAPTURED
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CREDIT_CARD
+  BANK_TRANSFER
+  WIRE_TRANSFER
+  PURCHASE_ORDER
+}
+
+enum PoolStatus {
+  OPEN
+  CLOSED
+  FULFILLED
+  EXPIRED
+  CANCELLED
+}
+
+enum PooledOrderStatus {
+  OPEN
+  LOCKED
+  PROCESSING
+  COMPLETED
+  CANCELLED
+}

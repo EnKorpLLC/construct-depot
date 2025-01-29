@@ -1,0 +1,206 @@
+{
+  "version": "1.0.0",
+  "ai_verification": {
+    "prompts": {
+      "validation": {
+        "enabled": true,
+        "checks": {
+          "injection": true,
+          "completion": true,
+          "consistency": true,
+          "toxicity": true
+        },
+        "thresholds": {
+          "maxLength": 2000,
+          "minConfidence": 0.7,
+          "toxicityScore": 0.3
+        }
+      },
+      "versioning": {
+        "required": true,
+        "format": "semantic",
+        "changelog": true
+      },
+      "testing": {
+        "required": true,
+        "coverage": {
+          "edgeCases": true,
+          "errorCases": true,
+          "locales": ["en"]
+        }
+      }
+    },
+    "models": {
+      "validation": {
+        "enabled": true,
+        "requirements": {
+          "documentation": true,
+          "performance": true,
+          "ethics": true
+        },
+        "metrics": {
+          "accuracy": 0.9,
+          "latency": 1000,
+          "costPerRequest": 0.1
+        }
+      },
+      "monitoring": {
+        "enabled": true,
+        "metrics": [
+          "requests",
+          "latency",
+          "errors",
+          "tokenUsage",
+          "cost"
+        ],
+        "alerts": {
+          "errorRate": 0.01,
+          "latencyP95": 2000,
+          "costSpike": 1.5
+        }
+      }
+    },
+    "safety": {
+      "inputValidation": {
+        "enabled": true,
+        "checks": {
+          "sanitization": true,
+          "lengthLimits": true,
+          "contentFiltering": true
+        }
+      },
+      "outputValidation": {
+        "enabled": true,
+        "checks": {
+          "schema": true,
+          "sensitivity": true,
+          "toxicity": true
+        }
+      },
+      "rateLimit": {
+        "enabled": true,
+        "requests": {
+          "perSecond": 10,
+          "perMinute": 100,
+          "perHour": 1000
+        }
+      }
+    },
+    "ethics": {
+      "biasChecking": {
+        "enabled": true,
+        "types": [
+          "gender",
+          "race",
+          "age",
+          "religion",
+          "nationality"
+        ],
+        "thresholds": {
+          "biasScore": 0.3,
+          "confidenceMin": 0.8
+        }
+      },
+      "fairnessMetrics": {
+        "enabled": true,
+        "metrics": [
+          "demographicParity",
+          "equalOpportunity",
+          "disparateImpact"
+        ],
+        "thresholds": {
+          "disparateImpactRatio": 0.8
+        }
+      }
+    },
+    "performance": {
+      "caching": {
+        "enabled": true,
+        "strategy": "hybrid",
+        "ttl": 3600,
+        "maxSize": "1GB"
+      },
+      "batching": {
+        "enabled": true,
+        "maxBatchSize": 10,
+        "maxWaitTime": 100
+      },
+      "optimization": {
+        "enabled": true,
+        "techniques": [
+          "tokenization",
+          "compression",
+          "contextPruning"
+        ]
+      }
+    },
+    "deployment": {
+      "staging": {
+        "required": true,
+        "environments": [
+          "development",
+          "staging",
+          "production"
+        ],
+        "promotion": {
+          "requireApproval": true,
+          "metrics": [
+            "accuracy",
+            "latency",
+            "errorRate"
+          ]
+        }
+      },
+      "testing": {
+        "required": true,
+        "types": [
+          "unit",
+          "integration",
+          "e2e",
+          "performance"
+        ],
+        "coverage": {
+          "minimum": 80
+        }
+      },
+      "monitoring": {
+        "required": true,
+        "metrics": [
+          "accuracy",
+          "latency",
+          "errors",
+          "cost"
+        ],
+        "alerts": {
+          "enabled": true,
+          "channels": [
+            "email",
+            "slack"
+          ]
+        }
+      }
+    },
+    "documentation": {
+      "required": true,
+      "components": {
+        "architecture": true,
+        "api": true,
+        "prompts": true,
+        "models": true,
+        "deployment": true
+      },
+      "apiSpec": {
+        "format": "OpenAPI",
+        "version": "3.0.0"
+      },
+      "examples": {
+        "required": true,
+        "coverage": {
+          "success": true,
+          "error": true,
+          "edge": true
+        }
+      }
+    }
+  }
+} 
