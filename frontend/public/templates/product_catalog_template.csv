@@ -1,3 +1,0 @@
-name,description,price,minOrderQuantity,unit,categories,specifications,markup,images
-Example Product 1,Detailed description of product 1,99.99,100,pieces,"Lumber,Building Materials","{""length"":""8ft"",""width"":""4ft""}",1.2,https://example.com/image1.jpg;https://example.com/image2.jpg
-Example Product 2,Detailed description of product 2,45.50,50,pallets,Roofing,"{""color"":""red"",""material"":""steel""}",1.15,https://example.com/image3.jpg 
