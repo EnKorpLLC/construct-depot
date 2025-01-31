@@ -1,46 +1,10 @@
-import { Redis } from 'ioredis';
+import { Redis } from '@upstash/redis';
 
-// Redis configuration with best practices
-const redisConfig = {
-  host: process.env.REDIS_HOST || 'localhost',
-  port: parseInt(process.env.REDIS_PORT || '6379'),
-  retryStrategy: (times: number) => {
-    const delay = Math.min(times * 100, 3000);
-    return delay;
-  },
-  maxRetriesPerRequest: 3,
-  enableReadyCheck: false,
-  connectTimeout: 15000,
-  lazyConnect: true,
-  showFriendlyErrorStack: process.env.NODE_ENV !== 'production'
-};
-
-// Create Redis singleton instance
-class RedisClient {
-  private static instance: Redis;
-
-  public static getInstance(): Redis {
-    if (!RedisClient.instance) {
-      RedisClient.instance = new Redis(redisConfig);
-      
-      // Error handling
-      RedisClient.instance.on('error', (error) => {
-        console.error('[Redis Error]', error);
-      });
-
-      RedisClient.instance.on('connect', () => {
-        console.log('[Redis] Connected successfully');
-      });
-
-      // Add disconnect handler
-      RedisClient.instance.on('end', () => {
-        console.log('[Redis] Connection closed');
-        RedisClient.instance = null;
-      });
-    }
-    return RedisClient.instance;
-  }
+if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+  throw new Error('Redis credentials are not properly configured');
 }
 
-// Export singleton instance
-export const redis = RedisClient.getInstance(); 
+export const redis = new Redis({
+  url: process.env.KV_REST_API_URL,
+  token: process.env.KV_REST_API_TOKEN,
+}); 
