@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
+import { TabsRoot, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
 import { EmailConfig } from './services/EmailConfig';
 import { AnalyticsConfig } from './services/AnalyticsConfig';
 import { SecurityConfig } from './services/SecurityConfig';
@@ -34,22 +34,25 @@ export function ServiceConfig() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="email" className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="email">Email (Outlook)</TabsTrigger>
+        <TabsRoot defaultValue="email" className="space-y-4">
+          <TabsList>
+            <TabsTrigger value="email">Email</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="security">Security</TabsTrigger>
           </TabsList>
+
           <TabsContent value="email">
             <EmailConfig />
           </TabsContent>
+
           <TabsContent value="analytics">
             <AnalyticsConfig />
           </TabsContent>
+
           <TabsContent value="security">
             <SecurityConfig />
           </TabsContent>
-        </Tabs>
+        </TabsRoot>
         <div className="mt-6 flex justify-end">
           <Button onClick={handleSave} disabled={isSaving}>
             {isSaving ? 'Saving...' : 'Save All Settings'}

@@ -1,24 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 
-interface Tab {
-  id: string;
-  label: string;
-  content: React.ReactNode;
-}
-
-interface TabsProps {
-  tabs: Tab[];
-  defaultTab?: string;
-  className?: string;
-}
-
-export const Tabs = TabsPrimitive.Root;
+// Export Radix UI primitives
+export const TabsRoot = TabsPrimitive.Root;
 export const TabsList = TabsPrimitive.List;
 export const TabsTrigger = TabsPrimitive.Trigger;
 export const TabsContent = TabsPrimitive.Content;
 
-// Add default styling
+// Styled components
 const StyledTabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
@@ -55,12 +44,26 @@ const StyledTabsContent = React.forwardRef<
 ));
 StyledTabsContent.displayName = TabsPrimitive.Content.displayName;
 
-export const Tabs: React.FC<TabsProps> = ({
+// Types for the custom Tabs component
+interface Tab {
+  id: string;
+  label: string;
+  content: React.ReactNode;
+}
+
+interface TabsProps {
+  tabs: Tab[];
+  defaultTab?: string;
+  className?: string;
+}
+
+// Custom Tabs component
+export const CustomTabs: React.FC<TabsProps> = ({
   tabs,
   defaultTab,
   className = ''
 }) => {
-  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
+  const [activeTab, setActiveTab] = React.useState(defaultTab || tabs[0]?.id);
 
   return (
     <div className={className}>
@@ -92,4 +95,4 @@ export const Tabs: React.FC<TabsProps> = ({
   );
 };
 
-export default Tabs; 
+export default CustomTabs; 

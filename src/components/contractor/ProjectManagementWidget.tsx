@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Card } from '@/components/ui/Card';
 import { Progress } from '@/components/ui/Progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
+import { TabsRoot, TabsList, TabsTrigger, TabsContent } from '@/components/ui/Tabs';
 import { Calendar } from 'lucide-react';
 
 interface Project {
@@ -65,7 +65,7 @@ export default function ProjectManagementWidget() {
           </button>
         </div>
 
-        <Tabs defaultValue="active" className="space-y-4">
+        <TabsRoot defaultValue="active" className="space-y-4">
           <TabsList>
             <TabsTrigger value="active">Active Projects</TabsTrigger>
             <TabsTrigger value="planning">Planning</TabsTrigger>
@@ -174,7 +174,7 @@ export default function ProjectManagementWidget() {
               No completed projects
             </div>
           </TabsContent>
-        </Tabs>
+        </TabsRoot>
       </div>
     </Card>
   );
