@@ -1,48 +1,64 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
+import { prisma } from '@/lib/prisma';
+import { compare } from 'bcryptjs';
 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' }
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null;
+          throw new Error('Invalid credentials');
         }
 
-        // TODO: Implement actual user lookup
-        // For now, return a mock user for testing
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email }
+        });
+
+        if (!user) {
+          throw new Error('Invalid credentials');
+        }
+
+        const isValidPassword = await compare(credentials.password, user.password);
+        if (!isValidPassword) {
+          throw new Error('Invalid credentials');
+        }
+
         return {
-          id: "1",
-          email: credentials.email,
-          name: "Test User"
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role
         };
       }
     })
   ],
   session: {
-    strategy: "jwt"
-  },
-  pages: {
-    signIn: "/login"
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
+      if (token && session.user) {
+        session.user.role = token.role;
       }
       return session;
     }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/auth/login',
+    error: '/auth/error'
   }
 }; 
