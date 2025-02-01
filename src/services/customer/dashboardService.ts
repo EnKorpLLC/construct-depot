@@ -12,7 +12,19 @@ export interface DashboardStats {
   }>;
 }
 
+export interface Project {
+  id: string;
+  name: string;
+  status: string;
+  createdAt: Date;
+}
+
 export const dashboardService = {
+  async getProjects(): Promise<Project[]> {
+    // TODO: Implement actual API call to fetch projects
+    return [];
+  },
+
   async getUserStats(userId: string): Promise<DashboardStats> {
     // TODO: Implement actual API call
     return {
