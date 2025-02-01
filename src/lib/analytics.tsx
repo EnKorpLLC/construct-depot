@@ -1,3 +1,5 @@
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { prisma } from '@/lib/prisma';
 import { decrypt } from '@/lib/crypto';
 
@@ -69,8 +71,6 @@ export function GA4Script() {
 }
 
 // React hook for GA4 config
-import { useState, useEffect } from 'react';
-
 export function useGA4Config() {
   const [config, setConfig] = useState<GA4Config | null>(null);
 

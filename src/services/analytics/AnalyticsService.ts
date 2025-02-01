@@ -12,6 +12,30 @@ import {
   ReportConfig
 } from './types';
 
+interface RawOrderTrend {
+  date: Date;
+  orders: bigint;
+}
+
+interface RawCustomerSegment {
+  name: string;
+  value: bigint;
+}
+
+interface RawCategoryMetric {
+  category: string;
+  orders: bigint;
+  revenue: bigint;
+}
+
+interface RawRepeatRate {
+  repeat_rate: number;
+}
+
+interface RawAverageOrders {
+  avg_orders: number;
+}
+
 export class AnalyticsService {
   private static instance: AnalyticsService;
   private readonly CACHE_TTL = 300; // 5 minutes
@@ -184,8 +208,8 @@ export class AnalyticsService {
     return { start, end };
   }
 
-  private async getOrderTrends(start: Date, end: Date) {
-    return prisma.$queryRaw`
+  private async getOrderTrends(start: Date, end: Date): Promise<OrderTrend[]> {
+    const results = await prisma.$queryRaw<RawOrderTrend[]>`
       SELECT 
         DATE(created_at) as date,
         COUNT(*) as orders
@@ -194,10 +218,15 @@ export class AnalyticsService {
       GROUP BY DATE(created_at)
       ORDER BY date ASC
     `;
+
+    return results.map(trend => ({
+      date: trend.date.toISOString().split('T')[0],
+      orders: Number(trend.orders)
+    }));
   }
 
-  private async getCustomerSegments(start: Date, end: Date) {
-    const segments = await prisma.$queryRaw`
+  private async getCustomerSegments(start: Date, end: Date): Promise<CustomerSegment[]> {
+    const segments = await prisma.$queryRaw<RawCustomerSegment[]>`
       WITH CustomerOrders AS (
         SELECT 
           user_id,
@@ -225,11 +254,15 @@ export class AnalyticsService {
         END
       ORDER BY value DESC
     `;
-    return segments;
+
+    return segments.map(segment => ({
+      name: segment.name,
+      value: Number(segment.value)
+    }));
   }
 
-  private async getTopCategories(start: Date, end: Date) {
-    return prisma.$queryRaw`
+  private async getTopCategories(start: Date, end: Date): Promise<CategoryMetric[]> {
+    const categories = await prisma.$queryRaw<RawCategoryMetric[]>`
       SELECT 
         c.name as category,
         COUNT(DISTINCT o.id) as orders,
@@ -243,41 +276,47 @@ export class AnalyticsService {
       ORDER BY revenue DESC
       LIMIT 5
     `;
+
+    return categories.map(category => ({
+      category: category.category,
+      orders: Number(category.orders),
+      revenue: Number(category.revenue)
+    }));
   }
 
   private async calculateRepeatPurchaseRate(start: Date, end: Date): Promise<number> {
-    const result = await prisma.$queryRaw`
+    const [result] = await prisma.$queryRaw<RawRepeatRate[]>`
       WITH CustomerPurchases AS (
-        SELECT 
-          user_id,
-          COUNT(*) as purchase_count
+        SELECT user_id, COUNT(*) as purchase_count
         FROM orders
         WHERE created_at BETWEEN ${start} AND ${end}
         GROUP BY user_id
       )
       SELECT 
         ROUND(
-          (COUNT(CASE WHEN purchase_count > 1 THEN 1 END)::FLOAT / 
-          COUNT(*)::FLOAT) * 100,
+          COUNT(CASE WHEN purchase_count > 1 THEN 1 END)::DECIMAL / 
+          COUNT(*)::DECIMAL * 100,
           2
         ) as repeat_rate
       FROM CustomerPurchases
     `;
-    return result[0].repeat_rate;
+
+    return result.repeat_rate;
   }
 
   private async calculateAverageOrdersPerCustomer(start: Date, end: Date): Promise<number> {
-    const result = await prisma.$queryRaw`
+    const [result] = await prisma.$queryRaw<RawAverageOrders[]>`
       SELECT 
         ROUND(
-          COUNT(*)::FLOAT / 
-          COUNT(DISTINCT user_id)::FLOAT,
+          COUNT(*)::DECIMAL / 
+          COUNT(DISTINCT user_id)::DECIMAL,
           2
         ) as avg_orders
       FROM orders
       WHERE created_at BETWEEN ${start} AND ${end}
     `;
-    return result[0].avg_orders;
+
+    return result.avg_orders;
   }
 
   private async calculateTotalRevenue(start: Date, end: Date): Promise<number> {

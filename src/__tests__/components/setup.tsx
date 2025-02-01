@@ -1,3 +1,4 @@
+import React from 'react';
 import '@testing-library/jest-dom';
 import { configure } from '@testing-library/react';
 import { TextEncoder, TextDecoder } from 'util';

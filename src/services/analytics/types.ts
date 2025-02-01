@@ -17,7 +17,7 @@ export interface CustomerSegment {
   value: number;
 }
 
-export interface TopCategory {
+export interface CategoryMetric {
   category: string;
   orders: number;
   revenue: number;
@@ -29,13 +29,12 @@ export interface CustomerMetricsData {
   repeatRate: number;
   averageOrdersPerCustomer: number;
   customerSegments: CustomerSegment[];
-  topCategories: TopCategory[];
+  topCategories: CategoryMetric[];
 }
 
 export interface RevenueTrend {
   date: string;
-  revenue: number;
-  averageOrder: number;
+  amount: number;
 }
 
 export interface RevenueMetricsData {
@@ -45,42 +44,30 @@ export interface RevenueMetricsData {
   revenueTrends: RevenueTrend[];
 }
 
-export interface PoolProgress {
-  poolId: string;
-  progress: number;
-  totalValue: number;
-  participants: number;
-}
-
 export interface PoolMetricsData {
+  totalPools: number;
   activePools: number;
-  completedPools: number;
-  totalValue: number;
-  poolProgress: PoolProgress[];
+  averagePoolSize: number;
+  totalSavings: number;
+  poolTrends: {
+    date: string;
+    pools: number;
+    participants: number;
+  }[];
 }
-
-export type ReportStatus = 'PROCESSING' | 'COMPLETED' | 'FAILED';
 
 export interface ReportConfig {
-  name: string;
-  type: 'PERFORMANCE' | 'REVENUE' | 'CUSTOMER' | 'CUSTOM';
-  metrics: string[];
-  dimensions: string[];
-  filters: {
-    from: string;
-    to: string;
-    [key: string]: any;
-  };
-  format: 'JSON' | 'CSV' | 'PDF';
+  timeframe: TimeFrame;
+  sections: ('orders' | 'customers' | 'revenue' | 'pools')[];
+  format: 'pdf' | 'csv' | 'json';
 }
 
 export interface AnalyticsReport {
   id: string;
-  name: string;
-  status: ReportStatus;
+  status: 'pending' | 'processing' | 'completed' | 'failed';
+  config: ReportConfig;
+  url?: string;
+  error?: string;
   createdAt: string;
   completedAt?: string;
-  config: ReportConfig;
-  results?: any;
-  error?: string;
 } 
