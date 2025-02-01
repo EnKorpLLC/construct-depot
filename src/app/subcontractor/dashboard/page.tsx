@@ -63,7 +63,7 @@ export default async function SubcontractorDashboard() {
     return (
       <div>
         <h1>Error loading Subcontractor Dashboard</h1>
-        <p>{error.message}</p>
+        <p>{error instanceof Error ? error.message : 'An unexpected error occurred'}</p>
       </div>
     );
   }
