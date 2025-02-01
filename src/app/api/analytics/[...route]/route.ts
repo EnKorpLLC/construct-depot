@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import { analyticsService } from '@/services/analytics/AnalyticsService';
 import { TimeFrame, ReportConfig } from '@/services/analytics/types';
 import { z } from 'zod';

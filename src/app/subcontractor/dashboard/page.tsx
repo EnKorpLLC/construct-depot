@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import ProjectOpportunitiesWidget from '@/components/subcontractor/ProjectOpportunitiesWidget';
 import ActiveProjectsWidget from '@/components/subcontractor/ActiveProjectsWidget';
