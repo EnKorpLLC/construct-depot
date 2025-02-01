@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
+import { UserRole } from '@/types/next-auth';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import ProjectManagementWidget from '@/components/contractor/ProjectManagementWidget';
 import BiddingWidget from '@/components/contractor/BiddingWidget';
@@ -12,7 +13,7 @@ import BusinessDevelopmentWidget from '@/components/contractor/BusinessDevelopme
 export default async function ContractorDashboard() {
   const session = await getServerSession(authOptions);
   
-  if (!session?.user || session.user.role !== 'GENERAL_CONTRACTOR') {
+  if (!session?.user || session.user.role !== UserRole.GENERAL_CONTRACTOR) {
     redirect('/auth/signin');
   }
 

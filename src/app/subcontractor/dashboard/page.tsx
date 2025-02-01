@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
+import { UserRole } from '@/types/next-auth';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import ProjectOpportunitiesWidget from '@/components/subcontractor/ProjectOpportunitiesWidget';
 import ActiveProjectsWidget from '@/components/subcontractor/ActiveProjectsWidget';
@@ -10,7 +11,7 @@ import PaymentTrackingWidget from '@/components/subcontractor/PaymentTrackingWid
 export default async function SubcontractorDashboard() {
   const session = await getServerSession(authOptions);
   
-  if (!session?.user || session.user.role !== 'SUBCONTRACTOR') {
+  if (!session?.user || session.user.role !== UserRole.SUBCONTRACTOR) {
     redirect('/auth/signin');
   }
 
