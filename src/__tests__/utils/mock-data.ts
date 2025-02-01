@@ -1,17 +1,21 @@
-import { OrderStatus, UserRole } from '@prisma/client';
+import { OrderStatus, Role } from '@prisma/client';
 
 export const mockUser = {
-  id: '1',
+  id: 'user-123',
+  email: 'user@example.com',
   name: 'Test User',
-  email: 'test@example.com',
-  role: UserRole.CUSTOMER,
+  role: Role.user,
+  createdAt: new Date(),
+  updatedAt: new Date()
 };
 
 export const mockAdmin = {
-  id: '2',
-  name: 'Admin User',
+  id: 'admin-123',
   email: 'admin@example.com',
-  role: UserRole.ADMIN,
+  name: 'Test Admin',
+  role: Role.super_admin,
+  createdAt: new Date(),
+  updatedAt: new Date()
 };
 
 export const mockProduct = {
@@ -65,12 +69,12 @@ export const mockPooledOrder = {
 describe('Mock Data', () => {
   it('should have valid user data', () => {
     expect(mockUser.id).toBeDefined();
-    expect(mockUser.role).toBe(UserRole.CUSTOMER);
+    expect(mockUser.role).toBe(Role.user);
   });
 
   it('should have valid admin data', () => {
     expect(mockAdmin.id).toBeDefined();
-    expect(mockAdmin.role).toBe(UserRole.ADMIN);
+    expect(mockAdmin.role).toBe(Role.super_admin);
   });
 
   it('should have valid product data', () => {

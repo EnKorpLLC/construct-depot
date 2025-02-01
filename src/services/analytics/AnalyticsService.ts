@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma';
 import { redis } from '@/lib/redis';
 import { performanceMonitor } from '@/lib/monitoring';
-import { UserRole } from '@/types/next-auth';
+import { Role } from '@prisma/client';
 import { 
   OrderMetricsData,
   CustomerMetricsData,
@@ -92,11 +92,11 @@ export class AnalyticsService {
     
     const [totalCustomers, newCustomers, customerSegments, topCategories] = await Promise.all([
       prisma.user.count({
-        where: { role: UserRole.USER }
+        where: { role: Role.user }
       }),
       prisma.user.count({
         where: {
-          role: UserRole.USER,
+          role: Role.user,
           createdAt: { gte: dateRange.start, lte: dateRange.end }
         }
       }),

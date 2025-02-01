@@ -3,12 +3,12 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { encrypt, decrypt } from '@/lib/crypto';
-import { UserRole } from '@/types/next-auth';
+import { Role } from '@prisma/client';
 
 // Helper to verify user is super admin
 async function verifySuperAdmin() {
   const session = await getServerSession(authOptions);
-  if (!session?.user || session.user.role !== UserRole.SUPER_ADMIN) {
+  if (!session?.user || session.user.role !== Role.super_admin) {
     throw new Error('Unauthorized');
   }
   return session.user;
