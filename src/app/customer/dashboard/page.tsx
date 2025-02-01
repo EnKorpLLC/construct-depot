@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth';
 import DashboardLayout from '@/components/layouts/DashboardLayout';
 import ProjectOverviewWidget from '@/components/customer/ProjectOverviewWidget';
 import BudgetTrackingWidget from '@/components/customer/BudgetTrackingWidget';
