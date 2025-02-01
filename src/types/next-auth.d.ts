@@ -11,19 +11,14 @@ export enum UserRole {
 declare module 'next-auth' {
   interface User {
     id: string;
-    email: string;
-    name?: string | null;
     role: UserRole;
   }
 
   interface Session {
-    user: {
+    user: User & {
       id: string;
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
       role: UserRole;
-    }
+    };
   }
 }
 
