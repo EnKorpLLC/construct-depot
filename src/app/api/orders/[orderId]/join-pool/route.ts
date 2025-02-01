@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { orderService } from '@/lib/services/order/order.service';
-import { ValidationError, NotFoundError, PermissionError } from '@/lib/errors';
+import { ValidationError, NotFoundError } from '@/lib/errors';
 import { z } from 'zod';
 
 // Validation schema for joining pool
