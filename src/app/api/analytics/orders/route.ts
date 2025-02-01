@@ -3,6 +3,11 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+interface OrderTrend {
+  date: Date;
+  orders: bigint;
+}
+
 export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
@@ -61,7 +66,7 @@ export async function GET(req: NextRequest) {
     ]);
 
     // Get daily order trends
-    const orderTrends = await prisma.$queryRaw`
+    const orderTrends = await prisma.$queryRaw<OrderTrend[]>`
       SELECT 
         DATE(created_at) as date,
         COUNT(*) as orders
@@ -75,7 +80,7 @@ export async function GET(req: NextRequest) {
       totalOrders,
       pendingOrders,
       completedOrders,
-      orderTrends: orderTrends.map((trend: any) => ({
+      orderTrends: orderTrends.map((trend) => ({
         date: trend.date.toISOString(),
         orders: Number(trend.orders),
       })),
