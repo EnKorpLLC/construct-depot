@@ -113,9 +113,9 @@ export default function MaterialOrdersWidget() {
                 <div className="mb-4">
                   <div className="flex justify-between text-sm text-gray-600 mb-1">
                     <span>Pool Progress</span>
-                    <span>{order.poolProgress}%</span>
+                    <span>{order.poolProgress ?? 0}%</span>
                   </div>
-                  <Progress value={order.poolProgress} className="mb-2" />
+                  <Progress value={order.poolProgress ?? 0} className="mb-2" />
                   <p className="text-sm text-gray-500">
                     {order.poolParticipants} participants in this pool
                   </p>
