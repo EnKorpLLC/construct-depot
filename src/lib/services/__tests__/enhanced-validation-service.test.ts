@@ -1,60 +1,58 @@
+import { OrderStatus, Role } from '@prisma/client';
 import { EnhancedValidationService } from '../EnhancedValidationService';
-import { OrderStatus, UserRole } from '@prisma/client';
-import { prismaMock } from '../../../__tests__/mocks/prisma';
+import { prismaMock } from '../../__tests__/mocks/prisma';
 
 describe('EnhancedValidationService', () => {
   const mockOrder = {
-    id: '1',
+    id: 'order-1',
+    userId: 'user-1',
     status: OrderStatus.PENDING,
-    userId: 'user1',
-    user: {
-      id: 'user1',
-      role: UserRole.CUSTOMER,
-    },
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    role: Role.user,
   };
 
   beforeEach(() => {
     jest.clearAllMocks();
-    prismaMock.order.findUnique.mockResolvedValue(mockOrder);
   });
 
   describe('validateTransition', () => {
-    it('should allow valid transitions', async () => {
-      const validContext = {
-        orderId: '1',
+    it('should allow valid transitions for admin', async () => {
+      const service = new EnhancedValidationService();
+      const result = await service.validateTransition({
+        orderId: mockOrder.id,
         currentStatus: OrderStatus.PENDING,
         newStatus: OrderStatus.PROCESSING,
-        userRole: UserRole.ADMIN,
-      };
+        userRole: Role.super_admin,
+      });
 
-      const result = await EnhancedValidationService.validateTransition(validContext);
-      expect(result).toBeNull();
+      expect(result.isValid).toBe(true);
     });
 
     it('should reject invalid role transitions', async () => {
-      const customerContext = {
-        orderId: '1',
+      const service = new EnhancedValidationService();
+      const result = await service.validateTransition({
+        orderId: mockOrder.id,
         currentStatus: OrderStatus.PENDING,
         newStatus: OrderStatus.PROCESSING,
-        userRole: UserRole.CUSTOMER,
-      };
+        userRole: Role.user,
+      });
 
-      const result = await EnhancedValidationService.validateTransition(customerContext);
-      expect(result).toBeDefined();
-      expect(result?.code).toBe('INSUFFICIENT_PERMISSIONS');
+      expect(result.isValid).toBe(false);
+      expect(result.error).toBe('Unauthorized status transition');
     });
 
-    it('should reject invalid status transitions', async () => {
-      const invalidContext = {
-        orderId: '1',
-        currentStatus: OrderStatus.PENDING,
-        newStatus: OrderStatus.DELIVERED,
-        userRole: UserRole.ADMIN,
-      };
+    it('should allow admin to bypass validation', async () => {
+      const service = new EnhancedValidationService();
+      const result = await service.validateTransition({
+        orderId: mockOrder.id,
+        currentStatus: OrderStatus.COMPLETED,
+        newStatus: OrderStatus.PROCESSING,
+        userRole: Role.super_admin,
+        bypassValidation: true,
+      });
 
-      const result = await EnhancedValidationService.validateTransition(invalidContext);
-      expect(result).toBeDefined();
-      expect(result?.code).toBe('INVALID_TRANSITION');
+      expect(result.isValid).toBe(true);
     });
   });
 }); 

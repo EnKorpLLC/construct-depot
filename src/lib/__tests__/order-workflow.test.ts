@@ -1,6 +1,7 @@
 import { OrderWorkflowService } from '../services/OrderWorkflowService';
-import { OrderStatus, UserRole } from '@prisma/client';
+import { OrderStatus, UserRole, Role } from '@prisma/client';
 import { prismaMock } from '../../__tests__/mocks/prisma';
+import { OrderWorkflow } from '../order-workflow';
 
 describe('OrderWorkflowService', () => {
   const mockOrder = {

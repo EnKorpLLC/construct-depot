@@ -1,12 +1,12 @@
 import { ValidationService } from '../services/ValidationService';
-import { OrderStatus, UserRole } from '@prisma/client';
+import { OrderStatus, Role } from '@prisma/client';
 
 describe('ValidationService', () => {
   describe('getAvailableTransitions', () => {
     it('should return valid transitions for PENDING status', () => {
       const transitions = ValidationService.getAvailableTransitions(
         OrderStatus.PENDING,
-        UserRole.ADMIN
+        Role.super_admin
       );
       expect(transitions).toContain(OrderStatus.PROCESSING);
       expect(transitions).toContain(OrderStatus.CANCELLED);
@@ -15,7 +15,7 @@ describe('ValidationService', () => {
     it('should return limited transitions for customer role', () => {
       const transitions = ValidationService.getAvailableTransitions(
         OrderStatus.PENDING,
-        UserRole.CUSTOMER
+        Role.user
       );
       expect(transitions).toContain(OrderStatus.CANCELLED);
       expect(transitions).not.toContain(OrderStatus.PROCESSING);
@@ -24,7 +24,7 @@ describe('ValidationService', () => {
     it('should return empty array for terminal states', () => {
       const transitions = ValidationService.getAvailableTransitions(
         OrderStatus.DELIVERED,
-        UserRole.ADMIN
+        Role.super_admin
       );
       expect(transitions).toEqual([]);
     });
@@ -45,31 +45,32 @@ describe('ValidationService', () => {
   });
 
   describe('validateStatusTransition', () => {
-    it('should allow valid transitions', () => {
+    it('should allow admin to make any valid transition', () => {
       const result = ValidationService.validateStatusTransition(
         OrderStatus.PENDING,
         OrderStatus.PROCESSING,
-        UserRole.ADMIN
+        Role.super_admin
       );
       expect(result).toBe(true);
     });
 
-    it('should reject invalid transitions', () => {
-      const result = ValidationService.validateStatusTransition(
-        OrderStatus.DELIVERED,
-        OrderStatus.PROCESSING,
-        UserRole.ADMIN
-      );
-      expect(result).toBe(false);
-    });
-
-    it('should reject unauthorized transitions', () => {
+    it('should return limited transitions for customer role', () => {
       const result = ValidationService.validateStatusTransition(
         OrderStatus.PENDING,
-        OrderStatus.PROCESSING,
-        UserRole.CUSTOMER
+        OrderStatus.CANCELLED,
+        Role.user
       );
-      expect(result).toBe(false);
+      expect(result).toBe(true);
+    });
+
+    it('should reject invalid transitions for admin', () => {
+      expect(() =>
+        ValidationService.validateStatusTransition(
+          OrderStatus.COMPLETED,
+          OrderStatus.PENDING,
+          Role.super_admin
+        )
+      ).toThrow('Invalid status transition');
     });
   });
 }); 

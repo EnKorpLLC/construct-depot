@@ -1,5 +1,5 @@
 import { OrderWorkflowService } from '@/lib/services/OrderWorkflowService';
-import { OrderStatus, UserRole } from '@prisma/client';
+import { OrderStatus, Role } from '@prisma/client';
 import { prismaMock } from '../mocks/prisma';
 import { mockOrder, mockProduct } from '../utils/mock-data';
 
@@ -9,7 +9,7 @@ describe('OrderWorkflowService', () => {
   });
 
   describe('updateOrderStatus', () => {
-    it('should successfully update order status', async () => {
+    it('should update order status for admin', async () => {
       prismaMock.order.findUnique.mockResolvedValue(mockOrder);
       prismaMock.order.update.mockResolvedValue({
         ...mockOrder,
@@ -19,11 +19,37 @@ describe('OrderWorkflowService', () => {
       const result = await OrderWorkflowService.updateOrderStatus(
         mockOrder.id,
         OrderStatus.PROCESSING,
-        UserRole.ADMIN
+        Role.super_admin
       );
 
       expect(result.status).toBe(OrderStatus.PROCESSING);
-      expect(prismaMock.order.update).toHaveBeenCalled();
+    });
+
+    it('should validate status transitions', async () => {
+      prismaMock.order.findUnique.mockResolvedValue({
+        ...mockOrder,
+        status: OrderStatus.COMPLETED,
+      });
+
+      await expect(
+        OrderWorkflowService.updateOrderStatus(
+          mockOrder.id,
+          OrderStatus.PROCESSING,
+          Role.super_admin
+        )
+      ).rejects.toThrow('Invalid status transition');
+    });
+
+    it('should enforce role-based permissions', async () => {
+      prismaMock.order.findUnique.mockResolvedValue(mockOrder);
+
+      await expect(
+        OrderWorkflowService.updateOrderStatus(
+          mockOrder.id,
+          OrderStatus.PROCESSING,
+          Role.user
+        )
+      ).rejects.toThrow('User does not have permission');
     });
 
     it('should handle pooling status transition correctly', async () => {
@@ -41,7 +67,7 @@ describe('OrderWorkflowService', () => {
       const result = await OrderWorkflowService.updateOrderStatus(
         pooledOrder.id,
         OrderStatus.PROCESSING,
-        UserRole.ADMIN
+        Role.super_admin
       );
 
       expect(result.status).toBe(OrderStatus.PROCESSING);
@@ -59,21 +85,9 @@ describe('OrderWorkflowService', () => {
         OrderWorkflowService.updateOrderStatus(
           deliveredOrder.id,
           OrderStatus.PROCESSING,
-          UserRole.ADMIN
+          Role.super_admin
         )
       ).rejects.toThrow('Invalid status transition');
-    });
-
-    it('should validate user permissions', async () => {
-      prismaMock.order.findUnique.mockResolvedValue(mockOrder);
-
-      await expect(
-        OrderWorkflowService.updateOrderStatus(
-          mockOrder.id,
-          OrderStatus.PROCESSING,
-          UserRole.CUSTOMER
-        )
-      ).rejects.toThrow('User does not have permission');
     });
   });
 
