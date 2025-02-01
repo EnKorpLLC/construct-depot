@@ -24,6 +24,7 @@ export interface BudgetCategory {
   allocated: number;
   spent: number;
   remaining: number;
+  status: 'on_track' | 'warning' | 'over_budget';
 }
 
 export interface BudgetSummary {
@@ -44,7 +45,29 @@ export const dashboardService = {
 
   async getBudgetCategories(projectId: string): Promise<BudgetCategory[]> {
     // TODO: Implement actual API call to fetch budget categories
-    return [];
+    return [
+      {
+        name: 'Materials',
+        allocated: 50000,
+        spent: 30000,
+        remaining: 20000,
+        status: 'on_track'
+      },
+      {
+        name: 'Labor',
+        allocated: 75000,
+        spent: 65000,
+        remaining: 10000,
+        status: 'warning'
+      },
+      {
+        name: 'Equipment',
+        allocated: 25000,
+        spent: 28000,
+        remaining: -3000,
+        status: 'over_budget'
+      }
+    ];
   },
 
   async getBudgetSummary(projectId: string): Promise<BudgetSummary> {
