@@ -34,9 +34,10 @@ model Order {
 }
 
 model ServiceConfig {
-  id        String   @id @default(cuid())
-  service   String   @unique
-  config    Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String    @id @default(cuid())
+  service      String    @unique
+  config       Json
+  lastVerified DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 } 
