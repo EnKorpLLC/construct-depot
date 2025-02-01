@@ -1,4 +1,5 @@
 import 'next-auth';
+import { JWT } from 'next-auth/jwt';
 
 export enum UserRole {
   SUPER_ADMIN = 'super_admin',
@@ -23,5 +24,12 @@ declare module 'next-auth' {
       image?: string | null;
       role: UserRole;
     }
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id: string;
+    role: UserRole;
   }
 } 
