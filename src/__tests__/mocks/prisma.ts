@@ -32,10 +32,11 @@ jest.mock('@prisma/client', () => ({
     DELIVERED: 'DELIVERED',
     CANCELLED: 'CANCELLED'
   },
-  UserRole: {
-    ADMIN: 'ADMIN',
-    CUSTOMER: 'CUSTOMER',
-    SUPPLIER: 'SUPPLIER'
+  Role: {
+    super_admin: 'super_admin',
+    GENERAL_CONTRACTOR: 'GENERAL_CONTRACTOR',
+    SUBCONTRACTOR: 'SUBCONTRACTOR',
+    user: 'user'
   },
   AdminActivityType: {
     ORDER_STATUS_CHANGE: 'ORDER_STATUS_CHANGE',

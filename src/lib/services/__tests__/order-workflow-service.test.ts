@@ -1,5 +1,5 @@
 import { OrderWorkflowService } from '../OrderWorkflowService';
-import { OrderStatus, UserRole } from '@prisma/client';
+import { OrderStatus, Role } from '@prisma/client';
 import { prismaMock } from '../../../__tests__/mocks/prisma';
 
 describe('OrderWorkflowService', () => {
@@ -9,7 +9,7 @@ describe('OrderWorkflowService', () => {
     userId: 'user1',
     user: {
       id: 'user1',
-      role: UserRole.CUSTOMER,
+      role: Role.user,
     },
     items: [
       {
@@ -31,7 +31,7 @@ describe('OrderWorkflowService', () => {
       const result = await OrderWorkflowService.updateOrderStatus(
         '1',
         OrderStatus.PROCESSING,
-        UserRole.ADMIN
+        Role.super_admin
       );
 
       expect(result.status).toBe(OrderStatus.PROCESSING);
@@ -42,7 +42,7 @@ describe('OrderWorkflowService', () => {
       const result = await OrderWorkflowService.updateOrderStatus(
         '1',
         OrderStatus.POOLING,
-        UserRole.ADMIN
+        Role.super_admin
       );
 
       expect(result.status).toBe(OrderStatus.POOLING);
@@ -53,7 +53,7 @@ describe('OrderWorkflowService', () => {
         OrderWorkflowService.updateOrderStatus(
           '1',
           OrderStatus.DELIVERED,
-          UserRole.ADMIN
+          Role.super_admin
         )
       ).rejects.toThrow('Invalid status transition');
     });
@@ -63,7 +63,7 @@ describe('OrderWorkflowService', () => {
         OrderWorkflowService.updateOrderStatus(
           '1',
           OrderStatus.PROCESSING,
-          UserRole.CUSTOMER
+          Role.user
         )
       ).rejects.toThrow('User does not have permission');
     });
