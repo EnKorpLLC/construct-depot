@@ -19,10 +19,42 @@ export interface Project {
   createdAt: Date;
 }
 
+export interface BudgetCategory {
+  name: string;
+  allocated: number;
+  spent: number;
+  remaining: number;
+}
+
+export interface BudgetSummary {
+  totalBudget: number;
+  totalSpent: number;
+  totalRemaining: number;
+  spendingTrend: Array<{
+    date: string;
+    amount: number;
+  }>;
+}
+
 export const dashboardService = {
   async getProjects(): Promise<Project[]> {
     // TODO: Implement actual API call to fetch projects
     return [];
+  },
+
+  async getBudgetCategories(projectId: string): Promise<BudgetCategory[]> {
+    // TODO: Implement actual API call to fetch budget categories
+    return [];
+  },
+
+  async getBudgetSummary(projectId: string): Promise<BudgetSummary> {
+    // TODO: Implement actual API call to fetch budget summary
+    return {
+      totalBudget: 0,
+      totalSpent: 0,
+      totalRemaining: 0,
+      spendingTrend: []
+    };
   },
 
   async getUserStats(userId: string): Promise<DashboardStats> {
