@@ -54,17 +54,21 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
   useEffect(() => {
     const fetchBudgetData = async () => {
       try {
-        setLoading(true);
         const [categoriesData, summaryData] = await Promise.all([
           CustomerDashboardService.getBudgetCategories(projectId),
-          CustomerDashboardService.getBudgetSummary(projectId),
+          CustomerDashboardService.getBudgetSummary(projectId)
         ]);
         setCategories(categoriesData);
-        setSummary(summaryData);
+        setSummary({
+          ...summaryData,
+          projectedOverage: summaryData.projectedOverage || 0,
+          recentExpenses: summaryData.recentExpenses || 0,
+          pendingApprovals: summaryData.pendingApprovals || 0
+        });
         setError(null);
       } catch (err) {
         setError('Failed to load budget data. Please try again later.');
-        console.error('Error loading budget data:', err);
+        console.error('Error fetching budget data:', err);
       } finally {
         setLoading(false);
       }
@@ -74,27 +78,43 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
   }, [projectId]);
 
   // WebSocket subscriptions for real-time updates
-  useWebSocket<{ projectId: string; category: BudgetCategory }>('budget_category_updated', (update) => {
-    if (update.projectId === projectId) {
-      setCategories(prev =>
-        prev.map(category =>
-          category.name === update.category.name
-            ? update.category
-            : category
-        )
-      );
+  useWebSocket({
+    url: `ws://localhost:3000/api/ws?projectId=${projectId}`,
+    onMessage: (message) => {
+      if (message.type === 'budget_category_updated') {
+        const update = message.payload as { projectId: string; category: BudgetCategory };
+        if (update.projectId === projectId) {
+          setCategories(prev =>
+            prev.map(category =>
+              category.name === update.category.name ? update.category : category
+            )
+          );
+        }
+      }
     }
   });
 
-  useWebSocket<{ projectId: string; expense: Expense }>('expense_added', (update) => {
-    if (update.projectId === projectId) {
-      setExpenses(prev => [...prev, update.expense]);
+  useWebSocket({
+    url: `ws://localhost:3000/api/ws?projectId=${projectId}`,
+    onMessage: (message) => {
+      if (message.type === 'expense_added') {
+        const update = message.payload as { projectId: string; expense: Expense };
+        if (update.projectId === projectId) {
+          setExpenses(prev => [...prev, update.expense]);
+        }
+      }
     }
   });
 
-  useWebSocket<{ projectId: string; summaryData: BudgetSummary }>('budget_summary_updated', (update) => {
-    if (update.projectId === projectId) {
-      setSummary(update.summaryData);
+  useWebSocket({
+    url: `ws://localhost:3000/api/ws?projectId=${projectId}`,
+    onMessage: (message) => {
+      if (message.type === 'budget_summary_updated') {
+        const update = message.payload as { projectId: string; summaryData: BudgetSummary };
+        if (update.projectId === projectId) {
+          setSummary(update.summaryData);
+        }
+      }
     }
   });
 

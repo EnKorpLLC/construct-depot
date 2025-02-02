@@ -8,6 +8,9 @@ interface OrderTrend {
   orders: bigint;
 }
 
+// Add export config to mark as dynamic
+export const dynamic = 'force-dynamic';
+
 export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

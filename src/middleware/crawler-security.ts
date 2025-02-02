@@ -6,8 +6,17 @@ import crypto from 'crypto';
 
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
 
+interface SecurityConfig {
+  maxRequestsPerMinute: number;
+  maxConcurrentJobs: number;
+  maxJobDuration: number;
+  requiredRoles: string[];
+  ipWhitelist: string[];
+  userAgentPattern: RegExp;
+}
+
 // Security configuration
-const SECURITY_CONFIG = {
+const SECURITY_CONFIG: SecurityConfig = {
   maxRequestsPerMinute: 60,
   maxConcurrentJobs: 5,
   maxJobDuration: 3600, // 1 hour
@@ -23,6 +32,14 @@ const requestSchema = z.object({
   schedule: z.string().regex(/^(\*|([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])|\*\/([0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9])) (\*|([0-9]|1[0-9]|2[0-3])|\*\/([0-9]|1[0-9]|2[0-3])) (\*|([1-9]|1[0-9]|2[0-9]|3[0-1])|\*\/([1-9]|1[0-9]|2[0-9]|3[0-1])) (\*|([1-9]|1[0-2])|\*\/([1-9]|1[0-2])) (\*|([0-6])|\*\/([0-6]))$/),
   selectors: z.record(z.string()),
 });
+
+type RequestSchema = z.infer<typeof requestSchema>;
+
+interface CrawlerSession {
+  user: {
+    role: string;
+  };
+}
 
 export class CrawlerSecurity {
   private static instance: CrawlerSecurity;
@@ -63,7 +80,7 @@ export class CrawlerSecurity {
 
   private async validateRequest(req: NextRequest): Promise<boolean> {
     try {
-      const body = await req.json();
+      const body = await req.clone().json() as unknown;
       await requestSchema.parseAsync(body);
       return true;
     } catch {
@@ -125,7 +142,7 @@ export class CrawlerSecurity {
     }
 
     // Validate session and roles
-    const session = await getServerSession();
+    const session = await getServerSession() as CrawlerSession | null;
     if (!session?.user || !SECURITY_CONFIG.requiredRoles.includes(session.user.role)) {
       await this.logSuspiciousActivity(ip, 'Unauthorized access attempt');
       return new NextResponse(JSON.stringify({ error: 'Unauthorized' }), {

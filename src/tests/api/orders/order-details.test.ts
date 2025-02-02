@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 import { OrderStatus } from '@prisma/client';
 import * as orderDetailRoutes from '@/app/api/orders/[orderId]/route';
+import { getServerSession } from 'next-auth';
+import { MockSession } from '../../setup';
 
 // Mock NextAuth session
 jest.mock('next-auth', () => ({
@@ -18,18 +20,16 @@ describe('Order Detail API Endpoints', () => {
   let testOrder: any;
 
   beforeEach(async () => {
-    // Create test user
-    testUser = await prisma.user.create({
+    const testUser = await prisma.user.create({
       data: {
-        email: 'user@example.com',
+        email: 'test@example.com',
         name: 'Test User',
         password: await hash('password123', 12),
-        role: 'USER'
+        role: 'user'
       }
     });
 
-    // Create test supplier
-    testSupplier = await prisma.user.create({
+    const testSupplier = await prisma.user.create({
       data: {
         email: 'supplier@example.com',
         name: 'Test Supplier',
@@ -38,30 +38,31 @@ describe('Order Detail API Endpoints', () => {
       }
     });
 
-    // Create test product
-    testProduct = await prisma.product.create({
+    const testProduct = await prisma.product.create({
       data: {
         name: 'Test Product',
-        description: 'Test product description',
+        description: 'A test product',
         price: 99.99,
-        supplierId: testSupplier.id
+        inventory: 100,
+        supplierId: testSupplier.id,
+        supplier: {
+          connect: {
+            id: testSupplier.id
+          }
+        }
       }
     });
 
-    // Create test order
-    testOrder = await prisma.order.create({
+    const testOrder = await prisma.order.create({
       data: {
-        orderNumber: 'TEST-001',
         userId: testUser.id,
-        supplierId: testSupplier.id,
-        status: OrderStatus.DRAFT,
         totalAmount: 99.99,
+        status: OrderStatus.PENDING,
         items: {
           create: {
             productId: testProduct.id,
             quantity: 1,
-            unitPrice: 99.99,
-            totalPrice: 99.99
+            price: 99.99
           }
         }
       }
@@ -80,8 +81,13 @@ describe('Order Detail API Endpoints', () => {
     it('should return order details for owner', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'GET',

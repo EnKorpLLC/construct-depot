@@ -10,6 +10,9 @@ import MaterialOrdersWidget from '@/components/contractor/MaterialOrdersWidget';
 import CostAnalyticsWidget from '@/components/contractor/CostAnalyticsWidget';
 import BusinessDevelopmentWidget from '@/components/contractor/BusinessDevelopmentWidget';
 
+// Add export config to mark as dynamic
+export const dynamic = 'force-dynamic';
+
 export default async function ContractorDashboard() {
   try {
     const session = await getServerSession(authOptions);

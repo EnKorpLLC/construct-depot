@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 import { OrderStatus, PaymentStatus, PaymentMethod } from '@prisma/client';
 import * as orderPaymentRoutes from '@/app/api/orders/[orderId]/payment/route';
+import { getServerSession } from 'next-auth';
+import { MockSession } from '../../setup';
 
 // Mock NextAuth session
 jest.mock('next-auth', () => ({
@@ -22,10 +24,10 @@ describe('Order Payment API Endpoints', () => {
     // Create test user
     testUser = await prisma.user.create({
       data: {
-        email: 'user@example.com',
+        email: 'test@example.com',
         name: 'Test User',
         password: await hash('password123', 12),
-        role: 'USER'
+        role: 'user'
       }
     });
 
@@ -43,26 +45,29 @@ describe('Order Payment API Endpoints', () => {
     testProduct = await prisma.product.create({
       data: {
         name: 'Test Product',
-        description: 'Test product description',
+        description: 'A test product',
         price: 99.99,
-        supplierId: testSupplier.id
+        inventory: 100,
+        supplierId: testSupplier.id,
+        supplier: {
+          connect: {
+            id: testSupplier.id
+          }
+        }
       }
     });
 
     // Create test order
     testOrder = await prisma.order.create({
       data: {
-        orderNumber: 'PAY-001',
         userId: testUser.id,
-        supplierId: testSupplier.id,
-        status: OrderStatus.PENDING,
         totalAmount: 99.99,
+        status: OrderStatus.PENDING,
         items: {
           create: {
             productId: testProduct.id,
             quantity: 1,
-            unitPrice: 99.99,
-            totalPrice: 99.99
+            price: 99.99
           }
         }
       }
@@ -93,8 +98,13 @@ describe('Order Payment API Endpoints', () => {
     it('should return payment details', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'GET',
@@ -116,8 +126,13 @@ describe('Order Payment API Endpoints', () => {
     it('should return 404 for non-existent payment', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'GET',
@@ -142,8 +157,13 @@ describe('Order Payment API Endpoints', () => {
 
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'POST',
@@ -178,8 +198,13 @@ describe('Order Payment API Endpoints', () => {
 
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'POST',
@@ -206,8 +231,13 @@ describe('Order Payment API Endpoints', () => {
     it('should update payment status', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'PATCH',
@@ -232,8 +262,13 @@ describe('Order Payment API Endpoints', () => {
     it('should validate payment status transition', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'PATCH',

@@ -1,7 +1,15 @@
-import { check } from 'k6/http';
 import http from 'k6/http';
+import { check } from 'k6';
 import { sleep } from 'k6';
 import { Counter, Rate, Trend } from 'k6/metrics';
+import { Options } from 'k6/options';
+
+interface K6Response {
+  status: number;
+  timings: {
+    duration: number;
+  };
+}
 
 // Custom metrics
 const analyticsRequests = new Counter('analytics_requests');
@@ -40,12 +48,13 @@ export default function() {
         analyticsLatency.add(orderMetricsRes.timings.duration);
         
         check(orderMetricsRes, {
-            'order metrics response time OK': (r) => r.timings.duration < 500,
+            'order metrics response time OK': (r: K6Response) => r.timings.duration < 500,
+            'order metrics status is 200': (r: K6Response) => r.status === 200,
         });
     }
     
     check(orderMetricsRes, {
-        'order metrics status is 200': (r) => r.status === 200,
+        'order metrics status is 200': (r: K6Response) => r.status === 200,
     });
 
     // Check cache headers
@@ -63,8 +72,8 @@ export default function() {
     analyticsLatency.add(customerMetricsRes.timings.duration);
     
     check(customerMetricsRes, {
-      'customer metrics status is 200': (r) => r.status === 200,
-      'customer metrics response time OK': (r) => r.timings.duration < 500,
+      'customer metrics status is 200': (r: K6Response) => r.status === 200,
+      'customer metrics response time OK': (r: K6Response) => r.timings.duration < 500,
     });
   }
 
@@ -78,8 +87,8 @@ export default function() {
     analyticsLatency.add(revenueMetricsRes.timings.duration);
     
     check(revenueMetricsRes, {
-      'revenue metrics status is 200': (r) => r.status === 200,
-      'revenue metrics response time OK': (r) => r.timings.duration < 500,
+      'revenue metrics status is 200': (r: K6Response) => r.status === 200,
+      'revenue metrics response time OK': (r: K6Response) => r.timings.duration < 500,
     });
   }
 
@@ -105,8 +114,8 @@ export default function() {
   analyticsLatency.add(reportRes.timings.duration);
 
   check(reportRes, {
-    'report generation status is 200': (r) => r.status === 200,
-    'report generation response time OK': (r) => r.timings.duration < 1000,
+    'report generation status is 200': (r: K6Response) => r.status === 200,
+    'report generation response time OK': (r: K6Response) => r.timings.duration < 1000,
   });
 
   // Test WebSocket connection for real-time analytics
@@ -114,8 +123,8 @@ export default function() {
   websocketConnections.add(1);
   
   check(ws, {
-    'websocket connection OK': (r) => r.status === 101,
-    'websocket response time OK': (r) => r.timings.duration < 100,
+    'websocket connection OK': (r: K6Response) => r.status === 101,
+    'websocket response time OK': (r: K6Response) => r.timings.duration < 100,
   });
 
   sleep(1);

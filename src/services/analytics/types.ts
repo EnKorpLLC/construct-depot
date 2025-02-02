@@ -57,9 +57,18 @@ export interface PoolMetricsData {
 }
 
 export interface ReportConfig {
+  name: string;
+  type: 'PERFORMANCE' | 'REVENUE' | 'CUSTOMER' | 'CUSTOM';
   timeframe: TimeFrame;
   sections: ('orders' | 'customers' | 'revenue' | 'pools')[];
-  format: 'pdf' | 'csv' | 'json';
+  metrics: string[];
+  dimensions: string[];
+  filters: {
+    from: string;
+    to: string;
+    [key: string]: string;
+  };
+  format: 'JSON' | 'CSV' | 'PDF';
 }
 
 export interface AnalyticsReport {
@@ -70,4 +79,35 @@ export interface AnalyticsReport {
   error?: string;
   createdAt: string;
   completedAt?: string;
+}
+
+// Raw database types
+export interface RawOrderTrend {
+  date: Date;
+  orders: bigint;
+}
+
+export interface RawCustomerSegment {
+  name: string;
+  value: bigint;
+}
+
+export interface RawCategoryMetric {
+  category: string;
+  orders: bigint;
+  revenue: bigint;
+}
+
+export interface RawRepeatRate {
+  repeat_rate: number;
+}
+
+export interface RawAverageOrders {
+  avg_orders: number;
+}
+
+// Error handling types
+export interface AnalyticsError extends Error {
+  code?: string;
+  details?: unknown;
 } 

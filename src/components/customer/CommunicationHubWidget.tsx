@@ -88,22 +88,38 @@ export default function CommunicationHubWidget() {
   }, []);
 
   // WebSocket subscriptions for real-time updates
-  useWebSocket<Message>('new_message', (message) => {
-    setMessages(prev => [...prev, message]);
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'new_message') {
+        setMessages(prev => [...prev, message.payload as Message]);
+      }
+    }
   });
 
-  useWebSocket<Notification>('new_notification', (notification) => {
-    setNotifications(prev => [...prev, notification]);
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'new_notification') {
+        setNotifications(prev => [...prev, message.payload as Notification]);
+      }
+    }
   });
 
-  useWebSocket<{ id: string; availability: Contact['availability'] }>('contact_status_change', (update) => {
-    setContacts(prev =>
-      prev.map(contact =>
-        contact.id === update.id
-          ? { ...contact, availability: update.availability }
-          : contact
-      )
-    );
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'contact_status_change') {
+        const update = message.payload as { id: string; availability: Contact['availability'] };
+        setContacts(prev =>
+          prev.map(contact =>
+            contact.id === update.id
+              ? { ...contact, availability: update.availability }
+              : contact
+          )
+        );
+      }
+    }
   });
 
   const handleMarkNotificationAsRead = async (notificationId: string) => {

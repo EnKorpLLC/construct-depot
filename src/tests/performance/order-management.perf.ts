@@ -1,7 +1,15 @@
-import { check } from 'k6/http';
 import http from 'k6/http';
+import { check } from 'k6';
 import { sleep } from 'k6';
 import { Counter, Rate, Trend } from 'k6/metrics';
+import { Options } from 'k6/options';
+
+interface K6Response {
+  status: number;
+  timings: {
+    duration: number;
+  };
+}
 
 // Custom metrics
 const orderRequests = new Counter('order_requests');
@@ -10,7 +18,9 @@ const orderProcessingTime = new Trend('order_processing_time');
 const poolingSuccess = new Rate('pooling_success');
 const websocketConnections = new Counter('websocket_connections');
 
-export const options = {
+export const options: Options = {
+  vus: 10,
+  duration: '30s',
   stages: [
     { duration: '1m', target: 50 },   // Ramp up to 50 users
     { duration: '3m', target: 50 },   // Stay at 50 users
@@ -66,8 +76,8 @@ export default function() {
   orderCreationSuccess.add(createRes.status === 201);
   
   check(createRes, {
-    'order created successfully': (r) => r.status === 201,
-    'create response time OK': (r) => r.timings.duration < 1000,
+    'order created successfully': (r: K6Response) => r.status === 201,
+    'create response time OK': (r: K6Response) => r.timings.duration < 1000,
   });
 
   if (createRes.status === 201) {
@@ -80,8 +90,8 @@ export default function() {
     );
     
     check(getRes, {
-      'order retrieved successfully': (r) => r.status === 200,
-      'get response time OK': (r) => r.timings.duration < 500,
+      'order retrieved successfully': (r: K6Response) => r.status === 200,
+      'get response time OK': (r: K6Response) => r.timings.duration < 500,
     });
 
     // Test order pooling
@@ -94,8 +104,8 @@ export default function() {
     poolingSuccess.add(poolRes.status === 200);
     
     check(poolRes, {
-      'order pooled successfully': (r) => r.status === 200,
-      'pool response time OK': (r) => r.timings.duration < 1000,
+      'order pooled successfully': (r: K6Response) => r.status === 200,
+      'pool response time OK': (r: K6Response) => r.timings.duration < 1000,
     });
 
     // Test order list with filters
@@ -105,8 +115,8 @@ export default function() {
     );
     
     check(listRes, {
-      'orders listed successfully': (r) => r.status === 200,
-      'list response time OK': (r) => r.timings.duration < 500,
+      'orders listed successfully': (r: K6Response) => r.status === 200,
+      'list response time OK': (r: K6Response) => r.timings.duration < 500,
     });
 
     // Test order search
@@ -116,8 +126,8 @@ export default function() {
     );
     
     check(searchRes, {
-      'orders searched successfully': (r) => r.status === 200,
-      'search response time OK': (r) => r.timings.duration < 800,
+      'orders searched successfully': (r: K6Response) => r.status === 200,
+      'search response time OK': (r: K6Response) => r.timings.duration < 800,
     });
   }
 
@@ -126,8 +136,8 @@ export default function() {
   websocketConnections.add(1);
   
   check(ws, {
-    'websocket connection OK': (r) => r.status === 101,
-    'websocket response time OK': (r) => r.timings.duration < 100,
+    'websocket connection OK': (r: K6Response) => r.status === 101,
+    'websocket response time OK': (r: K6Response) => r.timings.duration < 100,
   });
 
   sleep(1);

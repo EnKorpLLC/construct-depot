@@ -64,27 +64,43 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
   }, [projectId]);
 
   // WebSocket subscriptions for real-time updates
-  useWebSocket<TimelineEvent>('timeline_event_added', (event) => {
-    if (event.projectId === projectId) {
-      setEvents(prev => [...prev, event]);
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'timeline_event_added') {
+        const event = message.payload as TimelineEvent & { projectId: string };
+        if (event.projectId === projectId) {
+          setEvents(prev => [...prev, event]);
+        }
+      }
     }
   });
 
-  useWebSocket<{ id: string; projectId: string; updates: Partial<TimelineEvent> }>('timeline_event_updated', (update) => {
-    if (update.projectId === projectId) {
-      setEvents(prev =>
-        prev.map(event =>
-          event.id === update.id
-            ? { ...event, ...update.updates }
-            : event
-        )
-      );
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'timeline_event_updated') {
+        const update = message.payload as TimelineEvent & { projectId: string };
+        if (update.projectId === projectId) {
+          setEvents(prev =>
+            prev.map(event =>
+              event.id === update.id ? update : event
+            )
+          );
+        }
+      }
     }
   });
 
-  useWebSocket<{ id: string; projectId: string }>('timeline_event_deleted', (deletion) => {
-    if (deletion.projectId === projectId) {
-      setEvents(prev => prev.filter(event => event.id !== deletion.id));
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'timeline_event_deleted') {
+        const { projectId: eventProjectId, eventId } = message.payload as { projectId: string; eventId: string };
+        if (eventProjectId === projectId) {
+          setEvents(prev => prev.filter(event => event.id !== eventId));
+        }
+      }
     }
   });
 

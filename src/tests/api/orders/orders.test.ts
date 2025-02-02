@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 import { OrderStatus } from '@prisma/client';
 import * as orderRoutes from '@/app/api/orders/route';
+import { getServerSession } from 'next-auth';
+import { MockSession } from '../../setup';
 
 // Mock NextAuth session
 jest.mock('next-auth', () => ({
@@ -21,10 +23,10 @@ describe('Order API Endpoints', () => {
     // Create test user
     testUser = await prisma.user.create({
       data: {
-        email: 'user@example.com',
+        email: 'test@example.com',
         name: 'Test User',
         password: await hash('password123', 12),
-        role: 'USER'
+        role: 'user'
       }
     });
 
@@ -42,26 +44,29 @@ describe('Order API Endpoints', () => {
     testProduct = await prisma.product.create({
       data: {
         name: 'Test Product',
-        description: 'Test product description',
+        description: 'A test product',
         price: 99.99,
-        supplierId: testSupplier.id
+        inventory: 100,
+        supplierId: testSupplier.id,
+        supplier: {
+          connect: {
+            id: testSupplier.id
+          }
+        }
       }
     });
 
     // Create test order
     testOrder = await prisma.order.create({
       data: {
-        orderNumber: 'TEST-001',
         userId: testUser.id,
-        supplierId: testSupplier.id,
-        status: OrderStatus.DRAFT,
         totalAmount: 99.99,
+        status: OrderStatus.PENDING,
         items: {
           create: {
             productId: testProduct.id,
             quantity: 1,
-            unitPrice: 99.99,
-            totalPrice: 99.99
+            price: 99.99
           }
         }
       }
@@ -96,8 +101,13 @@ describe('Order API Endpoints', () => {
     it('should list orders for authenticated user', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'GET',
@@ -118,8 +128,13 @@ describe('Order API Endpoints', () => {
     it('should filter orders by status', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'GET',
@@ -141,8 +156,13 @@ describe('Order API Endpoints', () => {
     it('should create a new order for authenticated user', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const orderData = {
         supplierId: testSupplier.id,
@@ -169,8 +189,13 @@ describe('Order API Endpoints', () => {
     it('should validate required fields', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const invalidData = {
         // Missing supplierId
@@ -192,8 +217,13 @@ describe('Order API Endpoints', () => {
     it('should validate item quantities and prices', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const invalidData = {
         supplierId: testSupplier.id,
@@ -221,8 +251,13 @@ describe('Order API Endpoints', () => {
     it('should handle internal server errors gracefully', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       // Mock prisma to throw an error
       jest.spyOn(prisma.order, 'create').mockRejectedValue(new Error('Database error'));

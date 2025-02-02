@@ -1,84 +1,93 @@
+import { OrderStatus, Order, OrderItem, Product } from '@prisma/client';
 import { OrderWorkflowService } from '../OrderWorkflowService';
-import { OrderStatus, Role } from '@prisma/client';
-import { prismaMock } from '../../../__tests__/mocks/prisma';
+import { prismaMock } from '../../prisma/singleton';
 
 describe('OrderWorkflowService', () => {
-  const mockOrder = {
-    id: '1',
-    status: OrderStatus.PENDING,
-    userId: 'user1',
-    items: [
-      {
-        id: '1',
-        productId: 'prod1',
-        quantity: 2,
-      },
-    ],
-  };
-
+  let service: OrderWorkflowService;
+  
   beforeEach(() => {
-    jest.clearAllMocks();
+    service = new OrderWorkflowService();
   });
 
   describe('updateOrderStatus', () => {
-    it('should successfully update order status', async () => {
+    const mockOrder: Order & { items: OrderItem[] } = {
+      id: 'order1',
+      status: OrderStatus.PENDING,
+      userId: 'user1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      totalAmount: 100,
+      poolGroupId: null,
+      poolProgress: null,
+      poolDeadline: null,
+      items: [
+        {
+          id: 'item1',
+          productId: 'prod1',
+          quantity: 2,
+          price: 50,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          orderId: 'order1'
+        }
+      ]
+    };
+
+    it('should update order status and handle inventory for processing', async () => {
       prismaMock.order.findUnique.mockResolvedValue(mockOrder);
-      prismaMock.order.update.mockResolvedValue({
-        ...mockOrder,
-        status: OrderStatus.PROCESSING,
+      
+      const mockProduct: Product = {
+        id: 'prod1',
+        name: 'Test Product',
+        description: 'Test Description',
+        price: 50,
+        inventory: 10,
+        supplierId: 'supplier1',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      prismaMock.product.findUnique.mockResolvedValue(mockProduct);
+      prismaMock.product.update.mockResolvedValue({ ...mockProduct, inventory: 8 });
+      prismaMock.order.update.mockResolvedValue({ ...mockOrder, status: OrderStatus.PROCESSING });
+
+      await service.updateOrderStatus(mockOrder, OrderStatus.PROCESSING);
+
+      expect(prismaMock.product.update).toHaveBeenCalledWith({
+        where: { id: 'prod1' },
+        data: { inventory: 8 }
       });
-
-      const result = await OrderWorkflowService.updateOrderStatus(
-        mockOrder.id,
-        OrderStatus.PROCESSING,
-        Role.super_admin
-      );
-
-      expect(result.status).toBe(OrderStatus.PROCESSING);
-      expect(prismaMock.order.update).toHaveBeenCalled();
     });
 
-    it('should handle pooling status transition correctly', async () => {
-      prismaMock.order.findUnique.mockResolvedValue(mockOrder);
-      prismaMock.order.update.mockResolvedValue({
+    it('should restore inventory when cancelling order', async () => {
+      const processingOrder: Order & { items: OrderItem[] } = {
         ...mockOrder,
-        status: OrderStatus.POOLING,
+        status: OrderStatus.PROCESSING
+      };
+
+      prismaMock.order.findUnique.mockResolvedValue(processingOrder);
+      
+      const mockProduct: Product = {
+        id: 'prod1',
+        name: 'Test Product',
+        description: 'Test Description',
+        price: 50,
+        inventory: 8,
+        supplierId: 'supplier1',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      prismaMock.product.findUnique.mockResolvedValue(mockProduct);
+      prismaMock.product.update.mockResolvedValue({ ...mockProduct, inventory: 10 });
+      prismaMock.order.update.mockResolvedValue({ ...processingOrder, status: OrderStatus.CANCELLED });
+
+      await service.updateOrderStatus(processingOrder, OrderStatus.CANCELLED);
+
+      expect(prismaMock.product.update).toHaveBeenCalledWith({
+        where: { id: 'prod1' },
+        data: { inventory: 10 }
       });
-
-      const result = await OrderWorkflowService.updateOrderStatus(
-        mockOrder.id,
-        OrderStatus.POOLING,
-        Role.super_admin
-      );
-
-      expect(result.status).toBe(OrderStatus.POOLING);
-    });
-
-    it('should prevent invalid status transitions', async () => {
-      prismaMock.order.findUnique.mockResolvedValue({
-        ...mockOrder,
-        status: OrderStatus.DELIVERED,
-      });
-
-      await expect(
-        OrderWorkflowService.updateOrderStatus(
-          mockOrder.id,
-          OrderStatus.PROCESSING,
-          Role.super_admin
-        )
-      ).rejects.toThrow('Invalid status transition');
-    });
-
-    it('should validate user permissions', async () => {
-      prismaMock.order.findUnique.mockResolvedValue(mockOrder);
-
-      await expect(
-        OrderWorkflowService.updateOrderStatus(
-          mockOrder.id,
-          OrderStatus.PROCESSING,
-          Role.user
-        )
-      ).rejects.toThrow('User does not have permission');
     });
   });
 

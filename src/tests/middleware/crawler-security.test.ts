@@ -1,11 +1,31 @@
 import { describe, expect, it, beforeEach, afterEach, jest } from '@jest/globals';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
+import { MockSession } from '../setup';
 import { Redis } from 'ioredis';
 import { CrawlerSecurity, withCrawlerSecurity } from '../../middleware/crawler-security';
 
-// Mock Redis
-jest.mock('ioredis');
+interface MockRedis {
+  incr: jest.Mock;
+  expire: jest.Mock;
+  exists: jest.Mock;
+  setex: jest.Mock;
+  quit: jest.Mock;
+}
+
+const mockRedis: MockRedis = {
+  incr: jest.fn().mockResolvedValue(1),
+  expire: jest.fn().mockResolvedValue(1),
+  exists: jest.fn().mockResolvedValue(0),
+  setex: jest.fn().mockResolvedValue('OK'),
+  quit: jest.fn().mockResolvedValue('OK')
+};
+
+jest.mock('ioredis', () => {
+  return {
+    Redis: jest.fn().mockImplementation(() => mockRedis)
+  };
+});
 
 // Mock NextAuth
 jest.mock('next-auth', () => ({
@@ -14,22 +34,11 @@ jest.mock('next-auth', () => ({
 
 describe('CrawlerSecurity Middleware', () => {
   let security: CrawlerSecurity;
-  let mockRedis: jest.Mocked<Redis>;
+  let mockRedisClient: MockRedis;
   
   beforeEach(() => {
-    // Reset mocks
+    mockRedisClient = mockRedis;
     jest.clearAllMocks();
-    
-    // Mock Redis instance
-    mockRedis = {
-      incr: jest.fn().mockResolvedValue(1),
-      expire: jest.fn().mockResolvedValue(1),
-      exists: jest.fn().mockResolvedValue(0),
-      setex: jest.fn().mockResolvedValue('OK'),
-      quit: jest.fn().mockResolvedValue('OK'),
-    } as unknown as jest.Mocked<Redis>;
-    
-    (Redis as jest.MockedClass<typeof Redis>).mockImplementation(() => mockRedis);
     
     // Get security instance
     security = CrawlerSecurity.getInstance();
@@ -43,8 +52,13 @@ describe('CrawlerSecurity Middleware', () => {
     it('should allow valid requests', async () => {
       // Mock session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { role: 'ADMIN' }
-      });
+        user: { 
+          id: 'admin-id',
+          email: 'admin@example.com',
+          name: 'Admin User',
+          role: 'ADMIN'
+        }
+      } as MockSession);
       
       // Create mock request
       const req = new NextRequest('https://api.example.com/crawler', {
@@ -84,7 +98,7 @@ describe('CrawlerSecurity Middleware', () => {
     
     it('should enforce rate limits', async () => {
       // Mock Redis to simulate rate limit exceeded
-      mockRedis.incr.mockResolvedValue(61);
+      mockRedisClient.incr.mockResolvedValue(61);
       
       const req = new NextRequest('https://api.example.com/crawler', {
         method: 'GET',
@@ -107,8 +121,13 @@ describe('CrawlerSecurity Middleware', () => {
     it('should block unauthorized access', async () => {
       // Mock session with invalid role
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { role: 'USER' }
-      });
+        user: { 
+          id: 'admin-id',
+          email: 'admin@example.com',
+          name: 'Admin User',
+          role: 'USER'
+        }
+      } as MockSession);
       
       const req = new NextRequest('https://api.example.com/crawler', {
         method: 'GET',
@@ -151,8 +170,13 @@ describe('CrawlerSecurity Middleware', () => {
     it('should validate POST request body', async () => {
       // Mock valid session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { role: 'ADMIN' }
-      });
+        user: { 
+          id: 'admin-id',
+          email: 'admin@example.com',
+          name: 'Admin User',
+          role: 'ADMIN'
+        }
+      } as MockSession);
       
       const req = new NextRequest('https://api.example.com/crawler', {
         method: 'POST',
@@ -184,8 +208,13 @@ describe('CrawlerSecurity Middleware', () => {
     it('should reject invalid POST request body', async () => {
       // Mock valid session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { role: 'ADMIN' }
-      });
+        user: { 
+          id: 'admin-id',
+          email: 'admin@example.com',
+          name: 'Admin User',
+          role: 'ADMIN'
+        }
+      } as MockSession);
       
       const req = new NextRequest('https://api.example.com/crawler', {
         method: 'POST',
@@ -214,7 +243,7 @@ describe('CrawlerSecurity Middleware', () => {
   describe('IP Blocking', () => {
     it('should block previously blocked IPs', async () => {
       // Mock Redis to simulate blocked IP
-      mockRedis.exists.mockResolvedValue(1);
+      mockRedisClient.exists.mockResolvedValue(1);
       
       const req = new NextRequest('https://api.example.com/crawler', {
         method: 'GET',
@@ -235,8 +264,13 @@ describe('CrawlerSecurity Middleware', () => {
     it('should block IP after multiple suspicious activities', async () => {
       // Mock valid session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { role: 'ADMIN' }
-      });
+        user: { 
+          id: 'admin-id',
+          email: 'admin@example.com',
+          name: 'Admin User',
+          role: 'ADMIN'
+        }
+      } as MockSession);
       
       const req = new NextRequest('https://api.example.com/crawler', {
         method: 'POST',
@@ -260,7 +294,7 @@ describe('CrawlerSecurity Middleware', () => {
       
       expect(response.status).toBe(403);
       expect(handler).not.toHaveBeenCalled();
-      expect(mockRedis.setex).toHaveBeenCalledWith(
+      expect(mockRedisClient.setex).toHaveBeenCalledWith(
         'blocked_ip:127.0.0.1',
         86400,
         '1'
@@ -272,8 +306,13 @@ describe('CrawlerSecurity Middleware', () => {
     it('should handle handler errors gracefully', async () => {
       // Mock valid session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { role: 'ADMIN' }
-      });
+        user: { 
+          id: 'admin-id',
+          email: 'admin@example.com',
+          name: 'Admin User',
+          role: 'ADMIN'
+        }
+      } as MockSession);
       
       const req = new NextRequest('https://api.example.com/crawler', {
         method: 'GET',

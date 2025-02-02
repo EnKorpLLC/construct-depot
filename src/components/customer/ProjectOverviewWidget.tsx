@@ -70,48 +70,66 @@ export default function ProjectOverviewWidget() {
   }, []);
 
   // WebSocket subscriptions for real-time updates
-  useWebSocket<Project>('project_updated', (updatedProject) => {
-    setProjects(prev =>
-      prev.map(project =>
-        project.id === updatedProject.id
-          ? updatedProject
-          : project
-      )
-    );
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'project_updated') {
+        const updatedProject = message.payload as Project;
+        setProjects(prev =>
+          prev.map(project =>
+            project.id === updatedProject.id ? updatedProject : project
+          )
+        );
+      }
+    }
   });
 
-  useWebSocket<Project>('project_added', (newProject) => {
-    setProjects(prev => [...prev, newProject]);
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'project_deleted') {
+        const projectId = message.payload as string;
+        setProjects(prev => prev.filter(project => project.id !== projectId));
+      }
+    }
   });
 
-  useWebSocket<{ id: string }>('project_deleted', (deletion) => {
-    setProjects(prev => prev.filter(project => project.id !== deletion.id));
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'document_added') {
+        const update = message.payload as { projectId: string; document: Project['documents'][0] };
+        setProjects(prev =>
+          prev.map(project =>
+            project.id === update.projectId
+              ? {
+                  ...project,
+                  documents: [...project.documents, update.document]
+                }
+              : project
+          )
+        );
+      }
+    }
   });
 
-  useWebSocket<{ projectId: string; document: Project['documents'][0] }>('document_added', (update) => {
-    setProjects(prev =>
-      prev.map(project =>
-        project.id === update.projectId
-          ? {
-              ...project,
-              documents: [...project.documents, update.document],
-            }
-          : project
-      )
-    );
-  });
-
-  useWebSocket<{ projectId: string; milestone: Project['nextMilestone'] }>('milestone_updated', (update) => {
-    setProjects(prev =>
-      prev.map(project =>
-        project.id === update.projectId
-          ? {
-              ...project,
-              nextMilestone: update.milestone,
-            }
-          : project
-      )
-    );
+  useWebSocket({
+    url: 'ws://localhost:3000/api/ws',
+    onMessage: (message) => {
+      if (message.type === 'milestone_updated') {
+        const update = message.payload as { projectId: string; milestone: Project['nextMilestone'] };
+        setProjects(prev =>
+          prev.map(project =>
+            project.id === update.projectId
+              ? {
+                  ...project,
+                  nextMilestone: update.milestone
+                }
+              : project
+          )
+        );
+      }
+    }
   });
 
   const handleUpdateProject = async (projectId: string, updates: Partial<Project>) => {

@@ -8,6 +8,9 @@ import ActiveProjectsWidget from '@/components/subcontractor/ActiveProjectsWidge
 import PerformanceAnalyticsWidget from '@/components/subcontractor/PerformanceAnalyticsWidget';
 import PaymentTrackingWidget from '@/components/subcontractor/PaymentTrackingWidget';
 
+// Add export config to mark as dynamic
+export const dynamic = 'force-dynamic';
+
 export default async function SubcontractorDashboard() {
   try {
     const session = await getServerSession(authOptions);

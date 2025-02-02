@@ -3,6 +3,8 @@ import { encrypt, decrypt } from '@/lib/crypto';
 import { prisma } from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import * as nextAuth from 'next-auth';
+import { getServerSession } from 'next-auth';
+import { MockSession } from '../setup';
 
 // Mock NextAuth
 jest.mock('next-auth');
@@ -118,12 +120,22 @@ describe('Service Configuration', () => {
   });
 
   describe('API Endpoints', () => {
-    const mockSuperAdmin = {
-      user: { role: 'super_admin' },
+    const mockSuperAdmin: MockSession = {
+      user: {
+        id: 'admin-id',
+        email: 'admin@example.com',
+        name: 'Admin User',
+        role: 'super_admin'
+      }
     };
 
-    const mockRegularUser = {
-      user: { role: 'user' },
+    const mockRegularUser: MockSession = {
+      user: {
+        id: 'user-id',
+        email: 'user@example.com',
+        name: 'Regular User',
+        role: 'user'
+      }
     };
 
     it('should allow super admin to fetch configurations', async () => {

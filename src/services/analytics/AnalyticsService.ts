@@ -9,7 +9,11 @@ import {
   PoolMetricsData,
   TimeFrame,
   AnalyticsReport,
-  ReportConfig
+  ReportConfig,
+  OrderTrend,
+  CustomerSegment,
+  CategoryMetric,
+  RevenueTrend
 } from './types';
 
 interface RawOrderTrend {
@@ -51,55 +55,58 @@ export class AnalyticsService {
 
   // Order Analytics
   public async getOrderMetrics(timeframe: TimeFrame): Promise<OrderMetricsData> {
+    const cacheKey = `order_metrics:${timeframe}`;
+
     try {
-      const cacheKey = `analytics:orders:${timeframe}`;
-      console.log(`Attempting to get order metrics for timeframe: ${timeframe}`);
-      
-      const cached = await redis.get(cacheKey);
-      if (cached) {
-        console.log('Returning cached order metrics');
-        return JSON.parse(cached);
+      // Check cache first
+      const cachedData = await redis.get(cacheKey);
+      if (cachedData) {
+        return JSON.parse(cachedData);
       }
 
-      console.log('Cache miss, calculating order metrics');
-      const dateRange = this.getDateRange(timeframe);
-      
-      const [totalOrders, pendingOrders, completedOrders, orderTrends] = await Promise.all([
-        prisma.order.count({
-          where: { createdAt: { gte: dateRange.start, lte: dateRange.end } }
-        }),
-        prisma.order.count({
-          where: { 
-            status: 'PENDING',
-            createdAt: { gte: dateRange.start, lte: dateRange.end }
-          }
-        }),
-        prisma.order.count({
-          where: { 
-            status: 'COMPLETED',
-            createdAt: { gte: dateRange.start, lte: dateRange.end }
-          }
-        }),
-        this.getOrderTrends(dateRange.start, dateRange.end)
-      ]);
+      // Calculate metrics
+      const metrics = await performanceMonitor.track('getOrderMetrics', async () => {
+        console.log(`Attempting to get order metrics for timeframe: ${timeframe}`);
+        
+        const dateRange = this.getDateRange(timeframe);
+        
+        const [totalOrders, pendingOrders, completedOrders, orderTrends] = await Promise.all([
+          prisma.order.count({
+            where: { createdAt: { gte: dateRange.start, lte: dateRange.end } }
+          }),
+          prisma.order.count({
+            where: { 
+              status: 'PENDING',
+              createdAt: { gte: dateRange.start, lte: dateRange.end }
+            }
+          }),
+          prisma.order.count({
+            where: { 
+              status: 'COMPLETED',
+              createdAt: { gte: dateRange.start, lte: dateRange.end }
+            }
+          }),
+          this.getOrderTrends(dateRange.start, dateRange.end)
+        ]);
 
-      const metrics = {
-        totalOrders,
-        pendingOrders,
-        completedOrders,
-        orderTrends
-      };
+        return {
+          totalOrders,
+          pendingOrders,
+          completedOrders,
+          orderTrends
+        };
+      });
 
-      console.log('Caching order metrics');
+      // Cache the results
       await redis.setex(cacheKey, this.CACHE_TTL, JSON.stringify(metrics));
       return metrics;
     } catch (error) {
       console.error('Error in getOrderMetrics:', {
-        error: error.message,
-        stack: error.stack,
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
         timeframe
       });
-      throw error;
+      throw new Error('Failed to fetch order metrics');
     }
   }
 
@@ -333,18 +340,13 @@ export class AnalyticsService {
   }
 
   private async calculateAverageOrderValue(start: Date, end: Date): Promise<number> {
-    const result = await prisma.$queryRaw`
-      SELECT 
-        ROUND(
-          AVG(total_amount)::NUMERIC,
-          2
-        ) as avg_value
+    const result = await prisma.$queryRaw<Array<{ avg_value: number }>>`
+      SELECT AVG(total_amount) as avg_value
       FROM orders
-      WHERE 
-        created_at BETWEEN ${start} AND ${end}
+      WHERE created_at BETWEEN ${start} AND ${end}
         AND status = 'COMPLETED'
     `;
-    return result[0].avg_value;
+    return result[0]?.avg_value ?? 0;
   }
 
   private async calculateRevenueGrowth(start: Date, end: Date): Promise<number> {
@@ -364,11 +366,11 @@ export class AnalyticsService {
     return Number(((currentRevenue - previousRevenue) / previousRevenue * 100).toFixed(2));
   }
 
-  private async getRevenueTrends(start: Date, end: Date) {
-    return prisma.$queryRaw`
+  private async getRevenueTrends(start: Date, end: Date): Promise<RevenueTrend[]> {
+    const results = await prisma.$queryRaw<{ date: Date; amount: number; average_order: number }[]>`
       SELECT 
         DATE(created_at) as date,
-        SUM(total_amount) as revenue,
+        SUM(total_amount) as amount,
         ROUND(AVG(total_amount)::NUMERIC, 2) as average_order
       FROM orders
       WHERE 
@@ -377,6 +379,11 @@ export class AnalyticsService {
       GROUP BY DATE(created_at)
       ORDER BY date ASC
     `;
+
+    return results.map(trend => ({
+      date: trend.date.toISOString().split('T')[0],
+      amount: Number(trend.amount)
+    }));
   }
 
   private async createReportJob(config: ReportConfig): Promise<string> {
@@ -440,7 +447,7 @@ export class AnalyticsService {
         createdAt: new Date().toISOString(),
         completedAt: new Date().toISOString(),
         config,
-        error: error.message
+        error: error instanceof Error ? error.message : 'Unknown error'
       }));
     }
   }

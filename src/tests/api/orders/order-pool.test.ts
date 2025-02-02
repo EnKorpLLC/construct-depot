@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma';
 import { hash } from 'bcryptjs';
 import { OrderStatus } from '@prisma/client';
 import * as orderPoolRoutes from '@/app/api/orders/pool/route';
+import { getServerSession } from 'next-auth';
+import { MockSession } from '../../setup';
 
 // Mock NextAuth session
 jest.mock('next-auth', () => ({
@@ -21,10 +23,10 @@ describe('Order Pool API Endpoints', () => {
     // Create test user
     testUser = await prisma.user.create({
       data: {
-        email: 'user@example.com',
+        email: 'test@example.com',
         name: 'Test User',
         password: await hash('password123', 12),
-        role: 'USER'
+        role: 'user'
       }
     });
 
@@ -42,28 +44,29 @@ describe('Order Pool API Endpoints', () => {
     testProduct = await prisma.product.create({
       data: {
         name: 'Test Product',
-        description: 'Test product description',
+        description: 'A test product',
         price: 99.99,
-        minOrderQuantity: 10,
-        supplierId: testSupplier.id
+        inventory: 100,
+        supplierId: testSupplier.id,
+        supplier: {
+          connect: {
+            id: testSupplier.id
+          }
+        }
       }
     });
 
     // Create test order in pooling status
     testOrder = await prisma.order.create({
       data: {
-        orderNumber: 'POOL-001',
         userId: testUser.id,
-        supplierId: testSupplier.id,
-        status: OrderStatus.POOLING,
         totalAmount: 99.99,
-        poolExpiry: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours from now
+        status: OrderStatus.PENDING,
         items: {
           create: {
             productId: testProduct.id,
-            quantity: 5,
-            unitPrice: 99.99,
-            totalPrice: 499.95
+            quantity: 1,
+            price: 99.99
           }
         }
       }
@@ -82,8 +85,13 @@ describe('Order Pool API Endpoints', () => {
     it('should list active pools', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'GET'
@@ -101,8 +109,13 @@ describe('Order Pool API Endpoints', () => {
     it('should filter pools by product', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'GET',
@@ -123,8 +136,13 @@ describe('Order Pool API Endpoints', () => {
     it('should join existing pool', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'POST',
@@ -145,8 +163,13 @@ describe('Order Pool API Endpoints', () => {
     it('should validate minimum order quantity', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'POST',
@@ -172,8 +195,13 @@ describe('Order Pool API Endpoints', () => {
 
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'POST',
@@ -195,8 +223,13 @@ describe('Order Pool API Endpoints', () => {
     it('should create new pool', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'POST',
@@ -219,8 +252,13 @@ describe('Order Pool API Endpoints', () => {
     it('should validate product existence', async () => {
       // Mock authenticated session
       (getServerSession as jest.Mock).mockResolvedValue({
-        user: { id: testUser.id }
-      });
+        user: { 
+          id: testUser.id,
+          email: 'test@example.com',
+          name: 'Test User',
+          role: 'user'
+        }
+      } as MockSession);
 
       const { req, res } = createMocks({
         method: 'POST',

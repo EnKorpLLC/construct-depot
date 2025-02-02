@@ -10,6 +10,8 @@ const timeframeSchema = z.enum(['week', 'month', 'year']);
 const reportConfigSchema = z.object({
   name: z.string(),
   type: z.enum(['PERFORMANCE', 'REVENUE', 'CUSTOMER', 'CUSTOM']),
+  timeframe: z.enum(['week', 'month', 'year']),
+  sections: z.array(z.enum(['orders', 'customers', 'revenue', 'pools'])),
   metrics: z.array(z.string()),
   dimensions: z.array(z.string()),
   filters: z.object({

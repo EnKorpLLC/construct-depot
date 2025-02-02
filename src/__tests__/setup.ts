@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 import { configure } from '@testing-library/react';
+import { jest } from '@jest/globals';
+import { mockRedis } from './utils/test-utils';
+import { PrismaClient } from '@prisma/client';
+import { DeepMockProxy, mockDeep } from 'jest-mock-extended';
 
 // Polyfill for TextEncoder/TextDecoder
 global.TextEncoder = TextEncoder;
@@ -36,6 +40,35 @@ Object.defineProperty(window, 'matchMedia', {
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
   })),
+});
+
+// Mock Redis
+jest.mock('@/lib/redis', () => ({
+  redis: mockRedis
+}));
+
+// Mock Prisma
+export type MockPrismaClient = DeepMockProxy<PrismaClient>;
+export const prismaMock = mockDeep<PrismaClient>();
+
+jest.mock('@/lib/prisma', () => ({
+  prisma: prismaMock
+}));
+
+// Mock next-auth
+jest.mock('next-auth', () => ({
+  getServerSession: jest.fn()
+}));
+
+// Mock next/headers
+jest.mock('next/headers', () => ({
+  headers: () => new Map(),
+  cookies: () => new Map()
+}));
+
+// Reset all mocks before each test
+beforeEach(() => {
+  jest.clearAllMocks();
 });
 
 // Reset all mocks after each test

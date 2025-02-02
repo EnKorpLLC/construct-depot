@@ -1,7 +1,11 @@
-import { WebSocket } from 'ws';
+import { WebSocket, WebSocketServer } from 'ws';
 import { redis } from '@/lib/redis';
 import { performanceMonitor } from '@/lib/monitoring';
 import { analyticsService } from './AnalyticsService';
+
+declare global {
+  var wss: WebSocketServer | undefined;
+}
 
 interface RealTimeMetrics {
   activeUsers: number;
