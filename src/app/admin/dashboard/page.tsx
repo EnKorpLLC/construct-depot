@@ -5,9 +5,9 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Role } from '@prisma/client';
 import { DashboardSelector, DashboardSelectorButton } from '@/components/DashboardSelector';
-import { Users, FileText, Settings, X } from 'lucide-react';
+import { Users, FileText, Settings, X, Package } from 'lucide-react';
 
-type MenuItem = 'overview' | 'users' | 'reports' | 'settings';
+type MenuItem = 'overview' | 'users' | 'products' | 'reports' | 'settings';
 
 export default function AdminDashboard() {
   const { data: session } = useSession();
@@ -92,6 +92,56 @@ export default function AdminDashboard() {
                       <td className="py-2">Contractor</td>
                       <td className="py-2">
                         <button className="text-blue-600">Edit</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        );
+      case 'products':
+        return (
+          <div className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold">Product Management</h2>
+              <button
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                onClick={() => {/* Add new product logic */}}
+              >
+                Add System Product
+              </button>
+            </div>
+            <div className="bg-white rounded-lg shadow">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    className="px-4 py-2 border rounded-lg"
+                  />
+                </div>
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="text-left py-2">Product Name</th>
+                      <th className="text-left py-2">Supplier</th>
+                      <th className="text-left py-2">Price</th>
+                      <th className="text-left py-2">MOQ</th>
+                      <th className="text-left py-2">Type</th>
+                      <th className="text-left py-2">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b">
+                      <td className="py-2">Premium Lumber</td>
+                      <td className="py-2">Lumber Co.</td>
+                      <td className="py-2">$45/unit</td>
+                      <td className="py-2">100</td>
+                      <td className="py-2">Supplier</td>
+                      <td className="py-2">
+                        <button className="text-blue-600 mr-2">Edit</button>
+                        <button className="text-red-600">Remove</button>
                       </td>
                     </tr>
                   </tbody>
@@ -205,6 +255,17 @@ export default function AdminDashboard() {
           >
             <Users className="mr-3 h-5 w-5" />
             User Management
+          </button>
+          <button
+            onClick={() => setActiveMenuItem('products')}
+            className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
+              activeMenuItem === 'products'
+                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
+                : 'text-gray-600 hover:bg-gray-50'
+            }`}
+          >
+            <Package className="mr-3 h-5 w-5" />
+            Products
           </button>
           <button
             onClick={() => setActiveMenuItem('reports')}

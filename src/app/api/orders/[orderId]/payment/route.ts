@@ -55,7 +55,8 @@ export async function POST(
       amount: order.items.reduce((total, item) => total + item.price * item.quantity, 0),
       method: paymentMethod,
       transactionId: paymentDetails.transactionId || 'mock-transaction-id',
-      status: 'COMPLETED'
+      status: 'COMPLETED',
+      userId: session.user.id,
     }
   });
 
