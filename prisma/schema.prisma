@@ -7,17 +7,103 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  password  String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  role      Role      @default(user)
+  orders    Order[]
+  products  Product[]
+}
+
+model Product {
+  id              String        @id @default(cuid())
+  name            String
+  description     String?
+  price           Float
+  inventory       Int
+  supplierId      String
+  supplier        User          @relation(fields: [supplierId], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  OrderItem       OrderItem[]
+  isSystemProduct Boolean       @default(false)
+  minOrderQuantity Int          @default(1)
+  priceBrackets   PriceBracket[]
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  userId       String
+  totalAmount  Float
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  poolDeadline DateTime?
+  poolGroupId  String?
+  poolProgress Float?
+  status       OrderStatus @default(PENDING)
+  user         User        @relation(fields: [userId], references: [id])
+  items        OrderItem[]
+  payment      Payment?
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  order     Order    @relation(fields: [orderId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  orderId       String        @unique
+  amount        Float
+  status        PaymentStatus @default(PENDING)
+  method        PaymentMethod
+  transactionId String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  currency      String        @default("USD")
+  order         Order         @relation(fields: [orderId], references: [id])
+}
+
+model ServiceConfig {
+  id           String    @id @default(cuid())
+  service      String    @unique
+  config       Json
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastVerified DateTime?
+}
+
+model PriceBracket {
+  id          String   @id @default(cuid())
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id])
+  minQuantity Int
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 enum Role {
   super_admin
-  user
   GENERAL_CONTRACTOR
   SUBCONTRACTOR
+  user
   ADMIN
   SUPPLIER
 }
 
 enum OrderStatus {
-  DRAFT
   PENDING
   PROCESSING
   POOLING
@@ -25,15 +111,16 @@ enum OrderStatus {
   DELIVERED
   COMPLETED
   CANCELLED
+  DRAFT
 }
 
 enum PaymentStatus {
   PENDING
   PROCESSING
   COMPLETED
-  CAPTURED
   FAILED
   REFUNDED
+  CAPTURED
 }
 
 enum PaymentMethod {
@@ -42,77 +129,3 @@ enum PaymentMethod {
   CRYPTO
   OTHER
 }
-
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String
-  role      Role     @default(user)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders    Order[]
-  products  Product[]
-}
-
-model Product {
-  id          String      @id @default(cuid())
-  name        String
-  description String?
-  price       Float
-  inventory   Int
-  supplierId  String
-  supplier    User        @relation(fields: [supplierId], references: [id])
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  OrderItem   OrderItem[]
-}
-
-model Order {
-  id            String      @id @default(cuid())
-  userId        String
-  user          User        @relation(fields: [userId], references: [id])
-  status        OrderStatus @default(PENDING)
-  totalAmount   Float
-  items         OrderItem[]
-  payment       Payment?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
-  poolGroupId   String?
-  poolProgress  Float?
-  poolDeadline  DateTime?
-}
-
-model OrderItem {
-  id        String   @id @default(cuid())
-  orderId   String
-  order     Order    @relation(fields: [orderId], references: [id])
-  productId String
-  product   Product  @relation(fields: [productId], references: [id])
-  quantity  Int
-  price     Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Payment {
-  id            String        @id @default(cuid())
-  orderId       String        @unique
-  order         Order         @relation(fields: [orderId], references: [id])
-  amount        Float
-  currency      String        @default("USD")
-  status        PaymentStatus @default(PENDING)
-  method        PaymentMethod
-  transactionId String?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-}
-
-model ServiceConfig {
-  id           String    @id @default(cuid())
-  service      String    @unique
-  config       Json
-  lastVerified DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-} 
