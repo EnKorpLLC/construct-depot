@@ -6,6 +6,11 @@ import { PrismaClient } from '@prisma/client'
 import { Headers } from 'next/dist/compiled/@edge-runtime/primitives'
 import { NextRequest } from 'next/server'
 
+// Mock setImmediate for test environment
+if (typeof global.setImmediate === 'undefined') {
+  (global as any).setImmediate = (fn: Function, ...args: any[]) => setTimeout(fn, 0, ...args);
+}
+
 // Mock Request
 class MockRequest {
   private _url: string;

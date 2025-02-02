@@ -17,7 +17,8 @@
     "test:coverage": "jest --coverage",
     "test:integration": "jest --config jest.integration.config.js",
     "test:e2e": "jest --config jest.e2e.config.js",
-    "test:perf": "k6 run src/tests/performance/**/*.perf.ts"
+    "test:perf": "k6 run src/tests/performance/**/*.perf.ts",
+    "seed": "npx prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^5.8.1",
@@ -67,5 +68,8 @@
     "rimraf": "^6.0.1",
     "tailwindcss": "^3.3.0",
     "typescript": "^5.3.3"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }
