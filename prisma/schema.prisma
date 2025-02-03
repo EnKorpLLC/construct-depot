@@ -28,6 +28,13 @@ model User {
   // Project relations
   contractorProjects Project[] @relation("ContractorProjects")
   submittedBids     Bid[]     @relation("SubcontractorBids")
+
+  sentInvitations Invitation[] @relation("SentInvitations")
+
+  companyVerification  CompanyVerification? @relation("CompanyVerification")
+  createdTemplates    InvitationTemplate[] @relation("TemplateCreator")
+  crawlerSchedules    CrawlerSchedule[]
+  createdBatches     InvitationBatch[]    @relation("BatchCreator")
 }
 
 model Product {
@@ -44,6 +51,7 @@ model Product {
   isSystemProduct Boolean       @default(false)
   minOrderQuantity Int          @default(1)
   priceBrackets   PriceBracket[]
+  priceHistory    PriceHistory[]
 }
 
 model Order {
@@ -193,6 +201,127 @@ model Session {
   @@index([userId])
 }
 
+model Invitation {
+  id            String         @id @default(cuid())
+  email         String
+  role          Role
+  token         String         @unique
+  status        InviteStatus   @default(PENDING)
+  expiresAt     DateTime
+  invitedBy     User          @relation("SentInvitations", fields: [invitedById], references: [id])
+  invitedById   String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  batchId    String?
+  batch      InvitationBatch? @relation(fields: [batchId], references: [id])
+  templateId String?
+  template   InvitationTemplate? @relation(fields: [templateId], references: [id])
+  
+  @@index([invitedById])
+  @@index([batchId])
+  @@index([templateId])
+}
+
+model CrawlerSchedule {
+  id          String    @id @default(cuid())
+  url         String
+  frequency   String    // daily, weekly, monthly
+  lastCrawled DateTime?
+  nextCrawl   DateTime
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  domain      String
+  supplierId  String
+  supplier    User      @relation(fields: [supplierId], references: [id])
+
+  @@index([supplierId])
+}
+
+model PriceHistory {
+  id        String   @id @default(cuid())
+  productId String
+  price     Float
+  timestamp DateTime @default(now())
+  source    String   // manual, crawler, system
+  product   Product  @relation(fields: [productId], references: [id])
+
+  @@index([productId])
+}
+
+model InvitationTemplate {
+  id              String   @id @default(cuid())
+  name            String
+  subject         String
+  body            String
+  role            Role
+  onboardingSteps String[]
+  isDefault       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       User     @relation("TemplateCreator", fields: [createdById], references: [id])
+  createdById     String
+  invitations     Invitation[]
+  batches         InvitationBatch[]
+
+  @@index([createdById])
+}
+
+model CompanyVerification {
+  id            String             @id @default(cuid())
+  companyName   String
+  registrationNo String?
+  website       String?
+  documents     VerificationDoc[]
+  status        VerificationStatus @default(PENDING)
+  notes         String?
+  userId        String            @unique
+  user          User              @relation("CompanyVerification", fields: [userId], references: [id])
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  verifiedAt    DateTime?
+  verifiedBy    String?
+
+  @@index([userId])
+}
+
+model VerificationDoc {
+  id            String             @id @default(cuid())
+  name          String
+  url           String
+  type          String
+  verificationId String
+  verification  CompanyVerification @relation(fields: [verificationId], references: [id])
+  uploadedAt    DateTime           @default(now())
+
+  @@index([verificationId])
+}
+
+model CrawlerDomain {
+  id        String   @id @default(cuid())
+  domain    String   @unique
+  isAllowed Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  notes     String?
+}
+
+model InvitationBatch {
+  id          String    @id @default(cuid())
+  name        String
+  invitations Invitation[]
+  templateId  String?
+  template    InvitationTemplate? @relation(fields: [templateId], references: [id])
+  createdAt   DateTime  @default(now())
+  createdBy   User      @relation("BatchCreator", fields: [createdById], references: [id])
+  createdById String
+  status      BatchStatus @default(PENDING)
+
+  @@index([createdById])
+  @@index([templateId])
+}
+
 enum Role {
   super_admin
   ADMIN
@@ -227,4 +356,27 @@ enum PaymentMethod {
   BANK_TRANSFER
   CRYPTO
   OTHER
+}
+
+enum InviteStatus {
+  PENDING
+  ACCEPTED
+  EXPIRED
+  CANCELLED
+}
+
+enum VerificationStatus {
+  PENDING
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  MORE_INFO_NEEDED
+}
+
+enum BatchStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
 }
