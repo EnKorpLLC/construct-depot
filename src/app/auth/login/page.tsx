@@ -6,11 +6,14 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Role } from '@prisma/client';
 
-const ROLE_REDIRECTS = {
+const ROLE_REDIRECTS: Record<Role, string> = {
   [Role.super_admin]: '/admin/dashboard',
+  [Role.admin]: '/admin/dashboard',
   [Role.general_contractor]: '/contractor/dashboard',
   [Role.subcontractor]: '/subcontractor/dashboard',
   [Role.supplier]: '/supplier/dashboard',
+  [Role.user]: '/',
+  [Role.customer]: '/',
 };
 
 export default function LoginPage() {
