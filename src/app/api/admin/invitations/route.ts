@@ -8,7 +8,7 @@ import { PrismaClient } from '@prisma/client';
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || session.user.role !== 'super_admin') {
+    if (!session?.user || session.user.role !== Role.super_admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -50,7 +50,7 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || session.user.role !== 'super_admin') {
+    if (!session?.user || session.user.role !== Role.super_admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -87,7 +87,7 @@ export async function GET(request: Request) {
 export async function DELETE(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user || session.user.role !== 'super_admin') {
+    if (!session?.user || session.user.role !== Role.super_admin) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

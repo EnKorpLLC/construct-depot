@@ -29,7 +29,7 @@ export async function GET(
   }
 
   // Only allow users to view their own orders unless they're admin
-  if (order.userId !== session.user.id && session.user.role !== Role.ADMIN) {
+  if (order.userId !== session.user.id && session.user.role !== Role.admin && session.user.role !== Role.super_admin) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 

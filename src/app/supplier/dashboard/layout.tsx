@@ -15,7 +15,7 @@ export default function SupplierDashboardLayout({
     return <div>Loading...</div>;
   }
 
-  if (!session?.user || session.user.role !== Role.SUPPLIER) {
+  if (!session?.user || session.user.role !== Role.supplier) {
     redirect('/auth/login');
   }
 

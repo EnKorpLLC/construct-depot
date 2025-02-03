@@ -2,12 +2,16 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
+import { Role } from '@prisma/client';
 
 export async function GET(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (!session || session.user.role !== Role.general_contractor) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
     }
 
     const { searchParams } = new URL(request.url);
@@ -75,7 +79,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'GENERAL_CONTRACTOR') {
+    if (!session || session.user.role !== Role.general_contractor) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }

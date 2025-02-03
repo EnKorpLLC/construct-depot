@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
 
   const where = {
     ...(status && { status }),
-    ...(session.user.role !== Role.ADMIN && { userId: session.user.id })
+    ...(session.user.role !== Role.admin && session.user.role !== Role.super_admin && { userId: session.user.id })
   };
 
   const [orders, total] = await Promise.all([
