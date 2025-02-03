@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Product } from '@prisma/client';
 import Link from 'next/link';
+import { Role } from '@prisma/client';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -59,7 +60,7 @@ export default function ProductsPage() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Products</h1>
-          {session?.user?.role === 'SUPPLIER' && (
+          {session?.user?.role === Role.supplier && (
             <Link
               href="/supplier/products/new"
               className="px-4 py-2 bg-blue-darker text-white rounded-lg hover:bg-blue-lighter"

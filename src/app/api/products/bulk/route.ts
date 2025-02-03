@@ -69,7 +69,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Process each product group
-    for (const [name, group] of productGroups) {
+    await Promise.all(Array.from(productGroups).map(async ([name, group]) => {
       try {
         const { base, variants } = group;
         const specifications = base.specifications ? JSON.parse(base.specifications) : {};
@@ -109,7 +109,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         results.failed++;
         results.errors.push(`Failed to import "${name}": ${(error as Error).message}`);
       }
-    }
+    }));
 
     return NextResponse.json(results);
   } catch (error) {
@@ -183,6 +183,9 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           const option = variant.options[0]; // Assuming one option per variant for now
           rows.push({
             name: product.name,
+            price: product.price.toString(),
+            minOrderQuantity: product.minOrderQuantity.toString(),
+            inventory: '0',
             hasVariants: 'true',
             variantName: option.name,
             variantValue: option.value,

@@ -30,7 +30,7 @@ export default function BulkInvite() {
   const [invitations, setInvitations] = useState<InvitationData[]>([]);
   const [batches, setBatches] = useState<Batch[]>([]);
   const [newEmail, setNewEmail] = useState('');
-  const [newRole, setNewRole] = useState<Role>('SUPPLIER');
+  const [newRole, setNewRole] = useState<Role>(Role.supplier);
   const [newCompany, setNewCompany] = useState('');
   const [batchName, setBatchName] = useState('');
   const [selectedTemplate, setSelectedTemplate] = useState<string>('');
@@ -61,9 +61,12 @@ export default function BulkInvite() {
         const rows = csv.split('\n').filter(Boolean);
         const newInvitations = rows.slice(1).map(row => {
           const [email, role, company] = row.split(',').map(cell => cell.trim());
+          // Convert role string to Role enum value, defaulting to supplier
+          const roleValue = role?.toLowerCase().replace(/ /g, '_');
+          const validRole = Object.values(Role).find(r => r.toLowerCase() === roleValue) || Role.supplier;
           return {
             email,
-            role: (role?.toUpperCase() as Role) || 'SUPPLIER',
+            role: validRole,
             company: company || undefined,
           };
         });

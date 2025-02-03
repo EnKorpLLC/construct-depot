@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Role } from '@prisma/client';
+import { AlertType } from '@prisma/client';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -19,7 +20,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       data: {
         userId: session.user.id,
         productId,
-        priceThreshold,
+        targetPrice: priceThreshold,
+        type: AlertType.BELOW
       },
     });
 

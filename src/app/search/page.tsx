@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -39,14 +39,22 @@ interface SearchResults {
   pages: number;
 }
 
-export default function SearchPage() {
+interface SearchFilters {
+  query: string;
+  category: string;
+  minPrice: string;
+  maxPrice: string;
+  page: number;
+}
+
+function SearchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(true);
   const [results, setResults] = useState<SearchResults | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<SearchFilters>({
     query: searchParams.get('q') || '',
     category: searchParams.get('category') || '',
     minPrice: searchParams.get('minPrice') || '',
@@ -100,11 +108,11 @@ export default function SearchPage() {
 
   const debouncedSearch = debounce(search, 300);
 
-  const handleFilterChange = (key: string, value: string | number) => {
+  const handleFilterChange = (key: keyof SearchFilters, value: string | number) => {
     setFilters((prev) => ({
       ...prev,
       [key]: value,
-      page: key === 'page' ? value : 1, // Reset page when other filters change
+      page: key === 'page' ? (value as number) : 1, // Reset page when other filters change
     }));
   };
 
@@ -278,5 +286,17 @@ export default function SearchPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-darker"></div>
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   );
 } 

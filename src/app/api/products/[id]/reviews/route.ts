@@ -111,17 +111,28 @@ export async function GET(
     ]);
 
     // Calculate rating statistics
-    const stats = await prisma.review.groupBy({
-      by: ['rating'],
+    const stats = await prisma.review.aggregate({
       where: { productId: params.id },
-      _count: true,
+      _avg: {
+        rating: true
+      },
+      _count: {
+        rating: true
+      }
     });
 
+    const ratingDistribution = await prisma.$queryRaw`
+      SELECT rating, COUNT(*) as count
+      FROM Review
+      WHERE productId = ${params.id}
+      GROUP BY rating
+    `;
+
     const ratingStats = {
-      average: reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length,
-      total,
-      distribution: stats.reduce((acc, stat) => {
-        acc[stat.rating] = stat._count;
+      average: stats._avg.rating || 0,
+      total: stats._count.rating,
+      distribution: (ratingDistribution as { rating: number; count: number }[]).reduce((acc, stat) => {
+        acc[stat.rating] = Number(stat.count);
         return acc;
       }, {} as Record<number, number>),
     };

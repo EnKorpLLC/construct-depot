@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { Role } from '@prisma/client';
+import { Role, Prisma } from '@prisma/client';
 
 async function recordPriceChange(
   productId: string,
@@ -41,8 +41,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const hasVariants = formData.get('hasVariants') === 'true';
     const variants = hasVariants ? JSON.parse(formData.get('variants') as string) : [];
 
-    const product = await prisma.$transaction(async (tx) => {
-      const newProduct = await tx.product.create({
+    const [product] = await prisma.$transaction([
+      prisma.product.create({
         data: {
           name,
           description,
@@ -87,20 +87,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             },
           },
         },
-      });
+      }),
+    ]);
 
-      // Record initial price
-      await recordPriceChange(newProduct.id, 0, newProduct.price, 'system');
-      
-      // Record variant prices if any
-      if (hasVariants) {
-        for (const variant of newProduct.variants) {
-          await recordPriceChange(newProduct.id, 0, variant.price, 'system');
-        }
+    // Record initial price
+    await recordPriceChange(product.id, 0, product.price, 'system');
+    
+    // Record variant prices if any
+    if (hasVariants) {
+      for (const variant of product.variants) {
+        await recordPriceChange(product.id, 0, variant.price, 'system');
       }
-
-      return newProduct;
-    });
+    }
 
     return NextResponse.json(product);
   } catch (error) {
@@ -153,30 +151,19 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
     const variants = hasVariants ? JSON.parse(formData.get('variants') as string) : [];
 
     // Update product with transaction to handle images, variants, and price history
-    const product = await prisma.$transaction(async (tx) => {
-      // Delete existing images
-      await tx.productImage.deleteMany({
+    const [, , product] = await prisma.$transaction([
+      prisma.productImage.deleteMany({
         where: { productId: id },
-      });
-
-      // Delete existing variants and options
-      await tx.productVariant.deleteMany({
+      }),
+      prisma.productVariant.deleteMany({
         where: { productId: id },
-      });
-
-      // Record price changes
-      const newPrice = hasVariants ? (basePrice || price) : price;
-      if (existingProduct.price !== newPrice) {
-        await recordPriceChange(id, existingProduct.price, newPrice);
-      }
-
-      // Update product with new data
-      const updatedProduct = await tx.product.update({
+      }),
+      prisma.product.update({
         where: { id },
         data: {
           name,
           description,
-          price: newPrice,
+          price: hasVariants ? (basePrice || price) : price,
           basePrice: hasVariants ? basePrice : null,
           minOrderQuantity,
           categoryId: categoryId || undefined,
@@ -216,28 +203,32 @@ export async function PUT(request: NextRequest): Promise<NextResponse> {
             },
           },
         },
-      });
+      }),
+    ]);
 
-      // Record variant price changes
-      if (hasVariants) {
-        const existingVariants = new Map(
-          existingProduct.variants.map(v => [v.sku, v])
-        );
+    // Record price changes
+    const newPrice = hasVariants ? (basePrice || price) : price;
+    if (existingProduct.price !== newPrice) {
+      await recordPriceChange(id, existingProduct.price, newPrice);
+    }
 
-        for (const variant of updatedProduct.variants) {
-          const existingVariant = existingVariants.get(variant.sku || '');
-          if (!existingVariant || existingVariant.price !== variant.price) {
-            await recordPriceChange(
-              id,
-              existingVariant?.price || 0,
-              variant.price
-            );
-          }
+    // Record variant price changes
+    if (hasVariants) {
+      const existingVariants = new Map(
+        existingProduct.variants.map(v => [v.sku, v])
+      );
+
+      for (const variant of product.variants) {
+        const existingVariant = existingVariants.get(variant.sku || '');
+        if (!existingVariant || existingVariant.price !== variant.price) {
+          await recordPriceChange(
+            id,
+            existingVariant?.price || 0,
+            variant.price
+          );
         }
       }
-
-      return updatedProduct;
-    });
+    }
 
     return NextResponse.json(product);
   } catch (error) {
@@ -258,12 +249,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const limit = parseInt(searchParams.get('limit') || '20');
     const skip = (page - 1) * limit;
 
-    const where = {
+    const where: Prisma.ProductWhereInput = {
       ...(categoryId && { categoryId }),
       ...(search && {
         OR: [
-          { name: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } },
+          { name: { contains: search, mode: Prisma.QueryMode.insensitive } },
+          { description: { contains: search, mode: Prisma.QueryMode.insensitive } },
         ],
       }),
     };

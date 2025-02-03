@@ -58,6 +58,7 @@
     "@types/ioredis": "^4.28.10",
     "@types/jest": "^29.5.14",
     "@types/k6": "^0.54.2",
+    "@types/lodash": "^4.17.15",
     "@types/node": "^20.17.16",
     "@types/nodemailer": "^6.4.17",
     "@types/react": "^18.2.48",

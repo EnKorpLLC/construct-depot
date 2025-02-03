@@ -13,6 +13,11 @@ import {
   FileText,
   CheckSquare,
 } from 'lucide-react';
+import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
+import { Role } from '@prisma/client';
 
 interface ProjectDetail {
   id: string;
@@ -243,7 +248,7 @@ export default function ProjectDetailPage() {
                   </div>
                 </div>
 
-                {session?.user?.role === 'SUBCONTRACTOR' && project.status === 'open' && (
+                {session?.user?.role === Role.subcontractor && project?.status === 'open' && (
                   <div>
                     <h3 className="text-lg font-semibold mb-4">Submit Bid</h3>
                     <form onSubmit={handleSubmitBid} className="space-y-4">

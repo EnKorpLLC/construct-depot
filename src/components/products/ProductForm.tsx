@@ -111,10 +111,17 @@ export function ProductForm({ initialData, onSubmit, categories }: ProductFormPr
     setVariants(newVariants);
   };
 
-  const updateVariant = (index: number, field: keyof ProductVariant, value: any) => {
-    const newVariants = [...variants];
-    newVariants[index][field] = value;
-    setVariants(newVariants);
+  const updateVariant = (index: number, field: keyof ProductVariant, value: string | number) => {
+    setVariants(variants.map((variant, i) => 
+      i === index
+        ? {
+            ...variant,
+            [field]: field === 'price' || field === 'inventory'
+              ? typeof value === 'string' ? parseFloat(value) : value
+              : value
+          }
+        : variant
+    ));
   };
 
   const updateVariantOption = (
@@ -272,11 +279,15 @@ export function ProductForm({ initialData, onSubmit, categories }: ProductFormPr
       <div className="space-y-4">
         <h3 className="text-lg font-medium">Images</h3>
         <div className="grid grid-cols-4 gap-4">
+          <ImageUpload
+            onUpload={handleImageUpload}
+            className="h-40"
+          />
           {images.map((image, index) => (
             <div key={image.id} className="relative">
               <ImageUpload
                 value={image.url}
-                onUpload={() => {}}
+                onUpload={handleImageUpload}
                 onRemove={() => handleImageRemove(index)}
                 className="h-40"
               />
@@ -293,12 +304,6 @@ export function ProductForm({ initialData, onSubmit, categories }: ProductFormPr
               />
             </div>
           ))}
-          <div className="h-40">
-            <ImageUpload
-              onUpload={handleImageUpload}
-              className="h-full"
-            />
-          </div>
         </div>
       </div>
 
@@ -336,7 +341,7 @@ export function ProductForm({ initialData, onSubmit, categories }: ProductFormPr
                       <input
                         type="number"
                         value={variant.price}
-                        onChange={(e) => updateVariant(variantIndex, 'price', parseFloat(e.target.value))}
+                        onChange={(e) => updateVariant(variantIndex, 'price', e.target.value)}
                         min="0"
                         step="0.01"
                         className="w-full p-2 border rounded"

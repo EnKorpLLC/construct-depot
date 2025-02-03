@@ -1,9 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { Prisma } from '@prisma/client';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
-    const { searchParams } = new URL(request.url);
+    const searchParams = request.nextUrl.searchParams;
     const query = searchParams.get('q') || '';
     const categoryId = searchParams.get('category');
     const minPrice = searchParams.get('minPrice');
@@ -13,14 +16,14 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const skip = (page - 1) * limit;
 
     // Build where clause
-    const where = {
+    const where: Prisma.ProductWhereInput = {
       AND: [
         // Search query
         query
           ? {
               OR: [
-                { name: { contains: query, mode: 'insensitive' } },
-                { description: { contains: query, mode: 'insensitive' } },
+                { name: { contains: query, mode: Prisma.QueryMode.insensitive } },
+                { description: { contains: query, mode: Prisma.QueryMode.insensitive } },
               ],
             }
           : {},
@@ -33,7 +36,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
             maxPrice ? { price: { lte: parseFloat(maxPrice) } } : {},
           ],
         },
-      ],
+      ].filter(condition => Object.keys(condition).length > 0), // Remove empty conditions
     };
 
     // Execute query with pagination

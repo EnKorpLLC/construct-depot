@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from '@/lib/auth';
+import { Role } from '@prisma/client';
 
 export async function GET(
   request: Request,
@@ -24,7 +25,7 @@ export async function GET(
           },
         },
         bids: {
-          ...(session.user.role === 'GENERAL_CONTRACTOR' && {
+          ...(session.user.role === Role.general_contractor && {
             include: {
               subcontractor: {
                 select: {
@@ -35,7 +36,7 @@ export async function GET(
               },
             },
           }),
-          ...(session.user.role === 'SUBCONTRACTOR' && {
+          ...(session.user.role === Role.subcontractor && {
             where: { subcontractorId: session.user.id },
           }),
         },
@@ -71,7 +72,7 @@ export async function PUT(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'GENERAL_CONTRACTOR') {
+    if (!session || session.user.role !== Role.general_contractor) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -135,7 +136,7 @@ export async function DELETE(
 ) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || session.user.role !== 'GENERAL_CONTRACTOR') {
+    if (!session || session.user.role !== Role.general_contractor) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
