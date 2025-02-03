@@ -1,10 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn, useSession, getSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Role } from '@prisma/client';
+
+const ROLE_REDIRECTS = {
+  [Role.super_admin]: '/admin/dashboard',
+  [Role.general_contractor]: '/contractor/dashboard',
+  [Role.subcontractor]: '/subcontractor/dashboard',
+  [Role.supplier]: '/supplier/dashboard',
+};
 
 export default function LoginPage() {
   const router = useRouter();
@@ -15,20 +22,8 @@ export default function LoginPage() {
   // Handle redirection when session changes
   useEffect(() => {
     if (status === 'authenticated' && session?.user?.role) {
-      switch (session.user.role) {
-        case Role.super_admin:
-          router.push('/admin/settings/services');
-          break;
-        case Role.general_contractor:
-          router.push('/contractor/dashboard');
-          break;
-        case Role.subcontractor:
-          router.push('/subcontractor/dashboard');
-          break;
-        case Role.supplier:
-          router.push('/supplier/dashboard');
-          break;
-      }
+      const redirectPath = ROLE_REDIRECTS[session.user.role] || '/';
+      router.push(redirectPath);
     }
   }, [session, status, router]);
 
@@ -54,26 +49,7 @@ export default function LoginPage() {
         return;
       }
 
-      // Get the session to check user role
-      const session = await getSession();
-      if (session?.user?.role) {
-        switch (session.user.role) {
-          case Role.super_admin:
-            router.push('/admin/dashboard');
-            break;
-          case Role.general_contractor:
-            router.push('/contractor/dashboard');
-            break;
-          case Role.subcontractor:
-            router.push('/subcontractor/dashboard');
-            break;
-          case Role.supplier:
-            router.push('/supplier/dashboard');
-            break;
-          default:
-            router.push('/');
-        }
-      }
+      // The useEffect hook will handle redirection once the session is updated
     } catch (error) {
       setError('An error occurred during sign in');
       setIsLoading(false);
