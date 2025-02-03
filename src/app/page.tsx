@@ -5,6 +5,59 @@ import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Role } from '@prisma/client';
 import { AuthButtons } from '@/components/AuthButtons';
+import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { Search, ChevronRight, TrendingUp, Users, Package, Truck } from 'lucide-react';
+import Link from 'next/link';
+
+// Sample data - this would come from your database
+const featuredCategories = [
+  { id: 1, name: 'Building Materials', image: '/categories/building-materials.jpg' },
+  { id: 2, name: 'Tools & Equipment', image: '/categories/tools.jpg' },
+  { id: 3, name: 'Electrical', image: '/categories/electrical.jpg' },
+  { id: 4, name: 'Plumbing', image: '/categories/plumbing.jpg' },
+  { id: 5, name: 'HVAC', image: '/categories/hvac.jpg' },
+  { id: 6, name: 'Safety Equipment', image: '/categories/safety.jpg' },
+];
+
+const featuredProducts = [
+  {
+    id: 1,
+    name: 'Premium Lumber Pack',
+    description: '2x4x8 Premium Grade Lumber - 100 pieces',
+    price: 599.99,
+    image: '/products/lumber.jpg',
+    poolSize: 5,
+    poolDiscount: 15,
+  },
+  {
+    id: 2,
+    name: 'Concrete Mix Bulk',
+    description: 'High-Strength Concrete Mix - 50 bags',
+    price: 449.99,
+    image: '/products/concrete.jpg',
+    poolSize: 3,
+    poolDiscount: 10,
+  },
+  {
+    id: 3,
+    name: 'Steel Rebar Bundle',
+    description: '#4 Rebar 20ft - 50 pieces',
+    price: 799.99,
+    image: '/products/rebar.jpg',
+    poolSize: 4,
+    poolDiscount: 12,
+  },
+  {
+    id: 4,
+    name: 'Insulation Roll Pack',
+    description: 'R-19 Fiberglass Insulation - 10 rolls',
+    price: 299.99,
+    image: '/products/insulation.jpg',
+    poolSize: 3,
+    poolDiscount: 8,
+  },
+];
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -23,7 +76,7 @@ export default function Home() {
           router.push('/subcontractor/dashboard');
           break;
         case Role.SUPPLIER:
-          router.push('/customer/dashboard');
+          router.push('/supplier/dashboard');
           break;
       }
     }
@@ -40,47 +93,147 @@ export default function Home() {
 
   // Show landing page for non-authenticated users
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 text-center">
-        <h1 className="text-5xl font-bold text-grey-darker mb-8">
-          Welcome to Construct Depot
-        </h1>
-        <p className="text-xl text-grey-darker max-w-3xl mx-auto mb-12">
-          Your one-stop platform for construction material bulk buying. Save money and time by joining purchase pools.
-        </p>
-        <AuthButtons />
+    <div className="min-h-screen bg-grey-lighter/5">
+      {/* Hero Section with Search */}
+      <div className="bg-blue-darker text-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-bold mb-4">
+              Construction Materials at Wholesale Prices
+            </h1>
+            <p className="text-xl text-grey-lighter">
+              Join purchase pools to save big on bulk orders
+            </p>
+          </div>
+          <div className="max-w-3xl mx-auto">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-lighter h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="Search for materials, tools, and equipment..."
+                  className="w-full pl-10 pr-4 py-3 rounded-lg text-grey-darker"
+                />
+              </div>
+              <Button size="lg">
+                Search
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Categories */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-grey-darker">Shop by Category</h2>
+          <Link href="/categories" className="text-blue-darker hover:text-blue-lighter flex items-center gap-1">
+            View All <ChevronRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {featuredCategories.map((category) => (
+            <Link key={category.id} href={`/categories/${category.id}`}>
+              <Card className="hover:shadow-lg transition-shadow">
+                <div className="aspect-square relative">
+                  <img
+                    src={category.image}
+                    alt={category.name}
+                    className="object-cover w-full h-full rounded-t-lg"
+                  />
+                </div>
+                <div className="p-4 text-center">
+                  <h3 className="font-medium text-grey-darker">{category.name}</h3>
+                </div>
+              </Card>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Featured Products */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-grey-darker">Featured Products</h2>
+          <Link href="/products" className="text-blue-darker hover:text-blue-lighter flex items-center gap-1">
+            View All <ChevronRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {featuredProducts.map((product) => (
+            <Link key={product.id} href={`/products/${product.id}`}>
+              <Card className="hover:shadow-lg transition-shadow h-full">
+                <div className="aspect-video relative">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="object-cover w-full h-full rounded-t-lg"
+                  />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-medium text-grey-darker mb-2">{product.name}</h3>
+                  <p className="text-sm text-grey-lighter mb-4">{product.description}</p>
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <div className="text-2xl font-bold text-blue-darker">
+                        ${product.price.toFixed(2)}
+                      </div>
+                      <div className="text-sm text-grey-lighter">
+                        Pool Size: {product.poolSize} buyers
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-green-600 font-medium">
+                        Save {product.poolDiscount}%
+                      </div>
+                      <div className="text-sm text-grey-lighter">
+                        in pool
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
 
       {/* Features Section */}
-      <div id="features" className="py-20 bg-white">
+      <div className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center text-grey-darker mb-12">
-            Why Choose Construct Depot?
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-4 gap-8">
             {[
               {
-                title: 'Bulk Purchase Pools',
-                description: 'Join forces with other buyers to access wholesale prices on construction materials.',
+                icon: <Users className="h-8 w-8" />,
+                title: 'Group Buying Power',
+                description: 'Join forces with other buyers to access wholesale prices',
               },
               {
-                title: 'Verified Suppliers',
-                description: 'Work with our network of trusted and verified material suppliers.',
+                icon: <TrendingUp className="h-8 w-8" />,
+                title: 'Volume Discounts',
+                description: 'Bigger pools mean bigger savings on bulk orders',
               },
               {
-                title: 'Easy Management',
-                description: 'Track orders, manage deliveries, and coordinate with pool participants effortlessly.',
+                icon: <Package className="h-8 w-8" />,
+                title: 'Quality Products',
+                description: 'Verified suppliers and quality materials',
+              },
+              {
+                icon: <Truck className="h-8 w-8" />,
+                title: 'Coordinated Delivery',
+                description: 'Efficient delivery management for pool orders',
               },
             ].map((feature, index) => (
-              <div
-                key={index}
-                className="p-6 bg-grey-lighter/10 rounded-lg hover:shadow-lg transition-shadow"
-              >
-                <h3 className="text-xl font-semibold text-grey-darker mb-4">
+              <div key={index} className="text-center">
+                <div className="inline-block p-3 bg-blue-lighter/10 rounded-full mb-4 text-blue-darker">
+                  {feature.icon}
+                </div>
+                <h3 className="text-lg font-semibold text-grey-darker mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-grey-darker">{feature.description}</p>
+                <p className="text-grey-lighter">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -88,12 +241,12 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-blue-darker text-white py-20">
+      <div className="bg-blue-darker text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold mb-8">
+          <h2 className="text-3xl font-bold mb-4">
             Ready to Start Saving?
           </h2>
-          <p className="mt-6 text-xl text-grey-lighter">
+          <p className="text-xl text-grey-lighter mb-8">
             Join Construct Depot today and transform how you purchase construction materials.
           </p>
           <AuthButtons variant="secondary" />
