@@ -15,12 +15,12 @@ export default function ContractorDashboard() {
 
   // Protect the route
   useEffect(() => {
-    if (session?.user?.role !== Role.GENERAL_CONTRACTOR && session?.user?.role !== Role.super_admin) {
+    if (session?.user?.role !== Role.general_contractor && session?.user?.role !== Role.super_admin) {
       router.push('/auth/login');
     }
   }, [session, router]);
 
-  if (!session || (session.user.role !== Role.GENERAL_CONTRACTOR && session.user.role !== Role.super_admin)) {
+  if (!session || (session.user.role !== Role.general_contractor && session.user.role !== Role.super_admin)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-grey-lighter/10">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>

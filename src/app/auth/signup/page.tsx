@@ -59,21 +59,21 @@ export default function SignUpPage() {
               <h3 className="text-lg font-medium text-grey-darker">Select your role</h3>
               <div className="grid grid-cols-1 gap-4">
                 <button
-                  onClick={() => handleUserTypeSelect(Role.GENERAL_CONTRACTOR)}
+                  onClick={() => handleUserTypeSelect(Role.general_contractor)}
                   className="p-4 border rounded-lg hover:bg-grey-lighter/10"
                 >
                   <h4 className="font-semibold">General Contractor</h4>
                   <p className="text-sm text-grey-lighter">Manage construction projects and teams</p>
                 </button>
                 <button
-                  onClick={() => handleUserTypeSelect(Role.SUBCONTRACTOR)}
+                  onClick={() => handleUserTypeSelect(Role.subcontractor)}
                   className="p-4 border rounded-lg hover:bg-grey-lighter/10"
                 >
                   <h4 className="font-semibold">Subcontractor</h4>
                   <p className="text-sm text-grey-lighter">Find work and manage your services</p>
                 </button>
                 <button
-                  onClick={() => handleUserTypeSelect(Role.SUPPLIER)}
+                  onClick={() => handleUserTypeSelect(Role.supplier)}
                   className="p-4 border rounded-lg hover:bg-grey-lighter/10"
                 >
                   <h4 className="font-semibold">Supplier</h4>
@@ -183,7 +183,7 @@ export default function SignUpPage() {
               </div>
 
               {/* Role-specific fields */}
-              {userData.role === Role.GENERAL_CONTRACTOR && (
+              {userData.role === Role.general_contractor && (
                 <div>
                   <label htmlFor="licenses" className="block text-sm font-medium text-grey-darker">
                     Licenses (comma-separated)
@@ -199,7 +199,7 @@ export default function SignUpPage() {
                 </div>
               )}
 
-              {userData.role === Role.SUBCONTRACTOR && (
+              {userData.role === Role.subcontractor && (
                 <div>
                   <label htmlFor="specialties" className="block text-sm font-medium text-grey-darker">
                     Specialties (comma-separated)
@@ -215,7 +215,7 @@ export default function SignUpPage() {
                 </div>
               )}
 
-              {userData.role === Role.SUPPLIER && (
+              {userData.role === Role.supplier && (
                 <div>
                   <label htmlFor="products" className="block text-sm font-medium text-grey-darker">
                     Product Categories (comma-separated)

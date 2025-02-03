@@ -58,7 +58,7 @@ export async function PATCH(
   }
 
   // Only allow admins to update order status
-  if (session.user.role !== Role.ADMIN) {
+  if (session.user.role !== Role.admin && session.user.role !== Role.super_admin) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 

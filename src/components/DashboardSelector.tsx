@@ -10,9 +10,9 @@ export function DashboardSelector({ isOpen, onClose }: { isOpen: boolean; onClos
 
   const dashboards = [
     { name: 'Super Admin Dashboard', path: '/admin/dashboard', role: Role.super_admin },
-    { name: 'General Contractor Dashboard', path: '/contractor/dashboard', role: Role.GENERAL_CONTRACTOR },
-    { name: 'Subcontractor Dashboard', path: '/subcontractor/dashboard', role: Role.SUBCONTRACTOR },
-    { name: 'Supplier Dashboard', path: '/customer/dashboard', role: Role.SUPPLIER },
+    { name: 'General Contractor Dashboard', path: '/contractor/dashboard', role: Role.general_contractor },
+    { name: 'Subcontractor Dashboard', path: '/subcontractor/dashboard', role: Role.subcontractor },
+    { name: 'Supplier Dashboard', path: '/customer/dashboard', role: Role.supplier },
   ];
 
   if (!isOpen) return null;

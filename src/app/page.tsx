@@ -69,13 +69,13 @@ export default function Home() {
         case Role.super_admin:
           router.push('/admin/settings/services');
           break;
-        case Role.GENERAL_CONTRACTOR:
+        case Role.general_contractor:
           router.push('/contractor/dashboard');
           break;
-        case Role.SUBCONTRACTOR:
+        case Role.subcontractor:
           router.push('/subcontractor/dashboard');
           break;
-        case Role.SUPPLIER:
+        case Role.supplier:
           router.push('/supplier/dashboard');
           break;
       }
