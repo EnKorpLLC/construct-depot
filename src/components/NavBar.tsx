@@ -3,7 +3,7 @@
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { Role } from '@prisma/client';
-import { Settings, LogOut, LogIn, Package } from 'lucide-react';
+import { Settings, LogOut, LogIn, Package, Shield } from 'lucide-react';
 
 export function NavBar() {
   const { data: session } = useSession();
@@ -24,6 +24,17 @@ export function NavBar() {
                 <Package className="h-5 w-5" />
                 <span>Products</span>
               </Link>
+            )}
+            {session?.user && (
+              session.user.role === Role.super_admin && (
+                <Link
+                  href="/admin/super"
+                  className="text-grey-darker hover:text-blue-darker flex items-center gap-1 transition-colors"
+                >
+                  <Shield className="h-5 w-5" />
+                  <span>Admin</span>
+                </Link>
+              )
             )}
           </div>
           <div className="flex items-center space-x-4">
