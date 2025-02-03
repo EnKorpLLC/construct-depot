@@ -1,7 +1,6 @@
 import { PrismaClient, Role, Invitation, InviteStatus, InvitationTemplate, BatchStatus, CompanyVerification, VerificationStatus, InvitationBatch } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import { sendEmail } from '@/lib/email';
-import { Redis } from 'ioredis';
 
 interface BatchInvitation {
   email: string;
@@ -11,24 +10,13 @@ interface BatchInvitation {
 
 export class InvitationService {
   private prisma: PrismaClient;
-  private redis: Redis;
 
   constructor() {
     this.prisma = new PrismaClient();
-    this.redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
   }
 
   private generateToken(): string {
     return randomBytes(32).toString('hex');
-  }
-
-  private async isRateLimited(ip: string): Promise<boolean> {
-    const key = `invite_rate_limit:${ip}`;
-    const count = await this.redis.incr(key);
-    if (count === 1) {
-      await this.redis.expire(key, 3600); // 1 hour window
-    }
-    return count > 10; // 10 invitations per hour per IP
   }
 
   async createTemplate(data: {
@@ -265,6 +253,5 @@ export class InvitationService {
 
   async cleanup(): Promise<void> {
     await this.prisma.$disconnect();
-    await this.redis.quit();
   }
 } 
