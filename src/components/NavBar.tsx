@@ -26,9 +26,9 @@ export function NavBar() {
               </Link>
             )}
             {session?.user && (
-              session.user.role === Role.super_admin && (
+              (session.user.role === Role.admin || session.user.role === Role.super_admin) && (
                 <Link
-                  href="/admin/super"
+                  href={session.user.role === Role.super_admin ? "/admin/super" : "/admin/dashboard"}
                   className="text-grey-darker hover:text-blue-darker flex items-center gap-1 transition-colors"
                 >
                   <Shield className="h-5 w-5" />

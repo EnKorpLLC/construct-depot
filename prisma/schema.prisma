@@ -24,6 +24,7 @@ model User {
   orders        Order[]
   payments      Payment[]  @relation("UserPayments")
   products      Product[]
+  reviews       Review[]
 
   // Project relations
   contractorProjects Project[] @relation("ContractorProjects")
@@ -35,6 +36,8 @@ model User {
   createdTemplates    InvitationTemplate[] @relation("TemplateCreator")
   crawlerSchedules    CrawlerSchedule[]
   createdBatches     InvitationBatch[]    @relation("BatchCreator")
+
+  priceAlerts   PriceAlert[]
 }
 
 model Product {
@@ -52,6 +55,63 @@ model Product {
   minOrderQuantity Int          @default(1)
   priceBrackets   PriceBracket[]
   priceHistory    PriceHistory[]
+  images          ProductImage[]
+  thumbnailUrl    String?
+  specifications  Json?
+  categoryId      String?
+  category        Category?     @relation(fields: [categoryId], references: [id])
+  relatedProducts Product[]     @relation("RelatedProducts")
+  relatedTo       Product[]     @relation("RelatedProducts")
+  reviews         Review[]
+  variants        ProductVariant[]
+  hasVariants     Boolean       @default(false)
+  basePrice       Float?        // Base price for variant products
+
+  priceAlerts     PriceAlert[]
+
+  @@index([categoryId])
+}
+
+model ProductImage {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String?
+  order     Int      @default(0)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}
+
+model Category {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  imageUrl    String?
+  parentId    String?
+  parent      Category? @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryHierarchy")
+  products    Product[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([parentId])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+  @@index([userId])
 }
 
 model Order {
@@ -322,13 +382,62 @@ model InvitationBatch {
   @@index([templateId])
 }
 
+model ProductVariant {
+  id          String   @id @default(cuid())
+  sku         String?  @unique
+  price       Float
+  inventory   Int      @default(0)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  options     ProductVariantOption[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  priceAlerts PriceAlert[]
+
+  @@index([productId])
+}
+
+model ProductVariantOption {
+  id        String   @id @default(cuid())
+  name      String   // e.g., "Size", "Color"
+  value     String   // e.g., "Large", "Red"
+  variantId String
+  variant   ProductVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([variantId])
+  @@unique([variantId, name])
+}
+
+model PriceAlert {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variantId   String?
+  variant     ProductVariant? @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  targetPrice Float
+  type        AlertType
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([productId])
+  @@index([variantId])
+}
+
 enum Role {
   super_admin
-  ADMIN
-  SUPPLIER
-  GENERAL_CONTRACTOR
-  SUBCONTRACTOR
+  admin
+  supplier
+  general_contractor
+  subcontractor
   user
+  customer
 }
 
 enum OrderStatus {
@@ -379,4 +488,10 @@ enum BatchStatus {
   COMPLETED
   FAILED
   CANCELLED
+}
+
+enum AlertType {
+  BELOW
+  ABOVE
+  PERCENTAGE_CHANGE
 }

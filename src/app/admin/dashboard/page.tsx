@@ -1,42 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { Role } from '@prisma/client';
-import { DashboardSelector, DashboardSelectorButton } from '@/components/DashboardSelector';
-import { Users, FileText, Settings, X, Package } from 'lucide-react';
+import { Users, FileText, Settings, Package } from 'lucide-react';
 
 type MenuItem = 'overview' | 'users' | 'products' | 'reports' | 'settings';
 
 export default function AdminDashboard() {
   const { data: session } = useSession();
-  const router = useRouter();
-  const [showSelector, setShowSelector] = useState(false);
   const [activeMenuItem, setActiveMenuItem] = useState<MenuItem>('overview');
   const [showSettings, setShowSettings] = useState(false);
-
-  // Show dashboard selector on first load for super admin
-  useEffect(() => {
-    if (session?.user?.role === Role.super_admin) {
-      setShowSelector(true);
-    }
-  }, [session]);
-
-  // Protect the route
-  useEffect(() => {
-    if (session?.user?.role !== Role.super_admin) {
-      router.push('/auth/login');
-    }
-  }, [session, router]);
-
-  if (!session || session.user.role !== Role.super_admin) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-grey-lighter/10">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-darker"></div>
-      </div>
-    );
-  }
 
   const renderContent = () => {
     switch (activeMenuItem) {
@@ -253,8 +226,8 @@ export default function AdminDashboard() {
                 : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
-            <Users className="mr-3 h-5 w-5" />
-            User Management
+            <Users className="h-5 w-5 mr-2" />
+            Users
           </button>
           <button
             onClick={() => setActiveMenuItem('products')}
@@ -264,7 +237,7 @@ export default function AdminDashboard() {
                 : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
-            <Package className="mr-3 h-5 w-5" />
+            <Package className="h-5 w-5 mr-2" />
             Products
           </button>
           <button
@@ -275,7 +248,7 @@ export default function AdminDashboard() {
                 : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
-            <FileText className="mr-3 h-5 w-5" />
+            <FileText className="h-5 w-5 mr-2" />
             Reports
           </button>
           <button
@@ -286,8 +259,8 @@ export default function AdminDashboard() {
                 : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
-            <Settings className="mr-3 h-5 w-5" />
-            System Settings
+            <Settings className="h-5 w-5 mr-2" />
+            Settings
           </button>
         </nav>
       </div>
@@ -296,12 +269,6 @@ export default function AdminDashboard() {
       <div className="flex-1 p-8">
         {renderContent()}
       </div>
-
-      {/* Dashboard Selector Modal */}
-      <DashboardSelector isOpen={showSelector} onClose={() => setShowSelector(false)} />
-      
-      {/* Dashboard Switch Button */}
-      <DashboardSelectorButton />
     </div>
   );
 } 
