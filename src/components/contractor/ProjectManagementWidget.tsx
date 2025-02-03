@@ -59,8 +59,8 @@ export default function ProjectManagementWidget() {
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Project Management</h2>
-          <button className="text-blue-600 hover:text-blue-800">
+          <h2 className="text-xl font-semibold text-grey-darker">Project Management</h2>
+          <button className="text-blue-darker hover:text-blue-lighter transition-colors">
             View All Projects
           </button>
         </div>
@@ -76,23 +76,23 @@ export default function ProjectManagementWidget() {
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
+                className="bg-white rounded-lg border border-grey-lighter p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h3 className="text-lg font-medium text-gray-900">
+                    <h3 className="text-lg font-medium text-grey-darker">
                       {project.name}
                     </h3>
-                    <p className="text-sm text-gray-500 flex items-center mt-1">
+                    <p className="text-sm text-grey-lighter flex items-center mt-1">
                       <Calendar className="w-4 h-4 mr-1" />
                       {new Date(project.startDate).toLocaleDateString()} - {new Date(project.endDate).toLocaleDateString()}
                     </p>
                   </div>
                   <span className={`px-3 py-1 rounded-full text-sm font-medium
-                    ${project.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
-                      project.status === 'planning' ? 'bg-yellow-100 text-yellow-800' :
-                      project.status === 'on_hold' ? 'bg-orange-100 text-orange-800' :
-                      'bg-green-100 text-green-800'}`}
+                    ${project.status === 'in_progress' ? 'bg-blue-lighter/10 text-blue-darker' :
+                      project.status === 'planning' ? 'bg-osb-light/10 text-osb-dark' :
+                      project.status === 'on_hold' ? 'bg-orange-lighter/10 text-orange-darker' :
+                      'bg-grey-lighter/20 text-grey-darker'}`}
                   >
                     {project.status.replace('_', ' ').toUpperCase()}
                   </span>
@@ -101,7 +101,7 @@ export default function ProjectManagementWidget() {
                 <div className="space-y-3">
                   {/* Progress Bar */}
                   <div>
-                    <div className="flex justify-between text-sm text-gray-600 mb-1">
+                    <div className="flex justify-between text-sm text-grey-darker mb-1">
                       <span>Progress</span>
                       <span>{project.progress}%</span>
                     </div>
@@ -110,13 +110,13 @@ export default function ProjectManagementWidget() {
 
                   {/* Budget Overview */}
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Budget</span>
+                    <span className="text-grey-darker">Budget</span>
                     <span className="font-medium">
                       ${project.budget.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">Spent</span>
+                    <span className="text-grey-darker">Spent</span>
                     <span className="font-medium">
                       ${project.spent.toLocaleString()} ({Math.round((project.spent / project.budget) * 100)}%)
                     </span>
@@ -124,14 +124,14 @@ export default function ProjectManagementWidget() {
 
                   {/* Team Members */}
                   <div className="mt-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">Team</h4>
+                    <h4 className="text-sm font-medium text-grey-darker mb-2">Team</h4>
                     <div className="flex flex-wrap gap-2">
                       {project.team.map((member) => (
                         <div
                           key={member.id}
-                          className="flex items-center bg-gray-100 rounded-full px-3 py-1"
+                          className="flex items-center bg-grey-lighter/20 rounded-full px-3 py-1"
                         >
-                          <span className="text-sm">{member.name}</span>
+                          <span className="text-sm text-grey-darker">{member.name}</span>
                         </div>
                       ))}
                     </div>
@@ -139,18 +139,18 @@ export default function ProjectManagementWidget() {
 
                   {/* Recent Tasks */}
                   <div className="mt-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">Recent Tasks</h4>
+                    <h4 className="text-sm font-medium text-grey-darker mb-2">Recent Tasks</h4>
                     <div className="space-y-2">
                       {project.tasks.map((task) => (
                         <div
                           key={task.id}
-                          className="flex justify-between items-center bg-gray-50 rounded p-2"
+                          className="flex justify-between items-center bg-grey-lighter/10 rounded p-2"
                         >
-                          <span className="text-sm">{task.title}</span>
+                          <span className="text-sm text-grey-darker">{task.title}</span>
                           <span className={`text-sm px-2 py-1 rounded
-                            ${task.status === 'completed' ? 'bg-green-100 text-green-800' :
-                              task.status === 'in_progress' ? 'bg-blue-100 text-blue-800' :
-                              'bg-gray-100 text-gray-800'}`}
+                            ${task.status === 'completed' ? 'bg-blue-lighter/10 text-blue-darker' :
+                              task.status === 'in_progress' ? 'bg-osb-light/10 text-osb-dark' :
+                              'bg-grey-lighter/20 text-grey-darker'}`}
                           >
                             {task.status.replace('_', ' ')}
                           </span>
@@ -164,13 +164,13 @@ export default function ProjectManagementWidget() {
           </TabsContent>
 
           <TabsContent value="planning">
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-grey-lighter">
               No projects in planning phase
             </div>
           </TabsContent>
 
           <TabsContent value="completed">
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-grey-lighter">
               No completed projects
             </div>
           </TabsContent>

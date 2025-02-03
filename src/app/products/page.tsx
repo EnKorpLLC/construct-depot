@@ -62,7 +62,7 @@ export default function ProductsPage() {
           {session?.user?.role === 'SUPPLIER' && (
             <Link
               href="/supplier/products/new"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-darker text-white rounded-lg hover:bg-blue-lighter"
             >
               Add New Product
             </Link>
@@ -101,7 +101,7 @@ export default function ProductsPage() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">{product.name}</h3>
                     <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
                     <div className="flex justify-between items-center">
-                      <span className="text-lg font-bold text-blue-600">${product.price}</span>
+                      <span className="text-lg font-bold text-blue-darker">${product.price}</span>
                       <span className="text-sm text-gray-500">
                         {product.inventory} in stock
                       </span>

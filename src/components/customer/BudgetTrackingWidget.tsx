@@ -132,10 +132,10 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Budget Tracking</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">Budget Tracking</h2>
           </div>
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-darker"></div>
           </div>
         </div>
       </Card>
@@ -147,7 +147,7 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Budget Tracking</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">Budget Tracking</h2>
           </div>
           <div className="flex items-center justify-center h-64">
             <div className="text-red-600">{error || 'Failed to load budget data'}</div>
@@ -161,7 +161,7 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Budget Tracking</h2>
+          <h2 className="text-xl font-semibold text-grey-darker">Budget Tracking</h2>
           <Button variant="outline" size="sm">
             Download Report
           </Button>
@@ -171,13 +171,13 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
           <div className="bg-blue-50 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <DollarSign className="h-5 w-5 text-blue-600" />
-              <span className="text-xs text-blue-600 font-medium">Total Budget</span>
+              <DollarSign className="h-5 w-5 text-blue-darker" />
+              <span className="text-xs text-blue-darker font-medium">Total Budget</span>
             </div>
             <div className="text-2xl font-bold text-blue-700 mb-1">
               ${(summary.totalBudget / 1000).toFixed(0)}k
             </div>
-            <div className="text-xs text-blue-600">
+            <div className="text-xs text-blue-darker">
               ${(summary.totalRemaining / 1000).toFixed(0)}k remaining
             </div>
           </div>
@@ -213,25 +213,23 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
 
         {/* Category Breakdown */}
         <div className="mb-6">
-          <h3 className="text-sm font-medium text-gray-700 mb-4">Budget Categories</h3>
+          <h3 className="text-sm font-medium text-grey-darker mb-4">Budget Categories</h3>
           <div className="space-y-4">
             {categories.map((category, index) => (
               <div key={index} className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <span className="text-sm font-medium text-gray-900">{category.name}</span>
-                    <span className="text-xs text-gray-500 ml-2">
-                      ${category.spent.toLocaleString()} of ${category.allocated.toLocaleString()}
-                    </span>
-                  </div>
-                  <span className={`text-xs px-2 py-1 rounded-full
-                    ${category.status === 'on_track' ? 'bg-green-100 text-green-800' :
-                      category.status === 'warning' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-red-100 text-red-800'}`}
-                  >
-                    {category.status === 'on_track' ? 'On Track' :
-                      category.status === 'warning' ? 'Warning' : 'Over Budget'}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-grey-darker">{category.name}</span>
+                  <span className="text-xs text-grey-lighter ml-2">
+                    ${category.spent.toLocaleString()} of ${category.allocated.toLocaleString()}
                   </span>
+                </div>
+                <div className={`text-xs px-2 py-1 rounded-full
+                  ${category.status === 'on_track' ? 'bg-green-100 text-green-800' :
+                    category.status === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-red-100 text-red-800'}`}
+                >
+                  {category.status === 'on_track' ? 'On Track' :
+                    category.status === 'warning' ? 'Warning' : 'Over Budget'}
                 </div>
                 <Progress
                   value={Math.min(100, (category.spent / category.allocated) * 100)}
@@ -245,24 +243,24 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
         {/* Recent Expenses */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-sm font-medium text-gray-700">Recent Expenses</h3>
+            <h3 className="text-sm font-medium text-grey-darker">Recent Expenses</h3>
             <Button variant="ghost" size="sm">View All</Button>
           </div>
           <div className="space-y-2">
             {expenses.map((expense) => (
               <div
                 key={expense.id}
-                className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                className="flex items-center justify-between p-3 bg-grey-lighter/10 rounded-lg"
               >
                 <div className="flex items-center space-x-3">
                   <div className="flex-shrink-0">
-                    <FileText className="h-5 w-5 text-gray-400" />
+                    <FileText className="h-5 w-5 text-grey-lighter" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-grey-darker">
                       {expense.description}
                     </div>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-grey-lighter">
                       {expense.category} • {expense.date.toLocaleDateString()}
                     </div>
                   </div>
@@ -288,22 +286,18 @@ export default function BudgetTrackingWidget({ projectId }: { projectId: string 
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex items-center space-x-3 bg-gray-50 rounded-lg p-4">
-            <ArrowUpRight className="h-5 w-5 text-gray-400" />
+          <div className="flex items-center space-x-3 bg-grey-lighter/10 rounded-lg p-4">
+            <ArrowUpRight className="h-5 w-5 text-grey-lighter" />
             <div>
-              <div className="text-sm text-gray-500">Recent Expenses</div>
-              <div className="text-lg font-semibold">
-                ${(summary.recentExpenses / 1000).toFixed(1)}k
-              </div>
+              <div className="text-lg font-bold">${summary.recentExpenses}</div>
+              <div className="text-sm text-grey-lighter">Recent Expenses</div>
             </div>
           </div>
-          <div className="flex items-center space-x-3 bg-gray-50 rounded-lg p-4">
-            <ArrowDownRight className="h-5 w-5 text-gray-400" />
+          <div className="flex items-center space-x-3 bg-grey-lighter/10 rounded-lg p-4">
+            <ArrowDownRight className="h-5 w-5 text-grey-lighter" />
             <div>
-              <div className="text-sm text-gray-500">Pending Approvals</div>
-              <div className="text-lg font-semibold">
-                ${(summary.pendingApprovals / 1000).toFixed(1)}k
-              </div>
+              <div className="text-lg font-bold">${summary.pendingApprovals}</div>
+              <div className="text-sm text-grey-lighter">Pending Approvals</div>
             </div>
           </div>
         </div>

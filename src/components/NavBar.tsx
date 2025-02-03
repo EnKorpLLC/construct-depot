@@ -9,11 +9,11 @@ export function NavBar() {
   const { data: session } = useSession();
 
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="bg-white border-b border-grey-lighter">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-xl font-bold text-blue-600">
+            <Link href="/" className="text-xl font-bold text-blue-darker hover:text-blue-lighter transition-colors">
               Construct Depot
             </Link>
           </div>
@@ -23,7 +23,7 @@ export function NavBar() {
                 {/* Settings link - visible to all logged-in users */}
                 <Link
                   href="/admin/settings/services"
-                  className="text-gray-600 hover:text-gray-900 flex items-center gap-1"
+                  className="text-grey-darker hover:text-blue-darker flex items-center gap-1 transition-colors"
                 >
                   <Settings className="h-5 w-5" />
                   <span>Settings</span>
@@ -31,7 +31,7 @@ export function NavBar() {
                 {/* Logout button */}
                 <button
                   onClick={() => signOut()}
-                  className="text-gray-600 hover:text-gray-900 flex items-center gap-1"
+                  className="text-grey-darker hover:text-orange-darker flex items-center gap-1 transition-colors"
                 >
                   <LogOut className="h-5 w-5" />
                   <span>Log Out</span>
@@ -40,7 +40,7 @@ export function NavBar() {
             ) : (
               <Link
                 href="/auth/login"
-                className="text-gray-600 hover:text-gray-900 flex items-center gap-1"
+                className="text-grey-darker hover:text-blue-darker flex items-center gap-1 transition-colors"
               >
                 <LogIn className="h-5 w-5" />
                 <span>Log In</span>

@@ -56,7 +56,7 @@ export default function SubcontractorManagementWidget() {
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Subcontractor Management</h2>
+          <h2 className="text-xl font-semibold text-grey-darker">Subcontractor Management</h2>
           <Button variant="outline" size="sm">
             Find Subcontractors
           </Button>
@@ -65,7 +65,7 @@ export default function SubcontractorManagementWidget() {
         {/* Search and Filter */}
         <div className="space-y-4 mb-6">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-lighter h-4 w-4" />
             <input
               type="text"
               placeholder="Search subcontractors..."
@@ -84,7 +84,7 @@ export default function SubcontractorManagementWidget() {
                 className={`px-3 py-1 rounded-full text-sm font-medium transition-colors
                   ${selectedTrade === trade
                     ? 'bg-blue-100 text-blue-800'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                    : 'bg-grey-lighter/10 text-grey-darker hover:bg-grey-lighter/20'}`}
               >
                 {trade}
               </button>
@@ -101,8 +101,8 @@ export default function SubcontractorManagementWidget() {
             >
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <h3 className="font-medium text-gray-900">{sub.name}</h3>
-                  <p className="text-sm text-gray-500">{sub.trade}</p>
+                  <h3 className="font-medium text-grey-darker">{sub.name}</h3>
+                  <p className="text-sm text-grey-lighter">{sub.trade}</p>
                 </div>
                 <span className={`px-2 py-1 rounded text-sm font-medium
                   ${sub.status === 'available' ? 'bg-green-100 text-green-800' :
@@ -119,28 +119,28 @@ export default function SubcontractorManagementWidget() {
                   <Star className="h-4 w-4 text-yellow-400" />
                   <div className="text-sm">
                     <span className="font-medium">{sub.rating}</span>
-                    <span className="text-gray-500">/5</span>
+                    <span className="text-grey-lighter">/5</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Building2 className="h-4 w-4 text-gray-400" />
+                  <Building2 className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
                     <span className="font-medium">{sub.completedProjects}</span>
-                    <span className="text-gray-500"> completed</span>
+                    <span className="text-grey-lighter"> completed</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <MessageSquare className="h-4 w-4 text-gray-400" />
+                  <MessageSquare className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
                     <span className="font-medium">{sub.activeProjects}</span>
-                    <span className="text-gray-500"> active</span>
+                    <span className="text-grey-lighter"> active</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Users className="h-4 w-4 text-gray-400" />
+                  <Users className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
                     <span className="font-medium">{sub.teamSize}</span>
-                    <span className="text-gray-500"> team members</span>
+                    <span className="text-grey-lighter"> team members</span>
                   </div>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export default function SubcontractorManagementWidget() {
                   {sub.specialties.map((specialty, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-gray-100 rounded-full text-xs text-gray-600"
+                      className="px-2 py-1 bg-grey-lighter/10 rounded-full text-xs text-grey-darker"
                     >
                       {specialty}
                     </span>

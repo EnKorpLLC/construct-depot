@@ -32,8 +32,8 @@ export default function AdminDashboard() {
 
   if (!session || session.user.role !== Role.super_admin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-grey-lighter/10">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-darker"></div>
       </div>
     );
   }
@@ -46,16 +46,16 @@ export default function AdminDashboard() {
             <h2 className="text-2xl font-bold">Overview</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-lg font-medium text-gray-900">Total Users</h3>
-                <p className="text-3xl font-bold text-blue-600">123</p>
+                <h3 className="text-lg font-medium text-grey-darker">Total Users</h3>
+                <p className="text-3xl font-bold text-blue-darker">123</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-lg font-medium text-gray-900">Active Orders</h3>
-                <p className="text-3xl font-bold text-blue-600">45</p>
+                <h3 className="text-lg font-medium text-grey-darker">Active Orders</h3>
+                <p className="text-3xl font-bold text-blue-darker">45</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-lg font-medium text-gray-900">Total Revenue</h3>
-                <p className="text-3xl font-bold text-blue-600">$12,345</p>
+                <h3 className="text-lg font-medium text-grey-darker">Total Revenue</h3>
+                <p className="text-3xl font-bold text-blue-darker">$12,345</p>
               </div>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function AdminDashboard() {
                     placeholder="Search users..."
                     className="px-4 py-2 border rounded-lg"
                   />
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-lg">
+                  <button className="px-4 py-2 bg-blue-darker text-white rounded-lg">
                     Add User
                   </button>
                 </div>
@@ -91,7 +91,7 @@ export default function AdminDashboard() {
                       <td className="py-2">john@example.com</td>
                       <td className="py-2">Contractor</td>
                       <td className="py-2">
-                        <button className="text-blue-600">Edit</button>
+                        <button className="text-blue-darker hover:text-blue-lighter">Edit</button>
                       </td>
                     </tr>
                   </tbody>
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold">Product Management</h2>
               <button
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-darker text-white rounded-lg hover:bg-blue-darker"
                 onClick={() => {/* Add new product logic */}}
               >
                 Add System Product
@@ -140,7 +140,7 @@ export default function AdminDashboard() {
                       <td className="py-2">100</td>
                       <td className="py-2">Supplier</td>
                       <td className="py-2">
-                        <button className="text-blue-600 mr-2">Edit</button>
+                        <button className="text-blue-darker mr-2 hover:text-blue-lighter">Edit</button>
                         <button className="text-red-600">Remove</button>
                       </td>
                     </tr>
@@ -157,13 +157,13 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-lg font-medium mb-4">User Growth</h3>
-                <div className="h-64 bg-gray-100 rounded flex items-center justify-center">
+                <div className="h-64 bg-grey-lighter/10 rounded flex items-center justify-center">
                   Chart Placeholder
                 </div>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
                 <h3 className="text-lg font-medium mb-4">Revenue</h3>
-                <div className="h-64 bg-gray-100 rounded flex items-center justify-center">
+                <div className="h-64 bg-grey-lighter/10 rounded flex items-center justify-center">
                   Chart Placeholder
                 </div>
               </div>
@@ -177,45 +177,45 @@ export default function AdminDashboard() {
             <div className="bg-white rounded-lg shadow p-6">
               <form className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-grey-darker">
                     Site Name
                   </label>
                   <input
                     type="text"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    className="mt-1 block w-full border border-grey-lighter rounded-md shadow-sm py-2 px-3"
                     defaultValue="Construct Depot"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-grey-darker">
                     Contact Email
                   </label>
                   <input
                     type="email"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    className="mt-1 block w-full border border-grey-lighter rounded-md shadow-sm py-2 px-3"
                     defaultValue="support@constructdepot.com"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-grey-darker">
                     API Key
                   </label>
                   <input
                     type="password"
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3"
+                    className="mt-1 block w-full border border-grey-lighter rounded-md shadow-sm py-2 px-3"
                   />
                 </div>
                 <div className="flex justify-end space-x-4">
                   <button
                     type="button"
-                    className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+                    className="px-4 py-2 border border-grey-lighter rounded-md shadow-sm text-sm font-medium text-grey-darker bg-white hover:bg-grey-lighter/10"
                     onClick={() => setShowSettings(false)}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+                    className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-darker hover:bg-blue-darker"
                   >
                     Save Changes
                   </button>
@@ -228,19 +228,19 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-grey-lighter/10 flex">
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-lg">
         <div className="p-6">
-          <h1 className="text-xl font-bold text-gray-900">Admin Dashboard</h1>
+          <h1 className="text-xl font-bold text-grey-darker">Admin Dashboard</h1>
         </div>
         <nav className="space-y-1">
           <button
             onClick={() => setActiveMenuItem('overview')}
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'overview'
-                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-blue-lighter/10 text-blue-darker border-r-2 border-blue-darker'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             Overview
@@ -249,8 +249,8 @@ export default function AdminDashboard() {
             onClick={() => setActiveMenuItem('users')}
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'users'
-                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-blue-lighter/10 text-blue-darker border-r-2 border-blue-darker'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             <Users className="mr-3 h-5 w-5" />
@@ -260,8 +260,8 @@ export default function AdminDashboard() {
             onClick={() => setActiveMenuItem('products')}
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'products'
-                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-blue-lighter/10 text-blue-darker border-r-2 border-blue-darker'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             <Package className="mr-3 h-5 w-5" />
@@ -271,8 +271,8 @@ export default function AdminDashboard() {
             onClick={() => setActiveMenuItem('reports')}
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'reports'
-                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-blue-lighter/10 text-blue-darker border-r-2 border-blue-darker'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             <FileText className="mr-3 h-5 w-5" />
@@ -282,8 +282,8 @@ export default function AdminDashboard() {
             onClick={() => setActiveMenuItem('settings')}
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'settings'
-                ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-blue-lighter/10 text-blue-darker border-r-2 border-blue-darker'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             <Settings className="mr-3 h-5 w-5" />

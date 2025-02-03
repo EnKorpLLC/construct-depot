@@ -120,7 +120,6 @@ export default function BulkInvite() {
           <Select
             value={selectedTemplate}
             onValueChange={setSelectedTemplate}
-            className="w-full"
           >
             <option value="">Default Template</option>
             {templates.map((template) => (
@@ -143,7 +142,7 @@ export default function BulkInvite() {
               onChange={handleFileUpload}
             />
           </label>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-grey-lighter mt-2">
             CSV format: email,role,company (optional)
           </p>
         </div>
@@ -159,7 +158,6 @@ export default function BulkInvite() {
           <Select
             value={newRole}
             onValueChange={(value) => setNewRole(value as Role)}
-            className="w-48"
           >
             {Object.values(Role).map((role) => (
               <option key={role} value={role}>
@@ -183,11 +181,11 @@ export default function BulkInvite() {
           {invitations.map((invitation, index) => (
             <div
               key={index}
-              className="flex items-center justify-between p-2 bg-gray-50 rounded"
+              className="flex items-center justify-between p-2 bg-grey-lighter/10 rounded"
             >
               <div>
                 <p className="font-medium">{invitation.email}</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-grey-lighter">
                   {invitation.role.toLowerCase().replace('_', ' ')}
                   {invitation.company && ` • ${invitation.company}`}
                 </p>
@@ -228,12 +226,12 @@ export default function BulkInvite() {
                     batch.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
                     batch.status === 'PROCESSING' ? 'bg-blue-100 text-blue-800' :
                     batch.status === 'FAILED' ? 'bg-red-100 text-red-800' :
-                    'bg-gray-100 text-gray-800'
+                    'bg-grey-lighter/10 text-grey-darker'
                   }`}>
                     {batch.status.toLowerCase()}
                   </span>
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-grey-lighter">
                   {new Date(batch.createdAt).toLocaleDateString()}
                   {' • '}
                   {batch.invitations.length} invitation{batch.invitations.length !== 1 && 's'}

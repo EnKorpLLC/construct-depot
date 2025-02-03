@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { ProductCrawlerService } from '@/services/crawler/ProductCrawlerService';
 import { CrawlerSecurity } from '@/middleware/crawler-security';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Verify super admin access
     const session = await getServerSession(authOptions);

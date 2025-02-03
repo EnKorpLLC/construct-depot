@@ -62,7 +62,7 @@ export default function ProjectOpportunitiesWidget() {
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Project Opportunities</h2>
+          <h2 className="text-xl font-semibold text-grey-darker">Project Opportunities</h2>
           <Button variant="outline" size="sm">
             View All Projects
           </Button>
@@ -70,7 +70,7 @@ export default function ProjectOpportunitiesWidget() {
 
         {/* Trade Filters */}
         <div className="flex items-center gap-2 mb-6 overflow-x-auto pb-2">
-          <Filter className="h-4 w-4 text-gray-400" />
+          <Filter className="h-4 w-4 text-grey-lighter" />
           {trades.map((trade) => (
             <button
               key={trade}
@@ -78,7 +78,7 @@ export default function ProjectOpportunitiesWidget() {
               className={`px-3 py-1 rounded-full text-sm font-medium whitespace-nowrap
                 ${selectedTrade === trade || (trade === 'All' && !selectedTrade)
                   ? 'bg-blue-100 text-blue-800'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                  : 'bg-grey-lighter/10 text-grey-darker hover:bg-grey-lighter/20'}`}
             >
               {trade}
             </button>
@@ -90,13 +90,13 @@ export default function ProjectOpportunitiesWidget() {
           {opportunities.map((opportunity) => (
             <div
               key={opportunity.id}
-              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+              className="border border-grey-lighter rounded-lg p-4 hover:shadow-md transition-shadow"
             >
               {/* Header */}
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="font-medium text-gray-900">{opportunity.title}</h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="font-medium text-grey-darker">{opportunity.title}</h3>
+                  <p className="text-sm text-grey-lighter">
                     {opportunity.generalContractor} • {opportunity.location}
                   </p>
                 </div>
@@ -119,34 +119,34 @@ export default function ProjectOpportunitiesWidget() {
               {/* Project Details */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <div className="flex items-center space-x-2">
-                  <DollarSign className="h-4 w-4 text-gray-400" />
+                  <DollarSign className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">Budget:</span>
+                    <span className="text-grey-lighter">Budget:</span>
                     <span className="font-medium ml-1">
                       ${opportunity.budget.toLocaleString()}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Calendar className="h-4 w-4 text-gray-400" />
+                  <Calendar className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">Start:</span>
+                    <span className="text-grey-lighter">Start:</span>
                     <span className="font-medium ml-1">
                       {opportunity.startDate.toLocaleDateString()}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Building2 className="h-4 w-4 text-gray-400" />
+                  <Building2 className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">Trade:</span>
+                    <span className="text-grey-lighter">Trade:</span>
                     <span className="font-medium ml-1">{opportunity.tradeType}</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Percent className="h-4 w-4 text-gray-400" />
+                  <Percent className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">Duration:</span>
+                    <span className="text-grey-lighter">Duration:</span>
                     <span className="font-medium ml-1">{opportunity.duration}</span>
                   </div>
                 </div>
@@ -154,12 +154,12 @@ export default function ProjectOpportunitiesWidget() {
 
               {/* Requirements */}
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Requirements</h4>
+                <h4 className="text-sm font-medium text-grey-darker mb-2">Requirements</h4>
                 <div className="flex flex-wrap gap-2">
                   {opportunity.requirements.map((req, index) => (
                     <span
                       key={index}
-                      className="px-2 py-1 bg-gray-100 rounded-full text-xs text-gray-600"
+                      className="px-2 py-1 bg-grey-lighter/10 rounded-full text-xs text-grey-darker"
                     >
                       {req}
                     </span>
@@ -169,7 +169,7 @@ export default function ProjectOpportunitiesWidget() {
 
               {/* Bid Due Date */}
               <div className="mb-4">
-                <div className="flex justify-between text-sm text-gray-600 mb-1">
+                <div className="flex justify-between text-sm text-grey-darker mb-1">
                   <span>Time Remaining</span>
                   <span>Bids due {opportunity.bidsDue.toLocaleDateString()}</span>
                 </div>

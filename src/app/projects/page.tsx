@@ -72,10 +72,10 @@ export default function ProjectsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-grey-lighter/10 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Project Opportunities</h1>
+          <h1 className="text-3xl font-bold text-grey-darker">Project Opportunities</h1>
           {session?.user?.role === 'GENERAL_CONTRACTOR' && (
             <Link
               href="/contractor/projects/new"
@@ -116,7 +116,7 @@ export default function ProjectsPage() {
                     className={`px-3 py-1 rounded-full text-sm font-medium transition-colors
                       ${selectedTrade === trade
                         ? 'bg-blue-100 text-blue-800'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                        : 'bg-grey-lighter/10 text-grey-darker hover:bg-grey-lighter/20'}`}
                   >
                     {trade}
                   </button>
@@ -130,20 +130,20 @@ export default function ProjectsPage() {
                 <Link
                   key={project.id}
                   href={`/projects/${project.id}`}
-                  className="block border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                  className="block border border-grey-lighter rounded-lg p-6 hover:shadow-lg transition-shadow"
                 >
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h2 className="text-xl font-semibold text-gray-900 mb-2">{project.title}</h2>
-                      <div className="flex items-center text-gray-500 mb-2">
+                      <h2 className="text-xl font-semibold text-grey-darker mb-2">{project.title}</h2>
+                      <div className="flex items-center text-grey-lighter mb-2">
                         <Building2 className="h-4 w-4 mr-2" />
                         {project.generalContractor}
                       </div>
-                      <div className="flex items-center text-gray-500 mb-2">
+                      <div className="flex items-center text-grey-lighter mb-2">
                         <MapPin className="h-4 w-4 mr-2" />
                         {project.location}
                       </div>
-                      <div className="flex items-center text-gray-500">
+                      <div className="flex items-center text-grey-lighter">
                         <Clock className="h-4 w-4 mr-2" />
                         Bids due: {project.bidsDue.toLocaleDateString()}
                       </div>
@@ -167,8 +167,8 @@ export default function ProjectsPage() {
                   </div>
                   <div className="flex items-center justify-between mt-4 pt-4 border-t">
                     <div className="flex items-center">
-                      <DollarSign className="h-5 w-5 text-gray-400 mr-1" />
-                      <span className="text-lg font-semibold text-gray-900">
+                      <DollarSign className="h-5 w-5 text-grey-lighter mr-1" />
+                      <span className="text-lg font-semibold text-grey-darker">
                         ${project.budget.toLocaleString()}
                       </span>
                     </div>
@@ -176,7 +176,7 @@ export default function ProjectsPage() {
                       {project.requirements.map((req, index) => (
                         <span
                           key={index}
-                          className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-sm"
+                          className="px-2 py-1 bg-grey-lighter/10 text-grey-darker rounded text-sm"
                         >
                           {req}
                         </span>

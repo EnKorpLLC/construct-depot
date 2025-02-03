@@ -146,7 +146,7 @@ export default function ProjectOverviewWidget() {
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">My Projects</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">My Projects</h2>
           </div>
           <div className="flex items-center justify-center h-64">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -161,7 +161,7 @@ export default function ProjectOverviewWidget() {
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">My Projects</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">My Projects</h2>
           </div>
           <div className="flex items-center justify-center h-64">
             <div className="text-red-600">{error}</div>
@@ -175,7 +175,7 @@ export default function ProjectOverviewWidget() {
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">My Projects</h2>
+          <h2 className="text-xl font-semibold text-grey-darker">My Projects</h2>
           <Button variant="outline" size="sm">
             View All Projects
           </Button>
@@ -186,13 +186,13 @@ export default function ProjectOverviewWidget() {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+              className="border border-grey-lighter rounded-lg p-4 hover:shadow-md transition-shadow"
             >
               {/* Header */}
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="font-medium text-gray-900">{project.name}</h3>
-                  <p className="text-sm text-gray-500">
+                  <h3 className="font-medium text-grey-darker">{project.name}</h3>
+                  <p className="text-sm text-grey-lighter">
                     Contractor: {project.contractor.name}
                   </p>
                 </div>
@@ -208,7 +208,7 @@ export default function ProjectOverviewWidget() {
 
               {/* Progress Bar */}
               <div className="mb-4">
-                <div className="flex justify-between text-sm text-gray-600 mb-1">
+                <div className="flex justify-between text-sm text-grey-darker mb-1">
                   <span>Overall Progress</span>
                   <span>{project.progress}%</span>
                 </div>
@@ -218,36 +218,36 @@ export default function ProjectOverviewWidget() {
               {/* Project Stats */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                 <div className="flex items-center space-x-2">
-                  <Calendar className="h-4 w-4 text-gray-400" />
+                  <Calendar className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">End Date:</span>
+                    <span className="text-grey-lighter">End Date:</span>
                     <span className="font-medium ml-1">
                       {project.endDate.toLocaleDateString()}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <DollarSign className="h-4 w-4 text-gray-400" />
+                  <DollarSign className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">Budget Used:</span>
+                    <span className="text-grey-lighter">Budget Used:</span>
                     <span className="font-medium ml-1">
                       {Math.round((project.spent / project.budget) * 100)}%
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Users className="h-4 w-4 text-gray-400" />
+                  <Users className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">Team:</span>
+                    <span className="text-grey-lighter">Team:</span>
                     <span className="font-medium ml-1">
                       {project.team.length} members
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4 text-gray-400" />
+                  <Clock className="h-4 w-4 text-grey-lighter" />
                   <div className="text-sm">
-                    <span className="text-gray-500">Days Left:</span>
+                    <span className="text-grey-lighter">Days Left:</span>
                     <span className="font-medium ml-1">
                       {Math.ceil((project.endDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24))}
                     </span>
@@ -277,18 +277,18 @@ export default function ProjectOverviewWidget() {
 
               {/* Recent Documents */}
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-gray-700 mb-2">Recent Documents</h4>
+                <h4 className="text-sm font-medium text-grey-darker mb-2">Recent Documents</h4>
                 <div className="space-y-2">
                   {project.documents.map((doc, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between bg-gray-50 p-2 rounded"
+                      className="flex items-center justify-between bg-grey-lighter/10 p-2 rounded"
                     >
                       <div className="flex items-center">
-                        <FileText className="h-4 w-4 text-gray-400 mr-2" />
+                        <FileText className="h-4 w-4 text-grey-lighter mr-2" />
                         <span className="text-sm">{doc.name}</span>
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-grey-lighter">
                         Updated {doc.lastUpdated.toLocaleDateString()}
                       </div>
                     </div>

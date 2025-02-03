@@ -6,11 +6,11 @@ export const CostAnalyticsWidget = () => {
       <h2 className="text-lg font-semibold mb-4">Cost Analytics</h2>
       <div className="space-y-4">
         <div>
-          <p className="text-sm text-gray-600">Total Savings</p>
+          <p className="text-sm text-grey-lighter">Total Savings</p>
           <p className="text-2xl font-bold">$0.00</p>
         </div>
         <div>
-          <p className="text-sm text-gray-600">Average Cost Reduction</p>
+          <p className="text-sm text-grey-lighter">Average Cost Reduction</p>
           <p className="text-2xl font-bold">0%</p>
         </div>
       </div>

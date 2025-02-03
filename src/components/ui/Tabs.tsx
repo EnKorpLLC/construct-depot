@@ -14,7 +14,7 @@ const StyledTabsList = React.forwardRef<
 >(({ className = '', ...props }, ref) => (
   <TabsPrimitive.List
     ref={ref}
-    className={`inline-flex h-10 items-center justify-center rounded-lg bg-gray-100 p-1 text-gray-500 ${className}`}
+    className={`inline-flex h-10 items-center justify-center rounded-lg bg-grey-lighter/10 p-1 text-grey-lighter ${className}`}
     {...props}
   />
 ));
@@ -26,7 +26,7 @@ const StyledTabsTrigger = React.forwardRef<
 >(({ className = '', ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}
-    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-gray-900 data-[state=active]:shadow-sm ${className}`}
+    className={`inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-white data-[state=active]:text-grey-darker data-[state=active]:shadow-sm ${className}`}
     {...props}
   />
 ));
@@ -67,7 +67,7 @@ export const CustomTabs: React.FC<TabsProps> = ({
 
   return (
     <div className={className}>
-      <div className="border-b border-gray-200">
+      <div className="border-b border-grey-lighter">
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map((tab) => (
             <button
@@ -78,7 +78,7 @@ export const CustomTabs: React.FC<TabsProps> = ({
                 ${
                   activeTab === tab.id
                     ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    : 'border-transparent text-grey-lighter hover:text-grey-darker hover:border-grey-lighter'
                 }
               `}
               aria-current={activeTab === tab.id ? 'page' : undefined}

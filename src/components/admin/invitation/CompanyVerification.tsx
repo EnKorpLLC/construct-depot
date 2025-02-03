@@ -90,7 +90,6 @@ export default function CompanyVerification() {
           <Select
             value={selectedStatus}
             onValueChange={(value) => setSelectedStatus(value as VerificationStatus | 'ALL')}
-            className="w-48"
           >
             <option value="ALL">All Status</option>
             {Object.values(VerificationStatus).map((status) => (
@@ -117,7 +116,7 @@ export default function CompanyVerification() {
                       {getStatusIcon(verification.status)}
                       <h3 className="font-medium">{verification.companyName}</h3>
                     </div>
-                    <div className="mt-2 space-y-1 text-sm text-gray-500">
+                    <div className="mt-2 space-y-1 text-sm text-grey-lighter">
                       <p>Submitted by: {verification.user.name} ({verification.user.email})</p>
                       {verification.registrationNo && (
                         <p>Registration: {verification.registrationNo}</p>
@@ -163,11 +162,11 @@ export default function CompanyVerification() {
                           href={doc.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 p-2 bg-gray-50 rounded hover:bg-gray-100"
+                          className="flex items-center gap-2 p-2 bg-grey-lighter/10 rounded hover:bg-grey-lighter/20"
                         >
                           <FileText className="w-4 h-4" />
                           <span className="text-sm">{doc.name}</span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-grey-lighter">
                             ({new Date(doc.uploadedAt).toLocaleDateString()})
                           </span>
                         </a>

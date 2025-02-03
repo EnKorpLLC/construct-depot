@@ -112,7 +112,6 @@ export default function ScheduleManager() {
           <Select
             value={newFrequency}
             onValueChange={setNewFrequency}
-            className="w-48"
           >
             {FREQUENCIES.map(({ value, label }) => (
               <option key={value} value={value}>{label}</option>
@@ -156,8 +155,8 @@ export default function ScheduleManager() {
                   Run Now
                 </Button>
                 <Button
-                  variant={schedule.isActive ? 'default' : 'outline'}
-                  size="icon"
+                  variant={schedule.isActive ? 'primary' : 'outline'}
+                  size="sm"
                   onClick={() => toggleSchedule(schedule.id, !schedule.isActive)}
                 >
                   {schedule.isActive ? (
@@ -168,7 +167,7 @@ export default function ScheduleManager() {
                 </Button>
                 <Button
                   variant="destructive"
-                  size="icon"
+                  size="sm"
                   onClick={() => deleteSchedule(schedule.id)}
                 >
                   <Trash2 className="w-4 h-4" />

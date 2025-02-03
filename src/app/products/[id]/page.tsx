@@ -82,7 +82,7 @@ export default function ProductDetail() {
                   </div>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-gray-600">Current Price:</span>
-                    <span className="text-xl font-bold text-blue-600">${getCurrentPrice()}</span>
+                    <span className="text-xl font-bold text-blue-darker">${getCurrentPrice()}</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-gray-600">Available Stock:</span>
@@ -131,7 +131,7 @@ export default function ProductDetail() {
                   </div>
 
                   <button
-                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    className="w-full bg-blue-darker text-white py-2 px-4 rounded-md hover:bg-blue-lighter focus:outline-none focus:ring-2 focus:ring-blue-darker focus:ring-offset-2"
                     onClick={() => {/* Add to cart/pool logic */}}
                   >
                     Add to Order

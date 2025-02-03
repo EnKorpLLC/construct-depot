@@ -22,7 +22,7 @@ export default function SubcontractorDashboard() {
 
   if (!session || (session.user.role !== Role.SUBCONTRACTOR && session.user.role !== Role.super_admin)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-grey-lighter/10">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
       </div>
     );
@@ -36,15 +36,15 @@ export default function SubcontractorDashboard() {
             <h2 className="text-2xl font-bold">Overview</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-lg font-medium text-gray-900">Active Jobs</h3>
+                <h3 className="text-lg font-medium text-grey-darker">Active Jobs</h3>
                 <p className="text-3xl font-bold text-blue-600">3</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-lg font-medium text-gray-900">Open Bids</h3>
+                <h3 className="text-lg font-medium text-grey-darker">Open Bids</h3>
                 <p className="text-3xl font-bold text-blue-600">7</p>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <h3 className="text-lg font-medium text-gray-900">Total Earnings</h3>
+                <h3 className="text-lg font-medium text-grey-darker">Total Earnings</h3>
                 <p className="text-3xl font-bold text-blue-600">$34,567</p>
               </div>
             </div>
@@ -174,11 +174,11 @@ export default function SubcontractorDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-grey-lighter/10 flex">
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-lg">
         <div className="p-6">
-          <h1 className="text-xl font-bold text-gray-900">Subcontractor Dashboard</h1>
+          <h1 className="text-xl font-bold text-grey-darker">Subcontractor Dashboard</h1>
         </div>
         <nav className="space-y-1">
           <button
@@ -186,7 +186,7 @@ export default function SubcontractorDashboard() {
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'overview'
                 ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             Overview
@@ -196,7 +196,7 @@ export default function SubcontractorDashboard() {
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'jobs'
                 ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             <Briefcase className="mr-3 h-5 w-5" />
@@ -207,7 +207,7 @@ export default function SubcontractorDashboard() {
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'bids'
                 ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             <DollarSign className="mr-3 h-5 w-5" />
@@ -218,7 +218,7 @@ export default function SubcontractorDashboard() {
             className={`w-full flex items-center px-6 py-3 text-sm font-medium ${
               activeMenuItem === 'materials'
                 ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                : 'text-gray-600 hover:bg-gray-50'
+                : 'text-grey-lighter hover:bg-grey-lighter/10'
             }`}
           >
             <Wrench className="mr-3 h-5 w-5" />

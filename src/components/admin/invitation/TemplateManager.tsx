@@ -187,7 +187,7 @@ export default function TemplateManager() {
               </Button>
             </div>
             {editingTemplate?.onboardingSteps.map((step, index) => (
-              <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
+              <div key={index} className="flex items-center justify-between bg-grey-lighter/10 p-2 rounded">
                 <span>{step}</span>
                 <Button
                   variant="ghost"
@@ -224,10 +224,10 @@ export default function TemplateManager() {
                     <Star className="w-4 h-4 text-yellow-400 fill-current" />
                   )}
                 </div>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-grey-lighter">
                   Role: {template.role.toLowerCase().replace('_', ' ')}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-grey-lighter">
                   Steps: {template.onboardingSteps.length}
                 </p>
               </div>
@@ -242,14 +242,14 @@ export default function TemplateManager() {
                 </Button>
                 <Button
                   variant="outline"
-                  size="icon"
+                  size="sm"
                   onClick={() => setEditingTemplate(template)}
                 >
                   <Edit2 className="w-4 h-4" />
                 </Button>
                 <Button
                   variant="destructive"
-                  size="icon"
+                  size="sm"
                   onClick={() => deleteTemplate(template.id)}
                 >
                   <Trash2 className="w-4 h-4" />

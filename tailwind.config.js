@@ -8,6 +8,24 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Custom brand colors
+        blue: {
+          darker: '#1c237e',
+          lighter: '#0010ff',
+        },
+        orange: {
+          darker: '#e65003',
+          lighter: '#ff7300',
+        },
+        grey: {
+          darker: '#999999',
+          lighter: '#c3c3c3',
+        },
+        osb: {
+          dark: '#af733c',
+          medium: '#cda573',
+          light: '#dec09f',
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

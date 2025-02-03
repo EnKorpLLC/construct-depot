@@ -78,7 +78,6 @@ export default function PriceHistory() {
             <Select
               value={selectedProduct}
               onValueChange={setSelectedProduct}
-              className="w-64"
             >
               {products.map((product) => (
                 <option key={product.id} value={product.id}>
@@ -89,7 +88,6 @@ export default function PriceHistory() {
             <Select
               value={timeRange}
               onValueChange={setTimeRange}
-              className="w-32"
             >
               <option value="7d">7 Days</option>
               <option value="30d">30 Days</option>

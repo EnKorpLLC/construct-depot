@@ -152,10 +152,10 @@ export default function CommunicationHubWidget() {
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Communication Hub</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">Communication Hub</h2>
           </div>
           <div className="flex items-center justify-center h-64">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-darker"></div>
           </div>
         </div>
       </Card>
@@ -167,7 +167,7 @@ export default function CommunicationHubWidget() {
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Communication Hub</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">Communication Hub</h2>
           </div>
           <div className="flex items-center justify-center h-64">
             <div className="text-red-600">{error}</div>
@@ -195,7 +195,7 @@ export default function CommunicationHubWidget() {
       case 'busy':
         return 'bg-yellow-500';
       case 'offline':
-        return 'bg-gray-500';
+        return 'bg-grey-lighter';
     }
   };
 
@@ -203,7 +203,7 @@ export default function CommunicationHubWidget() {
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Communication Hub</h2>
+          <h2 className="text-xl font-semibold text-grey-darker">Communication Hub</h2>
           <Button variant="outline" size="sm">
             New Message
           </Button>
@@ -215,8 +215,8 @@ export default function CommunicationHubWidget() {
             onClick={() => setActiveTab('messages')}
             className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium ${
               activeTab === 'messages'
-                ? 'bg-blue-100 text-blue-800'
-                : 'text-gray-600 hover:bg-gray-100'
+                ? 'bg-grey-lighter text-grey-darker'
+                : 'text-grey-darker hover:bg-grey-lighter/10'
             }`}
           >
             <MessageSquare className="h-4 w-4 mr-2" />
@@ -226,8 +226,8 @@ export default function CommunicationHubWidget() {
             onClick={() => setActiveTab('notifications')}
             className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium ${
               activeTab === 'notifications'
-                ? 'bg-blue-100 text-blue-800'
-                : 'text-gray-600 hover:bg-gray-100'
+                ? 'bg-grey-lighter text-grey-darker'
+                : 'text-grey-darker hover:bg-grey-lighter/10'
             }`}
           >
             <Bell className="h-4 w-4 mr-2" />
@@ -237,8 +237,8 @@ export default function CommunicationHubWidget() {
             onClick={() => setActiveTab('contacts')}
             className={`flex items-center px-3 py-2 rounded-lg text-sm font-medium ${
               activeTab === 'contacts'
-                ? 'bg-blue-100 text-blue-800'
-                : 'text-gray-600 hover:bg-gray-100'
+                ? 'bg-grey-lighter text-grey-darker'
+                : 'text-grey-darker hover:bg-grey-lighter/10'
             }`}
           >
             <Users className="h-4 w-4 mr-2" />
@@ -252,35 +252,35 @@ export default function CommunicationHubWidget() {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
+                className="border border-grey-lighter rounded-lg p-4 hover:shadow-sm transition-shadow"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-gray-200 rounded-full" />
+                    <div className="flex-shrink-0 w-10 h-10 bg-grey-lighter/10 rounded-full" />
                     <div>
-                      <div className="font-medium text-gray-900">{message.sender.name}</div>
-                      <div className="text-sm text-gray-500">{message.sender.role}</div>
+                      <div className="font-medium text-grey-darker">{message.sender.name}</div>
+                      <div className="text-sm text-grey-lighter">{message.sender.role}</div>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-grey-lighter">
                     {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </span>
                 </div>
-                <p className="text-gray-600 mb-3">{message.content}</p>
+                <p className="text-grey-darker mb-3">{message.content}</p>
                 {message.attachments && message.attachments.length > 0 && (
                   <div className="space-y-2 mb-3">
                     {message.attachments.map((attachment, index) => (
                       <div
                         key={index}
-                        className="flex items-center bg-gray-50 rounded p-2 text-sm"
+                        className="flex items-center bg-grey-lighter/10 rounded p-2 text-sm"
                       >
                         {attachment.type === 'document' ? (
-                          <FileText className="h-4 w-4 text-gray-400 mr-2" />
+                          <FileText className="h-4 w-4 text-grey-lighter mr-2" />
                         ) : (
-                          <ImageIcon className="h-4 w-4 text-gray-400 mr-2" />
+                          <ImageIcon className="h-4 w-4 text-grey-lighter mr-2" />
                         )}
-                        <span className="text-gray-600">{attachment.name}</span>
-                        <span className="text-gray-400 ml-2">({attachment.size})</span>
+                        <span className="text-grey-darker">{attachment.name}</span>
+                        <span className="text-grey-lighter ml-2">({attachment.size})</span>
                       </div>
                     ))}
                   </div>
@@ -305,7 +305,7 @@ export default function CommunicationHubWidget() {
               <div
                 key={notification.id}
                 className={`border rounded-lg p-4 ${
-                  !notification.isRead ? 'bg-blue-50 border-blue-100' : 'border-gray-200'
+                  !notification.isRead ? 'bg-blue-50 border-blue-100' : 'border-grey-lighter'
                 }`}
               >
                 <div className="flex items-start space-x-3">
@@ -315,10 +315,10 @@ export default function CommunicationHubWidget() {
                   <div className="flex-grow">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h4 className="font-medium text-gray-900">{notification.title}</h4>
-                        <p className="text-sm text-gray-600 mt-1">{notification.description}</p>
+                        <h4 className="font-medium text-grey-darker">{notification.title}</h4>
+                        <p className="text-sm text-grey-darker mt-1">{notification.description}</p>
                       </div>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-grey-lighter">
                         {notification.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </span>
                     </div>
@@ -340,11 +340,11 @@ export default function CommunicationHubWidget() {
             {contacts.map((contact) => (
               <div
                 key={contact.id}
-                className="border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow"
+                className="border border-grey-lighter rounded-lg p-4 hover:shadow-sm transition-shadow"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-10 h-10 bg-gray-200 rounded-full relative">
+                    <div className="flex-shrink-0 w-10 h-10 bg-grey-lighter/10 rounded-full relative">
                       <div
                         className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${getAvailabilityColor(
                           contact.availability
@@ -352,18 +352,18 @@ export default function CommunicationHubWidget() {
                       />
                     </div>
                     <div>
-                      <div className="font-medium text-gray-900">{contact.name}</div>
-                      <div className="text-sm text-gray-500">{contact.role}</div>
+                      <div className="font-medium text-grey-darker">{contact.name}</div>
+                      <div className="text-sm text-grey-lighter">{contact.role}</div>
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="flex items-center space-x-2 mb-2">
-                      <Mail className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">{contact.email}</span>
+                      <Mail className="h-4 w-4 text-grey-lighter" />
+                      <span className="text-sm text-grey-darker">{contact.email}</span>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <Phone className="h-4 w-4 text-gray-400" />
-                      <span className="text-sm text-gray-600">{contact.phone}</span>
+                      <Phone className="h-4 w-4 text-grey-lighter" />
+                      <span className="text-sm text-grey-darker">{contact.phone}</span>
                     </div>
                   </div>
                 </div>
@@ -382,7 +382,7 @@ export default function CommunicationHubWidget() {
 
         {/* View All Link */}
         <div className="mt-6 text-center">
-          <Button variant="ghost" className="text-blue-600 hover:text-blue-800">
+          <Button variant="ghost" className="text-blue-darker hover:text-blue-lighter">
             View All {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
             <ChevronRight className="h-4 w-4 ml-1" />
           </Button>

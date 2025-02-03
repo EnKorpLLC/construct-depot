@@ -113,14 +113,14 @@ export default function DomainWhitelist() {
               </div>
               <div className="flex items-center gap-4">
                 <Button
-                  variant={domain.isAllowed ? 'default' : 'outline'}
+                  variant={domain.isAllowed ? 'primary' : 'outline'}
                   onClick={() => toggleDomain(domain.id, !domain.isAllowed)}
                 >
                   {domain.isAllowed ? 'Allowed' : 'Blocked'}
                 </Button>
                 <Button
                   variant="destructive"
-                  size="icon"
+                  size="sm"
                   onClick={() => deleteDomain(domain.id)}
                 >
                   <Trash2 className="w-4 h-4" />

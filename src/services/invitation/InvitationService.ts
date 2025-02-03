@@ -1,4 +1,4 @@
-import { PrismaClient, Role, Invitation, InviteStatus, InvitationTemplate, BatchStatus, CompanyVerification, VerificationStatus } from '@prisma/client';
+import { PrismaClient, Role, Invitation, InviteStatus, InvitationTemplate, BatchStatus, CompanyVerification, VerificationStatus, InvitationBatch } from '@prisma/client';
 import { randomBytes } from 'crypto';
 import { sendEmail } from '@/lib/email';
 import { Redis } from 'ioredis';

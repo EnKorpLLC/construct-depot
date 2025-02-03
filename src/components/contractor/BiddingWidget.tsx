@@ -44,7 +44,7 @@ export default function BiddingWidget() {
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">AI-Powered Bidding</h2>
+          <h2 className="text-xl font-semibold text-grey-darker">AI-Powered Bidding</h2>
           <Button variant="outline" size="sm">
             New Bid
           </Button>
@@ -52,15 +52,15 @@ export default function BiddingWidget() {
 
         <div className="space-y-6">
           {/* AI Analysis Status */}
-          <div className="bg-blue-50 rounded-lg p-4">
+          <div className="bg-blue-lighter/10 rounded-lg p-4">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-blue-900">Blueprint Analysis</h3>
-              <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
+              <h3 className="text-sm font-medium text-blue-darker">Blueprint Analysis</h3>
+              <span className="text-xs bg-blue-lighter/20 text-blue-darker px-2 py-1 rounded">
                 In Progress
               </span>
             </div>
             <Progress value={75} className="mb-2" />
-            <div className="text-xs text-blue-700">
+            <div className="text-xs text-blue-darker">
               AI is analyzing project requirements and calculating estimates
             </div>
           </div>
@@ -70,22 +70,22 @@ export default function BiddingWidget() {
             {activeBids.map((bid) => (
               <div
                 key={bid.id}
-                className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                className="border border-grey-lighter rounded-lg p-4 hover:shadow-md transition-shadow"
               >
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h3 className="font-medium text-gray-900">{bid.projectName}</h3>
-                    <p className="text-sm text-gray-500 flex items-center mt-1">
+                    <h3 className="font-medium text-grey-darker">{bid.projectName}</h3>
+                    <p className="text-sm text-grey-lighter flex items-center mt-1">
                       <Clock className="w-4 h-4 mr-1" />
                       Due: {bid.dueDate.toLocaleDateString()}
                     </p>
                   </div>
                   <span className={`px-2 py-1 rounded text-sm font-medium
-                    ${bid.status === 'analyzing' ? 'bg-blue-100 text-blue-800' :
-                      bid.status === 'ready' ? 'bg-green-100 text-green-800' :
-                      bid.status === 'submitted' ? 'bg-yellow-100 text-yellow-800' :
-                      bid.status === 'won' ? 'bg-green-100 text-green-800' :
-                      'bg-red-100 text-red-800'}`}
+                    ${bid.status === 'analyzing' ? 'bg-blue-lighter/10 text-blue-darker' :
+                      bid.status === 'ready' ? 'bg-osb-light/10 text-osb-dark' :
+                      bid.status === 'submitted' ? 'bg-orange-lighter/10 text-orange-darker' :
+                      bid.status === 'won' ? 'bg-blue-lighter/10 text-blue-darker' :
+                      'bg-orange-lighter/10 text-orange-darker'}`}
                   >
                     {bid.status.charAt(0).toUpperCase() + bid.status.slice(1)}
                   </span>
@@ -93,28 +93,28 @@ export default function BiddingWidget() {
 
                 {/* Quick Stats */}
                 <div className="grid grid-cols-3 gap-4 mb-4">
-                  <div className="bg-gray-50 p-3 rounded">
-                    <div className="text-sm text-gray-500">Estimated Value</div>
+                  <div className="bg-grey-lighter/10 p-3 rounded">
+                    <div className="text-sm text-grey-darker">Estimated Value</div>
                     <div className="font-medium">${bid.estimatedValue.toLocaleString()}</div>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <div className="text-sm text-gray-500">Materials</div>
+                  <div className="bg-grey-lighter/10 p-3 rounded">
+                    <div className="text-sm text-grey-darker">Materials</div>
                     <div className="font-medium">{bid.materials.length} Items</div>
                   </div>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <div className="text-sm text-gray-500">Labor Hours</div>
+                  <div className="bg-grey-lighter/10 p-3 rounded">
+                    <div className="text-sm text-grey-darker">Labor Hours</div>
                     <div className="font-medium">{bid.laborHours.toLocaleString()}</div>
                   </div>
                 </div>
 
                 {/* Material Breakdown */}
                 <div className="mb-4">
-                  <h4 className="text-sm font-medium text-gray-700 mb-2">Material Estimates</h4>
+                  <h4 className="text-sm font-medium text-grey-darker mb-2">Material Estimates</h4>
                   <div className="space-y-2">
                     {bid.materials.map((material, index) => (
                       <div key={index} className="flex justify-between text-sm">
-                        <span>{material.name}</span>
-                        <span className="text-gray-600">
+                        <span className="text-grey-darker">{material.name}</span>
+                        <span className="text-grey-lighter">
                           {material.quantity} {material.unit} (${material.estimatedCost.toLocaleString()})
                         </span>
                       </div>
@@ -139,11 +139,11 @@ export default function BiddingWidget() {
 
           {/* Quick Actions */}
           <div className="grid grid-cols-2 gap-4">
-            <button className="flex items-center justify-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+            <button className="flex items-center justify-center p-3 bg-grey-lighter/10 rounded-lg hover:bg-grey-lighter/20 transition-colors text-grey-darker">
               <FileText className="w-4 h-4 mr-2" />
               <span className="text-sm">Upload Blueprints</span>
             </button>
-            <button className="flex items-center justify-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+            <button className="flex items-center justify-center p-3 bg-grey-lighter/10 rounded-lg hover:bg-grey-lighter/20 transition-colors text-grey-darker">
               <Calculator className="w-4 h-4 mr-2" />
               <span className="text-sm">Quick Estimate</span>
             </button>

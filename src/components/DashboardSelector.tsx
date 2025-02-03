@@ -29,16 +29,16 @@ export function DashboardSelector({ isOpen, onClose }: { isOpen: boolean; onClos
                 router.push(dashboard.path);
                 onClose();
               }}
-              className="w-full p-4 text-left hover:bg-gray-50 rounded-lg border border-gray-200 transition-colors"
+              className="w-full p-4 text-left hover:bg-grey-lighter/10 rounded-lg border border-grey-lighter transition-colors"
             >
               <div className="font-semibold">{dashboard.name}</div>
-              <div className="text-sm text-gray-500">View as {dashboard.role}</div>
+              <div className="text-sm text-grey-lighter">View as {dashboard.role}</div>
             </button>
           ))}
         </div>
         <button
           onClick={onClose}
-          className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          className="mt-6 w-full bg-blue-darker text-white py-2 rounded-lg hover:bg-blue-lighter transition-colors"
         >
           Continue to Current Dashboard
         </button>
@@ -57,7 +57,7 @@ export function DashboardSelectorButton() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed top-20 right-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        className="fixed top-20 right-4 bg-blue-darker text-white px-4 py-2 rounded-lg hover:bg-blue-lighter transition-colors"
       >
         Switch Dashboard View
       </button>

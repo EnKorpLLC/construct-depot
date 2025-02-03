@@ -118,7 +118,7 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Project Timeline</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">Project Timeline</h2>
           </div>
           <div className="flex items-center justify-center h-64">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -133,7 +133,7 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
       <Card>
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">Project Timeline</h2>
+            <h2 className="text-xl font-semibold text-grey-darker">Project Timeline</h2>
           </div>
           <div className="flex items-center justify-center h-64">
             <div className="text-red-600">{error}</div>
@@ -161,7 +161,7 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
       case 'delayed':
         return <AlertTriangle className="h-5 w-5 text-red-500" />;
       default:
-        return <Calendar className="h-5 w-5 text-gray-400" />;
+        return <Calendar className="h-5 w-5 text-grey-lighter" />;
     }
   };
 
@@ -176,7 +176,7 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
       case 'inspection':
         return 'bg-orange-100 text-orange-800';
       default:
-        return 'bg-gray-100 text-gray-800';
+        return 'bg-grey-lighter/10 text-grey-darker';
     }
   };
 
@@ -184,7 +184,7 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
     <Card>
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Project Timeline</h2>
+          <h2 className="text-xl font-semibold text-grey-darker">Project Timeline</h2>
           <Button variant="outline" size="sm">
             View Full Timeline
           </Button>
@@ -192,28 +192,28 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
 
         {/* Progress Summary */}
         <div className="mb-6">
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <div className="flex justify-between text-sm text-grey-darker mb-2">
             <span>Overall Progress</span>
             <span>{summary.projectProgress}%</span>
           </div>
           <Progress value={summary.projectProgress} className="mb-4" />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="bg-gray-50 rounded-lg p-3">
-              <div className="text-sm text-gray-500">Milestones</div>
+            <div className="bg-grey-lighter/10 rounded-lg p-3">
+              <div className="text-sm text-grey-lighter">Milestones</div>
               <div className="text-lg font-semibold">
                 {summary.completedMilestones}/{summary.totalMilestones}
               </div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-3">
-              <div className="text-sm text-gray-500">Upcoming</div>
+            <div className="bg-grey-lighter/10 rounded-lg p-3">
+              <div className="text-sm text-grey-lighter">Upcoming</div>
               <div className="text-lg font-semibold">{summary.upcomingEvents}</div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-3">
-              <div className="text-sm text-gray-500">Delayed</div>
+            <div className="bg-grey-lighter/10 rounded-lg p-3">
+              <div className="text-sm text-grey-lighter">Delayed</div>
               <div className="text-lg font-semibold">{summary.delayedItems}</div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-3">
-              <div className="text-sm text-gray-500">Est. Completion</div>
+            <div className="bg-grey-lighter/10 rounded-lg p-3">
+              <div className="text-sm text-grey-lighter">Est. Completion</div>
               <div className="text-lg font-semibold">
                 {summary.estimatedCompletion.toLocaleDateString()}
               </div>
@@ -223,18 +223,18 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
 
         {/* Timeline Events */}
         <div className="relative">
-          <div className="absolute top-0 bottom-0 left-6 w-px bg-gray-200"></div>
+          <div className="absolute top-0 bottom-0 left-6 w-px bg-grey-lighter"></div>
           <div className="space-y-6">
             {events.map((event) => (
               <div key={event.id} className="relative pl-12">
                 <div className="absolute left-4 top-1 -translate-x-1/2 bg-white p-1">
                   {getStatusIcon(event.status)}
                 </div>
-                <div className="bg-white rounded-lg border border-gray-200 p-4">
+                <div className="bg-white rounded-lg border border-grey-lighter p-4">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <h3 className="font-medium text-gray-900">{event.title}</h3>
-                      <p className="text-sm text-gray-500 flex items-center">
+                      <h3 className="font-medium text-grey-darker">{event.title}</h3>
+                      <p className="text-sm text-grey-lighter flex items-center">
                         <CalendarDays className="h-4 w-4 mr-1" />
                         {event.date.toLocaleDateString()}
                       </p>
@@ -245,20 +245,20 @@ export default function TimelineWidget({ projectId }: { projectId: string }) {
                   </div>
 
                   {event.description && (
-                    <p className="text-sm text-gray-600 mb-3">{event.description}</p>
+                    <p className="text-sm text-grey-darker mb-3">{event.description}</p>
                   )}
 
                   {event.assignees && event.assignees.length > 0 && (
                     <div className="flex items-center mb-3">
-                      <Users className="h-4 w-4 text-gray-400 mr-2" />
-                      <div className="text-sm text-gray-600">
+                      <Users className="h-4 w-4 text-grey-lighter mr-2" />
+                      <div className="text-sm text-grey-darker">
                         {event.assignees.map(a => a.name).join(', ')}
                       </div>
                     </div>
                   )}
 
                   {event.notes && (
-                    <div className="flex items-start space-x-2 text-sm text-gray-500">
+                    <div className="flex items-start space-x-2 text-sm text-grey-lighter">
                       <MessageSquare className="h-4 w-4 mt-0.5" />
                       <span>{event.notes}</span>
                     </div>

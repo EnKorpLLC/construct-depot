@@ -103,29 +103,29 @@ export default function ProjectDetailPage() {
   if (!project) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-xl text-gray-600">Project not found</div>
+        <div className="text-xl text-grey-darker">Project not found</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-grey-lighter/10 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header */}
           <div className="p-6 border-b">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">{project.title}</h1>
-                <div className="flex items-center text-gray-500 mb-2">
+                <h1 className="text-3xl font-bold text-grey-darker mb-4">{project.title}</h1>
+                <div className="flex items-center text-grey-lighter mb-2">
                   <Building2 className="h-4 w-4 mr-2" />
                   {project.generalContractor}
                 </div>
-                <div className="flex items-center text-gray-500 mb-2">
+                <div className="flex items-center text-grey-lighter mb-2">
                   <MapPin className="h-4 w-4 mr-2" />
                   {project.location}
                 </div>
-                <div className="flex items-center text-gray-500">
+                <div className="flex items-center text-grey-lighter">
                   <Clock className="h-4 w-4 mr-2" />
                   Bids due: {project.bidsDue.toLocaleDateString()}
                 </div>
@@ -140,8 +140,8 @@ export default function ProjectDetailPage() {
                   {project.status.replace('_', ' ').toUpperCase()}
                 </span>
                 <div className="flex items-center mt-2">
-                  <DollarSign className="h-5 w-5 text-gray-400 mr-1" />
-                  <span className="text-lg font-semibold text-gray-900">
+                  <DollarSign className="h-5 w-5 text-grey-lighter mr-1" />
+                  <span className="text-lg font-semibold text-grey-darker">
                     ${project.budget.toLocaleString()}
                   </span>
                 </div>
@@ -154,7 +154,7 @@ export default function ProjectDetailPage() {
             <div className="lg:col-span-2 space-y-6">
               <section>
                 <h2 className="text-xl font-semibold mb-4">Project Description</h2>
-                <p className="text-gray-600">{project.description}</p>
+                <p className="text-grey-darker">{project.description}</p>
               </section>
 
               <section>
@@ -163,7 +163,7 @@ export default function ProjectDetailPage() {
                   {project.scope.map((item, index) => (
                     <li key={index} className="flex items-start">
                       <CheckSquare className="h-5 w-5 text-green-500 mr-2 mt-0.5" />
-                      <span className="text-gray-600">{item}</span>
+                      <span className="text-grey-darker">{item}</span>
                     </li>
                   ))}
                 </ul>
@@ -175,7 +175,7 @@ export default function ProjectDetailPage() {
                   {project.requirements.map((req, index) => (
                     <span
                       key={index}
-                      className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm"
+                      className="px-3 py-1 bg-grey-lighter/10 text-grey-darker rounded-full text-sm"
                     >
                       {req}
                     </span>
@@ -190,10 +190,10 @@ export default function ProjectDetailPage() {
                     <a
                       key={index}
                       href={file.url}
-                      className="flex items-center p-3 border rounded-lg hover:bg-gray-50"
+                      className="flex items-center p-3 border rounded-lg hover:bg-grey-lighter/10"
                     >
-                      <FileText className="h-5 w-5 text-gray-400 mr-2" />
-                      <span className="text-blue-600">{file.name}</span>
+                      <FileText className="h-5 w-5 text-grey-lighter mr-2" />
+                      <span className="text-blue-darker hover:text-blue-lighter">{file.name}</span>
                     </a>
                   ))}
                 </div>
@@ -202,40 +202,40 @@ export default function ProjectDetailPage() {
 
             {/* Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-gray-50 rounded-lg p-6 space-y-6">
+              <div className="bg-grey-lighter/10 rounded-lg p-6 space-y-6">
                 <div>
                   <h3 className="text-lg font-semibold mb-4">Project Details</h3>
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center text-gray-500">
+                      <div className="flex items-center text-grey-lighter">
                         <Calendar className="h-4 w-4 mr-2" />
                         Start Date
                       </div>
-                      <span className="text-gray-900">
+                      <span className="text-grey-darker">
                         {project.startDate.toLocaleDateString()}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center text-gray-500">
+                      <div className="flex items-center text-grey-lighter">
                         <Clock className="h-4 w-4 mr-2" />
                         Duration
                       </div>
-                      <span className="text-gray-900">{project.duration}</span>
+                      <span className="text-grey-darker">{project.duration}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center text-gray-500">
+                      <div className="flex items-center text-grey-lighter">
                         <Users className="h-4 w-4 mr-2" />
                         Current Bids
                       </div>
-                      <span className="text-gray-900">{project.currentBids}</span>
+                      <span className="text-grey-darker">{project.currentBids}</span>
                     </div>
                     {project.averageBid && (
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center text-gray-500">
+                        <div className="flex items-center text-grey-lighter">
                           <DollarSign className="h-4 w-4 mr-2" />
                           Average Bid
                         </div>
-                        <span className="text-gray-900">
+                        <span className="text-grey-darker">
                           ${project.averageBid.toLocaleString()}
                         </span>
                       </div>
@@ -248,35 +248,35 @@ export default function ProjectDetailPage() {
                     <h3 className="text-lg font-semibold mb-4">Submit Bid</h3>
                     <form onSubmit={handleSubmitBid} className="space-y-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-grey-darker mb-1">
                           Bid Amount
                         </label>
                         <div className="relative">
-                          <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                          <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-grey-lighter h-5 w-5" />
                           <input
                             type="text"
                             value={bidAmount}
                             onChange={(e) => setBidAmount(e.target.value)}
-                            className="pl-10 w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="pl-10 w-full border border-grey-lighter rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                             placeholder="Enter amount"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-sm font-medium text-grey-darker mb-1">
                           Notes
                         </label>
                         <textarea
                           value={bidNotes}
                           onChange={(e) => setBidNotes(e.target.value)}
                           rows={4}
-                          className="w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full border border-grey-lighter rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                           placeholder="Add any additional notes..."
                         />
                       </div>
                       <button
                         type="submit"
-                        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        className="w-full bg-blue-darker text-white py-2 px-4 rounded-md hover:bg-blue-lighter focus:outline-none focus:ring-2 focus:ring-blue-darker focus:ring-offset-2"
                       >
                         Submit Bid
                       </button>

@@ -8,7 +8,7 @@ interface CardProps {
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ children, className = '' }, ref) => {
     return (
-      <div ref={ref} className={`bg-white rounded-lg shadow-md overflow-hidden ${className}`}>
+      <div ref={ref} className={`bg-white rounded-lg shadow-md border border-grey-lighter hover:border-grey-darker transition-colors ${className}`}>
         {children}
       </div>
     );
@@ -24,7 +24,7 @@ interface CardHeaderProps {
 export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ children, className = '' }, ref) => {
     return (
-      <div ref={ref} className={`px-6 py-4 border-b border-gray-200 ${className}`}>
+      <div ref={ref} className={`px-6 py-4 border-b border-grey-lighter ${className}`}>
         {children}
       </div>
     );
@@ -40,7 +40,7 @@ interface CardTitleProps {
 export const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ children, className = '' }, ref) => {
     return (
-      <h3 ref={ref} className={`text-lg font-semibold text-gray-900 ${className}`}>
+      <h3 ref={ref} className={`text-lg font-semibold text-grey-darker ${className}`}>
         {children}
       </h3>
     );
@@ -56,7 +56,7 @@ interface CardDescriptionProps {
 export const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(
   ({ children, className = '' }, ref) => {
     return (
-      <p ref={ref} className={`text-sm text-gray-500 ${className}`}>
+      <p ref={ref} className={`text-sm text-grey-lighter ${className}`}>
         {children}
       </p>
     );

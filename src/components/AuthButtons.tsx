@@ -15,8 +15,8 @@ export function AuthButtons({ variant = 'primary' }: AuthButtonsProps) {
         onClick={() => router.push('/auth/signup')}
         className={`${
           variant === 'primary'
-            ? 'bg-blue-600 text-white hover:bg-blue-700'
-            : 'bg-white text-blue-600 border-2 border-blue-600 hover:bg-blue-50'
+            ? 'bg-blue-darker text-white hover:bg-blue-lighter'
+            : 'bg-white text-blue-darker border-2 border-blue-darker hover:bg-blue-lighter/10'
         } px-8 py-3 rounded-lg font-semibold transition-colors`}
       >
         {variant === 'primary' ? 'Get Started' : 'Sign Up Now'}
