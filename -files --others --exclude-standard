@@ -1,0 +1,5 @@
+[33ma588f26[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m feat: add supplier pool management
+[33m6dcb9e1[m fix: update login page role redirects
+[33mc835299[m fix: update admin login and authentication
+[33m94003a0[m fix: resolve build issues and improve error handling
+[33md8d59db[m fix: update role enum values to use correct case-sensitive values from Prisma
