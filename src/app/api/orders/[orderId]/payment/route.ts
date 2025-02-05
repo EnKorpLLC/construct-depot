@@ -1,80 +1,89 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { prisma } from '@/lib/prisma';
-import { OrderStatus, Role } from '@prisma/client';
+import { OrderStatus, Role, PaymentMethod, PaymentStatus } from '@prisma/client';
 
-export async function POST(
-  request: NextRequest,
+export async function GET(
+  request: Request,
   { params }: { params: { orderId: string } }
 ) {
   const session = await getServerSession();
   if (!session?.user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return new NextResponse('Unauthorized', { status: 401 });
   }
 
-  const order = await prisma.order.findUnique({
-    where: { id: params.orderId },
-    include: {
-      items: {
-        include: {
-          product: true
-        }
-      }
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: params.orderId },
+      include: {
+        product: true,
+        payment: true,
+        user: true,
+      },
+    });
+
+    if (!order) {
+      return new NextResponse('Order not found', { status: 404 });
     }
-  });
 
-  if (!order) {
-    return NextResponse.json({ error: 'Order not found' }, { status: 404 });
-  }
-
-  // Only allow users to pay for their own orders
-  if (order.userId !== session.user.id) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
-  }
-
-  // Validate order status
-  if (order.status !== OrderStatus.PENDING) {
-    return NextResponse.json({
-      error: 'Order cannot be paid in current status'
-    }, { status: 400 });
-  }
-
-  const data = await request.json();
-  const { paymentMethod, paymentDetails } = data;
-
-  if (!paymentMethod || !paymentDetails) {
-    return NextResponse.json({
-      error: 'Payment method and details are required'
-    }, { status: 400 });
-  }
-
-  // Process payment (mock implementation)
-  const payment = await prisma.payment.create({
-    data: {
-      orderId: order.id,
-      amount: order.items.reduce((total, item) => total + item.price * item.quantity, 0),
-      method: paymentMethod,
-      transactionId: paymentDetails.transactionId || 'mock-transaction-id',
-      status: 'COMPLETED',
-      userId: session.user.id,
+    if (order.userId !== session.user.id) {
+      return new NextResponse('Unauthorized', { status: 403 });
     }
-  });
 
-  // Update order status
-  const updatedOrder = await prisma.order.update({
-    where: { id: order.id },
-    data: { status: OrderStatus.PROCESSING },
-    include: {
-      items: {
-        include: {
-          product: true
-        }
-      }
+    return NextResponse.json({ order });
+  } catch (error) {
+    console.error('Error fetching order payment:', error);
+    return new NextResponse('Internal Server Error', { status: 500 });
+  }
+}
+
+export async function POST(
+  request: Request,
+  { params }: { params: { orderId: string } }
+) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return new NextResponse('Unauthorized', { status: 401 });
+  }
+
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: params.orderId },
+      include: {
+        product: true,
+        payment: true,
+      },
+    });
+
+    if (!order) {
+      return new NextResponse('Order not found', { status: 404 });
     }
-  });
 
-  return NextResponse.json({
-    order: updatedOrder,
-    payment
-  });
+    if (order.userId !== session.user.id) {
+      return new NextResponse('Unauthorized', { status: 403 });
+    }
+
+    if (order.payment) {
+      return new NextResponse('Payment already exists', { status: 400 });
+    }
+
+    // Calculate total amount
+    const totalAmount = order.quantity * order.product.price;
+
+    // Create payment record
+    const payment = await prisma.payment.create({
+      data: {
+        orderId: order.id,
+        userId: session.user.id,
+        amount: totalAmount,
+        status: PaymentStatus.PENDING,
+        method: PaymentMethod.CREDIT_CARD,
+      },
+    });
+
+    return NextResponse.json({ payment });
+  } catch (error) {
+    console.error('Error creating payment:', error);
+    return new NextResponse('Internal Server Error', { status: 500 });
+  }
 } 

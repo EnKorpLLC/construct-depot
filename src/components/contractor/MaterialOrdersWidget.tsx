@@ -12,12 +12,12 @@ interface MaterialOrder {
   status: 'pending' | 'processing' | 'shipped' | 'delivered' | 'pooling';
   progress: number;
   totalAmount: number;
-  items: Array<{
+  quantity: number;
+  product: {
     name: string;
-    quantity: number;
-    unit: string;
     price: number;
-  }>;
+    unit: string;
+  };
   supplier: string;
   estimatedDelivery: Date;
   poolParticipants?: number;
@@ -32,11 +32,13 @@ export default function MaterialOrdersWidget() {
       projectName: 'Downtown Office Complex',
       status: 'pooling',
       progress: 65,
-      totalAmount: 125000,
-      items: [
-        { name: 'Steel Beams', quantity: 50, unit: 'pieces', price: 1500 },
-        { name: 'Concrete Mix', quantity: 200, unit: 'bags', price: 250 },
-      ],
+      totalAmount: 75000,
+      quantity: 50,
+      product: {
+        name: 'Steel Beams',
+        price: 1500,
+        unit: 'pieces'
+      },
       supplier: 'Steel & Materials Co.',
       estimatedDelivery: new Date('2024-02-15'),
       poolParticipants: 3,
@@ -47,11 +49,13 @@ export default function MaterialOrdersWidget() {
       projectName: 'Retail Center Renovation',
       status: 'shipped',
       progress: 100,
-      totalAmount: 75000,
-      items: [
-        { name: 'Glass Panels', quantity: 30, unit: 'pieces', price: 2000 },
-        { name: 'Aluminum Frames', quantity: 30, unit: 'sets', price: 500 },
-      ],
+      totalAmount: 60000,
+      quantity: 30,
+      product: {
+        name: 'Glass Panels',
+        price: 2000,
+        unit: 'pieces'
+      },
       supplier: 'Modern Glass Solutions',
       estimatedDelivery: new Date('2024-01-30'),
     },
@@ -127,8 +131,10 @@ export default function MaterialOrdersWidget() {
                 <div className="flex items-center space-x-2">
                   <Package className="h-4 w-4 text-grey-darker" />
                   <div className="text-sm">
-                    <span className="text-grey-lighter">Items:</span>
-                    <span className="font-medium ml-1">{order.items.length}</span>
+                    <span className="text-grey-lighter">Quantity:</span>
+                    <span className="font-medium ml-1">
+                      {order.quantity} {order.product.unit}
+                    </span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -162,18 +168,16 @@ export default function MaterialOrdersWidget() {
                 )}
               </div>
 
-              {/* Items List */}
+              {/* Product Details */}
               <div className="mb-4">
-                <h4 className="text-sm font-medium text-grey-darker mb-2">Order Items</h4>
-                <div className="space-y-2">
-                  {order.items.map((item, index) => (
-                    <div key={index} className="flex justify-between text-sm">
-                      <span className="text-grey-darker">{item.name}</span>
-                      <span className="text-grey-lighter">
-                        {item.quantity} {item.unit} (${item.price.toLocaleString()}/unit)
-                      </span>
-                    </div>
-                  ))}
+                <h4 className="text-sm font-medium text-grey-darker mb-2">Product Details</h4>
+                <div className="text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-grey-darker">{order.product.name}</span>
+                    <span className="text-grey-lighter">
+                      ${order.product.price.toLocaleString()}/{order.product.unit}
+                    </span>
+                  </div>
                 </div>
               </div>
 

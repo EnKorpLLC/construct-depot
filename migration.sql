@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "Role" AS ENUM ('super_admin', 'admin', 'supplier', 'general_contractor', 'subcontractor', 'user');
+CREATE TYPE "Role" AS ENUM ('super_admin', 'admin', 'supplier', 'general_contractor', 'subcontractor', 'user', 'customer');
 
 -- CreateEnum
 CREATE TYPE "OrderStatus" AS ENUM ('PENDING', 'PROCESSING', 'POOLING', 'SHIPPED', 'DELIVERED', 'COMPLETED', 'CANCELLED', 'DRAFT');
@@ -18,6 +18,12 @@ CREATE TYPE "VerificationStatus" AS ENUM ('PENDING', 'IN_REVIEW', 'APPROVED', 'R
 
 -- CreateEnum
 CREATE TYPE "BatchStatus" AS ENUM ('PENDING', 'PROCESSING', 'COMPLETED', 'FAILED', 'CANCELLED');
+
+-- CreateEnum
+CREATE TYPE "AlertType" AS ENUM ('BELOW', 'ABOVE', 'PERCENTAGE_CHANGE');
+
+-- CreateEnum
+CREATE TYPE "PoolStatus" AS ENUM ('OPEN', 'COMPLETED', 'CANCELLED', 'EXPIRED');
 
 -- CreateTable
 CREATE TABLE "User" (
@@ -45,11 +51,13 @@ CREATE TABLE "Product" (
     "supplierId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "isSystemProduct" BOOLEAN NOT NULL DEFAULT false,
     "minOrderQuantity" INTEGER NOT NULL DEFAULT 1,
     "thumbnailUrl" TEXT,
     "specifications" JSONB,
     "categoryId" TEXT,
+    "hasVariants" BOOLEAN NOT NULL DEFAULT false,
+    "basePrice" DOUBLE PRECISION,
+    "isSystemProduct" BOOLEAN NOT NULL DEFAULT false,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -93,31 +101,32 @@ CREATE TABLE "Review" (
 );
 
 -- CreateTable
-CREATE TABLE "Order" (
+CREATE TABLE "Pool" (
     "id" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
-    "totalAmount" DOUBLE PRECISION NOT NULL,
+    "productId" TEXT NOT NULL,
+    "targetQuantity" INTEGER NOT NULL,
+    "currentQuantity" INTEGER NOT NULL,
+    "status" "PoolStatus" NOT NULL DEFAULT 'OPEN',
+    "expiresAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "poolDeadline" TIMESTAMP(3),
-    "poolGroupId" TEXT,
-    "poolProgress" DOUBLE PRECISION,
-    "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
 
-    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Pool_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "OrderItem" (
+CREATE TABLE "Order" (
     "id" TEXT NOT NULL,
-    "orderId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "price" DOUBLE PRECISION NOT NULL,
+    "totalAmount" DOUBLE PRECISION,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "status" "OrderStatus" NOT NULL DEFAULT 'PENDING',
+    "poolId" TEXT,
 
-    CONSTRAINT "OrderItem_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -349,6 +358,46 @@ CREATE TABLE "InvitationBatch" (
 );
 
 -- CreateTable
+CREATE TABLE "ProductVariant" (
+    "id" TEXT NOT NULL,
+    "sku" TEXT,
+    "price" DOUBLE PRECISION NOT NULL,
+    "inventory" INTEGER NOT NULL DEFAULT 0,
+    "productId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ProductVariant_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "ProductVariantOption" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
+    "variantId" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "ProductVariantOption_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PriceAlert" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "productId" TEXT NOT NULL,
+    "variantId" TEXT,
+    "targetPrice" DOUBLE PRECISION NOT NULL,
+    "type" "AlertType" NOT NULL,
+    "isActive" BOOLEAN NOT NULL DEFAULT true,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "PriceAlert_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "_RelatedProducts" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL
@@ -361,6 +410,9 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE INDEX "Product_categoryId_idx" ON "Product"("categoryId");
 
 -- CreateIndex
+CREATE INDEX "Product_supplierId_idx" ON "Product"("supplierId");
+
+-- CreateIndex
 CREATE INDEX "ProductImage_productId_idx" ON "ProductImage"("productId");
 
 -- CreateIndex
@@ -371,6 +423,18 @@ CREATE INDEX "Review_productId_idx" ON "Review"("productId");
 
 -- CreateIndex
 CREATE INDEX "Review_userId_idx" ON "Review"("userId");
+
+-- CreateIndex
+CREATE INDEX "Pool_productId_idx" ON "Pool"("productId");
+
+-- CreateIndex
+CREATE INDEX "Order_userId_idx" ON "Order"("userId");
+
+-- CreateIndex
+CREATE INDEX "Order_productId_idx" ON "Order"("productId");
+
+-- CreateIndex
+CREATE INDEX "Order_poolId_idx" ON "Order"("poolId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Payment_orderId_key" ON "Payment"("orderId");
@@ -445,6 +509,27 @@ CREATE INDEX "InvitationBatch_createdById_idx" ON "InvitationBatch"("createdById
 CREATE INDEX "InvitationBatch_templateId_idx" ON "InvitationBatch"("templateId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "ProductVariant_sku_key" ON "ProductVariant"("sku");
+
+-- CreateIndex
+CREATE INDEX "ProductVariant_productId_idx" ON "ProductVariant"("productId");
+
+-- CreateIndex
+CREATE INDEX "ProductVariantOption_variantId_idx" ON "ProductVariantOption"("variantId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "ProductVariantOption_variantId_name_key" ON "ProductVariantOption"("variantId", "name");
+
+-- CreateIndex
+CREATE INDEX "PriceAlert_userId_idx" ON "PriceAlert"("userId");
+
+-- CreateIndex
+CREATE INDEX "PriceAlert_productId_idx" ON "PriceAlert"("productId");
+
+-- CreateIndex
+CREATE INDEX "PriceAlert_variantId_idx" ON "PriceAlert"("variantId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "_RelatedProducts_AB_unique" ON "_RelatedProducts"("A", "B");
 
 -- CreateIndex
@@ -469,13 +554,16 @@ ALTER TABLE "Review" ADD CONSTRAINT "Review_productId_fkey" FOREIGN KEY ("produc
 ALTER TABLE "Review" ADD CONSTRAINT "Review_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Pool" ADD CONSTRAINT "Pool_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "OrderItem" ADD CONSTRAINT "OrderItem_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Order" ADD CONSTRAINT "Order_poolId_fkey" FOREIGN KEY ("poolId") REFERENCES "Pool"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Payment" ADD CONSTRAINT "Payment_orderId_fkey" FOREIGN KEY ("orderId") REFERENCES "Order"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -533,6 +621,21 @@ ALTER TABLE "InvitationBatch" ADD CONSTRAINT "InvitationBatch_templateId_fkey" F
 
 -- AddForeignKey
 ALTER TABLE "InvitationBatch" ADD CONSTRAINT "InvitationBatch_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProductVariant" ADD CONSTRAINT "ProductVariant_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProductVariantOption" ADD CONSTRAINT "ProductVariantOption_variantId_fkey" FOREIGN KEY ("variantId") REFERENCES "ProductVariant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PriceAlert" ADD CONSTRAINT "PriceAlert_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PriceAlert" ADD CONSTRAINT "PriceAlert_productId_fkey" FOREIGN KEY ("productId") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PriceAlert" ADD CONSTRAINT "PriceAlert_variantId_fkey" FOREIGN KEY ("variantId") REFERENCES "ProductVariant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_RelatedProducts" ADD CONSTRAINT "_RelatedProducts_A_fkey" FOREIGN KEY ("A") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -8,14 +8,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Custom brand colors
-        blue: {
-          darker: '#1c237e',
-          lighter: '#0010ff',
+        // Custom brand colors with balanced blue and orange
+        primary: {
+          DEFAULT: '#1c237e', // blue darker
+          light: '#0010ff',   // blue lighter
         },
-        orange: {
-          darker: '#e65003',
-          lighter: '#ff7300',
+        secondary: {
+          DEFAULT: '#e65003', // orange darker
+          light: '#ff7300',   // orange lighter
         },
         grey: {
           darker: '#999999',
@@ -31,14 +31,6 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

@@ -1,4 +1,4 @@
-import { OrderStatus, Role, Order, Product, OrderItem } from '@prisma/client';
+import { OrderStatus, Role, Order, Product } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 
 export class OrderWorkflowService {
@@ -9,7 +9,7 @@ export class OrderWorkflowService {
   ) {
     const order = await prisma.order.findUnique({
       where: { id: orderId },
-      include: { items: true }
+      include: { product: true }
     });
 
     if (!order) {
@@ -38,34 +38,6 @@ export class OrderWorkflowService {
     return updatedOrder;
   }
 
-  static async handleStatusSpecificActions(order: Order & { items: any[] }, newStatus: OrderStatus) {
-    if (newStatus === OrderStatus.PROCESSING) {
-      // Reserve inventory
-      for (const item of order.items) {
-        await prisma.product.update({
-          where: { id: item.productId },
-          data: {
-            inventory: {
-              decrement: item.quantity
-            }
-          }
-        });
-      }
-    } else if (order.status === OrderStatus.PROCESSING && newStatus === OrderStatus.CANCELLED) {
-      // Release reserved inventory
-      for (const item of order.items) {
-        await prisma.product.update({
-          where: { id: item.productId },
-          data: {
-            inventory: {
-              increment: item.quantity
-            }
-          }
-        });
-      }
-    }
-  }
-
   private static isValidStatusTransition(currentStatus: OrderStatus, newStatus: OrderStatus): boolean {
     const validTransitions: Record<OrderStatus, OrderStatus[]> = {
       [OrderStatus.DRAFT]: [OrderStatus.PENDING],
@@ -81,33 +53,29 @@ export class OrderWorkflowService {
     return validTransitions[currentStatus]?.includes(newStatus) || false;
   }
 
-  private async handleStatusSpecificActions(order: Order & { items: OrderItem[] }): Promise<void> {
+  private static async handleStatusSpecificActions(order: Order, newStatus: OrderStatus): Promise<void> {
     // Update inventory based on status change
-    if (order.status === OrderStatus.PROCESSING) {
+    if (newStatus === OrderStatus.PROCESSING) {
       // Decrease inventory
-      for (const item of order.items) {
-        const product = await prisma.product.findUnique({
-          where: { id: item.productId }
+      const product = await prisma.product.findUnique({
+        where: { id: order.productId }
+      });
+      if (product) {
+        await prisma.product.update({
+          where: { id: order.productId },
+          data: { inventory: product.inventory - order.quantity }
         });
-        if (product) {
-          await prisma.product.update({
-            where: { id: item.productId },
-            data: { inventory: product.inventory - item.quantity }
-          });
-        }
       }
-    } else if (order.status === OrderStatus.CANCELLED) {
+    } else if (newStatus === OrderStatus.CANCELLED) {
       // Restore inventory
-      for (const item of order.items) {
-        const product = await prisma.product.findUnique({
-          where: { id: item.productId }
+      const product = await prisma.product.findUnique({
+        where: { id: order.productId }
+      });
+      if (product) {
+        await prisma.product.update({
+          where: { id: order.productId },
+          data: { inventory: product.inventory + order.quantity }
         });
-        if (product) {
-          await prisma.product.update({
-            where: { id: item.productId },
-            data: { inventory: product.inventory + item.quantity }
-          });
-        }
       }
     }
   }

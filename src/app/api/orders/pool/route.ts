@@ -17,25 +17,16 @@ export async function GET(request: NextRequest) {
 
   const where = {
     status: OrderStatus.POOLING,
-    ...(productId && {
-      items: {
-        some: {
-          productId
-        }
-      }
-    })
+    ...(productId && { productId })
   };
 
   const [pools, total] = await Promise.all([
     prisma.order.findMany({
       where,
       include: {
-        items: {
-          include: {
-            product: true
-          }
-        },
-        user: true
+        product: true,
+        user: true,
+        pool: true
       },
       skip,
       take: limit,
@@ -73,11 +64,8 @@ export async function POST(request: NextRequest) {
   const order = await prisma.order.findUnique({
     where: { id: orderId },
     include: {
-      items: {
-        include: {
-          product: true
-        }
-      }
+      product: true,
+      pool: true
     }
   });
 
@@ -102,18 +90,62 @@ export async function POST(request: NextRequest) {
     where: { id: order.id },
     data: {
       status: OrderStatus.POOLING,
-      poolGroupId: `pool-${Date.now()}`, // Generate a unique pool group ID
-      poolProgress: 0, // Initial progress
-      poolDeadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
-    },
-    include: {
-      items: {
-        include: {
-          product: true
+      pool: {
+        create: {
+          productId: order.productId,
+          targetQuantity: order.quantity * 5, // Example: target is 5x the order quantity
+          currentQuantity: order.quantity,
+          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
         }
       }
+    },
+    include: {
+      product: true,
+      pool: true
     }
   });
 
   return NextResponse.json(updatedOrder);
+}
+
+export async function PUT(request: NextRequest) {
+  const session = await getServerSession();
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    const body = await request.json();
+    const { poolId, status } = body;
+
+    if (!poolId || !status) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    // Only suppliers and admins can update pool status
+    const allowedRoles = [Role.supplier, Role.admin, Role.super_admin] as const;
+    if (!allowedRoles.includes(session.user.role as typeof allowedRoles[number])) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
+    }
+
+    const pool = await prisma.pool.update({
+      where: { id: poolId },
+      data: { status },
+      include: {
+        orders: true,
+        product: true,
+      },
+    });
+
+    // Update all orders in the pool
+    await prisma.order.updateMany({
+      where: { poolId },
+      data: { status: status === 'COMPLETED' ? 'COMPLETED' : 'PENDING' },
+    });
+
+    return NextResponse.json({ pool });
+  } catch (error) {
+    console.error('Error updating pool:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 } 

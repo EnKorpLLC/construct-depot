@@ -2,13 +2,14 @@
 
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { Role } from '@prisma/client';
+import { useEffect, useState } from 'react';
+import { Role, Product } from '@prisma/client';
 import { AuthButtons } from '@/components/AuthButtons';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Search, ChevronRight, TrendingUp, Users, Package, Truck } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 // Sample data - this would come from your database
 const featuredCategories = [
@@ -62,6 +63,10 @@ const featuredProducts = [
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState('name');
 
   useEffect(() => {
     if (status === 'authenticated' && session?.user?.role) {
@@ -81,6 +86,44 @@ export default function Home() {
       }
     }
   }, [session, status, router]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+        const data = await response.json();
+        setProducts(data.products || []);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        toast.error('Failed to load products');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    product.description?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    switch (sortBy) {
+      case 'name':
+        return a.name.localeCompare(b.name);
+      case 'price':
+        return a.price - b.price;
+      case 'inventory':
+        return a.inventory - b.inventory;
+      default:
+        return 0;
+    }
+  });
 
   // Show loading state while checking session
   if (status === 'loading') {
@@ -113,8 +156,19 @@ export default function Home() {
                   type="text"
                   placeholder="Search for materials, tools, and equipment..."
                   className="w-full pl-10 pr-4 py-3 rounded-lg text-grey-darker"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
               </div>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="px-4 py-2 border rounded-lg"
+              >
+                <option value="name">Sort by Name</option>
+                <option value="price">Sort by Price</option>
+                <option value="inventory">Sort by Inventory</option>
+              </select>
               <Button size="lg">
                 Search
               </Button>
@@ -160,12 +214,12 @@ export default function Home() {
           </Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {featuredProducts.map((product) => (
+          {sortedProducts.map((product) => (
             <Link key={product.id} href={`/products/${product.id}`}>
               <Card className="hover:shadow-lg transition-shadow h-full">
                 <div className="aspect-video relative">
                   <img
-                    src={product.image}
+                    src={product.thumbnailUrl || '/images/product-placeholder.jpg'}
                     alt={product.name}
                     className="object-cover w-full h-full rounded-t-lg"
                   />
@@ -179,15 +233,12 @@ export default function Home() {
                         ${product.price.toFixed(2)}
                       </div>
                       <div className="text-sm text-grey-lighter">
-                        Pool Size: {product.poolSize} buyers
+                        Min. Order: {product.minOrderQuantity} units
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-green-600 font-medium">
-                        Save {product.poolDiscount}%
-                      </div>
                       <div className="text-sm text-grey-lighter">
-                        in pool
+                        {product.inventory} in stock
                       </div>
                     </div>
                   </div>

@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Product, PriceBracket } from '@prisma/client';
 import { useSession } from 'next-auth/react';
+import { toast } from 'sonner';
+import clsx from 'clsx';
+import Link from 'next/link';
 
 type ProductWithBrackets = Product & {
   priceBrackets: PriceBracket[];
@@ -17,6 +20,7 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const params = useParams();
+  const router = useRouter();
   const { data: session } = useSession();
 
   useEffect(() => {
@@ -27,6 +31,7 @@ export default function ProductDetail() {
         setProduct(data);
       } catch (error) {
         console.error('Error fetching product:', error);
+        toast.error('Failed to load product');
       } finally {
         setLoading(false);
       }
@@ -65,6 +70,15 @@ export default function ProductDetail() {
     return applicableBracket ? applicableBracket.price : product.price;
   };
 
+  const handleAddToOrder = () => {
+    if (!session) {
+      router.push('/auth/login?callbackUrl=' + encodeURIComponent(`/products/${params.id}`));
+      return;
+    }
+    // Add to cart/pool logic here
+    toast.success('Added to order');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -93,7 +107,10 @@ export default function ProductDetail() {
                 {product.priceBrackets && product.priceBrackets.length > 0 && (
                   <div className="mb-6">
                     <h3 className="text-lg font-semibold mb-2">Volume Discounts</h3>
-                    <div className="space-y-2">
+                    <div className={clsx(
+                      "space-y-2",
+                      !session && "filter blur-sm cursor-not-allowed"
+                    )}>
                       {product.priceBrackets
                         .sort((a, b) => a.minQuantity - b.minQuantity)
                         .map((bracket) => (
@@ -106,6 +123,14 @@ export default function ProductDetail() {
                           </div>
                         ))}
                     </div>
+                    {!session && (
+                      <p className="text-sm text-gray-500 mt-2">
+                        <Link href="/auth/login" className="text-blue-darker hover:underline">
+                          Log in
+                        </Link>
+                        {' '}to view volume discounts
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -132,9 +157,9 @@ export default function ProductDetail() {
 
                   <button
                     className="w-full bg-blue-darker text-white py-2 px-4 rounded-md hover:bg-blue-lighter focus:outline-none focus:ring-2 focus:ring-blue-darker focus:ring-offset-2"
-                    onClick={() => {/* Add to cart/pool logic */}}
+                    onClick={handleAddToOrder}
                   >
-                    Add to Order
+                    {session ? 'Add to Order' : 'Login to Order'}
                   </button>
                 </div>
               </div>
@@ -144,17 +169,30 @@ export default function ProductDetail() {
                   <h3 className="text-lg font-semibold mb-4">Supplier Information</h3>
                   <p className="text-gray-600">{product.supplier.name}</p>
                   
-                  <h3 className="text-lg font-semibold mt-6 mb-4">Pooling Status</h3>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Current Pool Progress:</span>
-                      <span className="text-gray-900">75%</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Pool Deadline:</span>
-                      <span className="text-gray-900">3 days left</span>
+                  <div className={clsx(
+                    "mt-6",
+                    !session && "filter blur-sm cursor-not-allowed"
+                  )}>
+                    <h3 className="text-lg font-semibold mb-4">Pooling Status</h3>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Current Pool Progress:</span>
+                        <span className="text-gray-900">75%</span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Pool Deadline:</span>
+                        <span className="text-gray-900">3 days left</span>
+                      </div>
                     </div>
                   </div>
+                  {!session && (
+                    <p className="text-sm text-gray-500 mt-2">
+                      <Link href="/auth/login" className="text-blue-darker hover:underline">
+                        Log in
+                      </Link>
+                      {' '}to view pooling status
+                    </p>
+                  )}
                 </div>
               </div>
             </div>

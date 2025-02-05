@@ -50,8 +50,6 @@ model Product {
   supplier        User          @relation(fields: [supplierId], references: [id])
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
-  OrderItem       OrderItem[]
-  isSystemProduct Boolean       @default(false)
   minOrderQuantity Int          @default(1)
   priceBrackets   PriceBracket[]
   priceHistory    PriceHistory[]
@@ -66,10 +64,13 @@ model Product {
   variants        ProductVariant[]
   hasVariants     Boolean       @default(false)
   basePrice       Float?        // Base price for variant products
-
   priceAlerts     PriceAlert[]
+  pools           Pool[]        // Added relation
+  orders          Order[]       // Added relation
+  isSystemProduct Boolean       @default(false)  // Added field
 
   @@index([categoryId])
+  @@index([supplierId])
 }
 
 model ProductImage {
@@ -114,31 +115,39 @@ model Review {
   @@index([userId])
 }
 
+model Pool {
+  id              String      @id @default(cuid())
+  productId       String
+  product         Product     @relation(fields: [productId], references: [id])
+  targetQuantity  Int
+  currentQuantity Int
+  status          PoolStatus  @default(OPEN)
+  expiresAt       DateTime
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  orders          Order[]
+
+  @@index([productId])
+}
+
 model Order {
   id           String      @id @default(cuid())
   userId       String
-  totalAmount  Float
+  productId    String
+  quantity     Int
+  totalAmount  Float?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
-  poolDeadline DateTime?
-  poolGroupId  String?
-  poolProgress Float?
   status       OrderStatus @default(PENDING)
   user         User        @relation(fields: [userId], references: [id])
-  items        OrderItem[]
+  product      Product     @relation(fields: [productId], references: [id])
+  poolId       String?
+  pool         Pool?       @relation(fields: [poolId], references: [id])
   payment      Payment?
-}
 
-model OrderItem {
-  id        String   @id @default(cuid())
-  orderId   String
-  productId String
-  quantity  Int
-  price     Float
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  order     Order    @relation(fields: [orderId], references: [id])
-  product   Product  @relation(fields: [productId], references: [id])
+  @@index([userId])
+  @@index([productId])
+  @@index([poolId])
 }
 
 model Payment {
@@ -494,4 +503,11 @@ enum AlertType {
   BELOW
   ABOVE
   PERCENTAGE_CHANGE
+}
+
+enum PoolStatus {
+  OPEN
+  COMPLETED
+  CANCELLED
+  EXPIRED
 }
